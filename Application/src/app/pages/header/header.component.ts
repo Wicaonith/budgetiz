@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-
+import { Component, OnInit, Input, OnChanges, SimpleChanges, AfterViewInit } from '@angular/core';
+import { LoginService } from "../../services/login.service"
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -7,9 +7,54 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor() { }
+  private menus: Map<string,string>;
 
-  ngOnInit(): void {
+  /**
+   * Constructeur de la classe HeaderComponent
+   * 
+   * @param loginService - LoginService
+   */
+  public constructor(private loginService: LoginService) { 
+
+    this.menus = new Map<string, string>();
+    this.menus.set("Accueil", "");
+    this.menus.set("Prévisionnel", "/prévisionnel");
+    this.menus.set("Épargne", "/epargne");
+    this.menus.set("Label", "/Data");
+    this.menus.set("Prévisionnel", "/prévisionnel");
   }
 
+
+  
+  /**
+   * Méthode au clic sur le bouton de connexion/déconnexion
+   */
+  public logInOrLogOut(): void {
+    this.loginService.logInOrLogOut();
+  }
+
+  /**
+   * Méthode d'implémentation de OnInit
+   */
+  public ngOnInit(): void {
+    console.log("[HeaderComponent] - OnInit")
+  }
+
+  /**
+   * Méthode d'implémentation de OnChanges
+   * @param changes - SimpleChanges
+   */
+  public ngOnChanges(changes: SimpleChanges): void {
+    console.log("[HeaderComponent] - Onchanges", changes);
+  }
+
+  /**
+   * Méthode d'implémentation de AfterViewInit
+   */
+  public ngAfterViewInit(): void {
+    console.log("[HeaderComponent] - AfterViewInit");
+  }
+
+  //ACCESSEUR
+  public getMenus(): Map<string, string> {return this.menus}
 }
