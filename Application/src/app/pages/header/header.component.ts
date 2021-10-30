@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, OnChanges, SimpleChanges, AfterViewInit } from '@angular/core';
 import { LoginService } from "../../services/login.service"
+
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -18,14 +19,12 @@ export class HeaderComponent implements OnInit {
 
     this.menus = new Map<string, string>();
     this.menus.set("Accueil", "");
-    this.menus.set("Prévisionnel", "/prévisionnel");
-    this.menus.set("Épargne", "/epargne");
-    this.menus.set("Label", "/Data");
-    this.menus.set("Prévisionnel", "/prévisionnel");
+    this.menus.set("Prévisionnel", "/previsionnal");
+    this.menus.set("Épargne", "/saving");
+    this.menus.set("Label", "/label");
+    this.menus.set("Données", "/data");
   }
 
-
-  
   /**
    * Méthode au clic sur le bouton de connexion/déconnexion
    */
@@ -56,5 +55,6 @@ export class HeaderComponent implements OnInit {
   }
 
   //ACCESSEUR
-  public getMenus(): Map<string, string> {return this.menus}
+  public getMenus(): Map<string, string> {return this.menus;}
+  public getLoginService(): LoginService {return this.loginService;}
 }

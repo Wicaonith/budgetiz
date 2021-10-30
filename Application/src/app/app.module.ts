@@ -11,6 +11,12 @@ import { FooterComponent } from './pages/footer/footer.component'; // 2nd stage
 import { ContentComponent } from './pages/content/content.component'; // 2nd stage
 
 import { HomeComponent } from './pages/content/home/home.component'; // 3rd stage
+import { LabelComponent } from './pages/content/label/label.component'; // 3rd stage
+import { DataComponent } from './pages/content/data/data.component'; // 3rd stage
+import { PrevisionalComponent } from './pages/content/previsional/previsional.component'; // 3rd stage
+import { SavingComponent } from './pages/content/saving/saving.component'; // 3rd stage
+
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -19,11 +25,16 @@ import { HomeComponent } from './pages/content/home/home.component'; // 3rd stag
     HeaderComponent,
     FooterComponent,
     ContentComponent,
-    HomeComponent
+    HomeComponent,
+    LabelComponent,
+    DataComponent,
+    PrevisionalComponent,
+    SavingComponent
   ],
   imports: [
     BrowserModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    RouterModule
   ],
   providers: [],
   bootstrap: [AppComponent]
