@@ -17,6 +17,7 @@ import { PrevisionalComponent } from './pages/content/previsional/previsional.co
 import { SavingComponent } from './pages/content/saving/saving.component'; // 3rd stage
 
 import { RouterModule } from '@angular/router';
+import { MatTableModule } from '@angular/material/table';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { RouterModule } from '@angular/router';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    RouterModule
+    RouterModule,
+    MatTableModule
   ],
   providers: [],
   bootstrap: [AppComponent]

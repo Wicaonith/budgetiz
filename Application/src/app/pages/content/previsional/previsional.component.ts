@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-previsional',
   templateUrl: './previsional.component.html',
-  styleUrls: ['./previsional.component.css']
+  styleUrls: ['../../pages.component.css']
 })
 export class PrevisionalComponent implements OnInit {
 

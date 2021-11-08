@@ -1,0 +1,27 @@
+/* Global */
+
+/* Header */
+.banner img {
+    margin: 0 16px;
+}
+
+.banner-menu {
+    height: 100%;
+}
+
+.banner {
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    align-items: center;
+    background-color: #4da34d;
+    color: white;
+    text-align: center;
+    font-weight: 600;
+}
+
+/* Pages Data */
+.dataTable{
+    width: 100%;
+}
