@@ -2,5 +2,5 @@
 
 <button (click)="onClick()" >APPUIE !</button>
 
-<input #box (keyup)="0">
-<p>Bonjour {{ box.value }} </p>
+<input #box (keyup)="onKey($event)">
+<p>{{ value }} </p>

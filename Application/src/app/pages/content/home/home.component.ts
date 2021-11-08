@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { TEST_DATAS } from 'src/app/mock/mock-data';
 import { DataTransaction } from 'src/app/models/dataTransaction';
-import { TEST_DATAS } from './mock-data';
 
 @Component({
   selector: 'app-home',

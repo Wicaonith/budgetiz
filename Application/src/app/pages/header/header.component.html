@@ -7,7 +7,11 @@
 
 <!-- Navigation menu -->
 <!-- Display only if user is loggin -->
-<div *ngIf="getLoginService().getIsLoggedIn()">
+<nav>
+
+</nav>
+
+<div *ngIf="">
 <ul>
     <li class="menu"><a [routerLink]="['']" routerLinkActive="link-active" [routerLinkActiveOptions]="{exact: true}">Accueil</a></li>
     <li class="menu"><a [routerLink]="['/previsionnal']" routerLinkActive="link-active">Prévisionnel</a></li>
