@@ -18,6 +18,7 @@ import { LabelComponent } from './pages/content/label/label.component'; // 3rd s
 import { SectionComponent } from './pages/content/label/section/section.component'; // 4th stage
 import { UndersectionComponent } from './pages/content/label/undersection/undersection.component'; // 4th stage
 import { BankaccountComponent } from './pages/content/label/bankaccount/bankaccount.component'; // 4th stage
+import { PageNotFoundComponent } from './pages/page-not-found.component';
 
 import { RouterModule } from '@angular/router';
 
@@ -27,6 +28,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
+
+import { AppRoutingModule } from './app-routing.module';
 
 
 
@@ -44,7 +47,8 @@ import { MatTabsModule } from '@angular/material/tabs';
     SavingComponent,
     SectionComponent,
     UndersectionComponent,
-    BankaccountComponent
+    BankaccountComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
@@ -55,7 +59,8 @@ import { MatTabsModule } from '@angular/material/tabs';
     MatInputModule,
     MatButtonModule,
     MatIconModule, 
-    MatTabsModule
+    MatTabsModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
