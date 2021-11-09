@@ -14,9 +14,22 @@ h1 {
 
 }
 
+/* Page not found */
+.page-not-found {
+    width:30%;
+    margin-left:auto;
+    margin-right:auto;
+    margin-top: 50px;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    text-align: center;
+    border:#4da34d 5px solid;
+    font-size: 30px;
+}
+
 /* Header */
 .banner img {
-    margin: 0 16px;
+    margin: 5px 16px;
 }
 
 .banner-menu {
@@ -105,4 +118,10 @@ h1 {
 
 ::ng-deep .mat-tab-group.mat-primary .mat-ink-bar {
     background-color: #4da34d;
+}
+
+/* datatable */
+::ng-deep .mat-header-cell {
+    font-size: 15px;
+    font-weight: 600;
 }

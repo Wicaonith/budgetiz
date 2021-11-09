@@ -3,29 +3,34 @@ import { Section } from "./section";
 
 /**
  * L'objet modélisant les Sous rubriques dans l'application
- * @extends Section
+ * 
+ * @attribut id - number - L'identifiant de la sous rubrique
+ * @attribut name - string - Le nom de la sous rubrique
+ * @attribut section - Section - La rubrique mère
+ * @attribut inTab - boolean - L'indicateur de la présence dans la tableau récapitulatif
  */
-export class UnderSection {
+export class Undersection {
 
+    /** L'identifiant de la sous rubrique */
+    id: number;
     /** Le nom de la sous rubrique */
     name: string;
-
     /** La rubrique mère */
-    section : Section;
-
+    section: Section;
     /** L'indicateur de la présence dans la tableau récapitulatif */
-    inTab: boolean; 
-    
-    
+    inTab: boolean;
+
+
     /**
-     * Constructeur de la classe Section
-     * Initialiser avec un tableau de sous rubrique
+     * Constructeur de la classe Undersection
      * 
+     * @param id - number - L'identifiant de la sous rubrique
      * @param name - string - Le nom de la rubrique
-     * @param section - UnderSection - La rubrique mère
+     * @param section - Undersection - La rubrique mère
      * @param inTab - boolean - Determine l'affichage dans le tableau ou non
      */
-    constructor(name: string, section: Section, inTab: boolean){
+    constructor(id: number, name: string, section: Section, inTab: boolean) {
+        this.id = id;
         this.name = name;
         this.section = section;
         this.inTab = inTab;

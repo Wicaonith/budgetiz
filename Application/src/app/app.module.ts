@@ -8,11 +8,10 @@ import { PagesComponent } from './pages/pages.component'; // Main - 1st stage
 
 import { HeaderComponent } from './pages/header/header.component'; // 2nd stage
 import { FooterComponent } from './pages/footer/footer.component'; // 2nd stage
-import { ContentComponent } from './pages/content/content.component'; // 2nd stage
 
 import { HomeComponent } from './pages/content/home/home.component'; // 3rd stage
 import { DataComponent } from './pages/content/data/data.component'; // 3rd stage
-import { PrevisionalComponent } from './pages/content/previsional/previsional.component'; // 3rd stage
+import { ImpotsComponent } from './pages/content/impots/impots.component'; // 3rd stage
 import { SavingComponent } from './pages/content/saving/saving.component'; // 3rd stage
 import { LabelComponent } from './pages/content/label/label.component'; // 3rd stage
 import { SectionComponent } from './pages/content/label/section/section.component'; // 4th stage
@@ -31,6 +30,10 @@ import { MatTabsModule } from '@angular/material/tabs';
 
 import { AppRoutingModule } from './app-routing.module';
 
+//Services
+import { SectionService } from './services/section.service';
+import { UndersectionService } from './services/undersection.service';
+
 
 
 @NgModule({
@@ -39,11 +42,10 @@ import { AppRoutingModule } from './app-routing.module';
     PagesComponent,
     HeaderComponent,
     FooterComponent,
-    ContentComponent,
     HomeComponent,
     LabelComponent,
     DataComponent,
-    PrevisionalComponent,
+    ImpotsComponent,
     SavingComponent,
     SectionComponent,
     UndersectionComponent,
@@ -62,7 +64,9 @@ import { AppRoutingModule } from './app-routing.module';
     MatTabsModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [SectionService,
+    UndersectionService,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

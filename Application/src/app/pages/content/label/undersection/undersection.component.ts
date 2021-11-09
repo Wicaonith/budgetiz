@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { TEST_SECTION } from 'src/app/mock/mock-section';
-import { TEST_UNDERSECTION } from 'src/app/mock/mock-undersection';
 import { EnumSectionType } from 'src/app/models/enum/enumSectionType';
 import { Section } from 'src/app/models/section';
-import { UnderSection } from 'src/app/models/underSection';
+import { Undersection } from 'src/app/models/undersection';
+import { SectionService } from 'src/app/services/section.service';
+import { UndersectionService } from 'src/app/services/undersection.service';
 
 @Component({
   selector: 'app-undersection',
@@ -12,66 +12,42 @@ import { UnderSection } from 'src/app/models/underSection';
 })
 export class UndersectionComponent implements OnInit {
 
-  /** Liste des Sous Rubriques (NAME/SECTION/TYPE/INTAB)*/
-  underSections: UnderSection[] = [];
-
+  /** Liste des Sous Rubriques (ID/NAME/SECTION/TYPE/INTAB)*/
+  undersections: Undersection[] = [];
   /** Colonnes à afficher dans le tableau des Sous-Rubriques */
-  underSectionColumns: string[] = ['name', 'section', 'type', 'display', 'remove'];
-  
+  undersectionColumns: string[] = ['id', 'name', 'section', 'type', 'display', 'remove'];
   /** Liste des Rubriques mères */
-  sections: Section[] =[];
-
+  sections: Section[] = [];
   /** Enum Type*/
   enumTypeList = Object.values(EnumSectionType);
+  /** Le dernier identifiant */
+  lastId: number = 0;
 
-  /**
-   * Constructeur vide
-   */
-  constructor() { }
+  public constructor(private undersectionService: UndersectionService, private sectionService: SectionService) { }
 
   /**
    * Appel a l'initialisation
    * Instancie le tableau des Sous-Rubriques
    */
-  ngOnInit(): void {
+  public ngOnInit(): void {
     // Lit les Sous-Rubriques stocké en base
-    this.underSections = TEST_UNDERSECTION;
+    this.undersections = this.undersectionService.readUndersections();
     // Lit les Rubriques stocké en base
-    this.sections = TEST_SECTION;
+    this.sections = this.sectionService.readSections();
+    //Initialise le dernier identifiant
+    this.lastId = this.undersectionService.readLastId();
   }
 
   /**
    * Change la valeur de l'attribut "inTab"
    * 
-   * @param undersection - UnderSection - Change la valeur de l'attribut "inTab"
+   * @param Undersection - Undersection - Change la valeur de l'attribut "inTab"
    */
-  displayInTab(undersection: UnderSection) {
-    undersection.inTab = !undersection.inTab;
-    this.modifyUnderSection(undersection);
+  public displayInTab(Undersection: Undersection) {
+    Undersection.inTab = !Undersection.inTab;
+    this.updateUndersection(Undersection);
   }
 
-  /**
-   * Lit dans la base les informations d'une Sous-Rubrique par rapport à son nom et sa Rubrique mère
-   * 
-   * @param name - string - Le nom de la Sous-Rubrique à lire
-   * @param section - Section - La Rubrique mère 
-   */
-  readUnderSection(name: string, section: Section){
-    
-    //Appel du service
-  }
-
-  
-  /**
-   * Contrôle dans la base si une rubrique n'existe pas déjà avec le trio name/section/type
-   * 
-   * @param name - string - Le libellé de la rubrique à contrôler
-   * @param type - string - Le type de la rubrique à contrôler
-   */
-     controlUnderSection(name: string, section: Section, type: string): void {
-
-      //Appel du service
-    }
 
   /**
    * Créer dans la base une rubrique avec la paire name/section/type
@@ -80,19 +56,34 @@ export class UndersectionComponent implements OnInit {
    * @param section - Section - La Rubrique mère 
    * @param type - string - Le type de la rubrique à créer
    */
-  createUnderSection(name: string, section: Section, type: string): void {
+  public createUndersection(name: string, section: Section, type: string): void {
 
     //Appel du service
   }
 
   /**
-   * Modifie un objet UnderSection en base
+   * Récupère dans la base les informations d'une Sous-Rubrique par rapport à son identifiant
    * 
-   * @param undersection - UnderSection - L'objet à modifier en base
+   * @param id - number - L'identifiant de la Sous-Rubrique à lire
    */
-  modifyUnderSection(undersection: UnderSection) {
+  public readUndersection(id: string) {
 
-    //Appel du service
+    let idN: number = Number(id);
+
+    //Appel du service - Récupère une Sous-Rubrique par rapport à son identifiant.
+    this.undersectionService.readUndersection(idN);
+  }
+
+  /**
+   * Modifie un objet Undersection en base
+   * 
+   * @param Undersection - Undersection - L'objet à modifier en base
+   */
+  public updateUndersection(Undersection: Undersection) {
+
+
+    //Appel du service - Modifie la Sous-Rubrique.
+    this.undersectionService.updateUndersection(Undersection);
   }
 
   /**
@@ -100,9 +91,19 @@ export class UndersectionComponent implements OnInit {
    * 
    * @param section - Section - La Sous-Rubrique à supprimer
    */
-  removeUnderSection(undersection: UnderSection) {
-    
+  public deleteUndersection(Undersection: Undersection) {
+
     //Appel du service
   }
 
+  /**
+   * Contrôle dans la base si une rubrique n'existe pas déjà avec le trio name/section/type
+   * 
+   * @param name - string - Le libellé de la rubrique à contrôler
+   * @param type - string - Le type de la rubrique à contrôler
+   */
+  public controlUndersection(name: string, section: Section, type: string): void {
+
+    //Appel du service
+  }
 }
