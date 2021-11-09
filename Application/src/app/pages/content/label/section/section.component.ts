@@ -10,10 +10,12 @@ import { SectionService } from 'src/app/services/section.service';
 })
 export class SectionComponent implements OnInit {
 
-  /** Liste des Rubriques (NAME/TYPE)*/
-  sections: Section[] = [];
+  /** Objet section du formulaire */
+  section : Section = new Section(0,"","");
+  /** Liste des Rubriques (ID/NAME/TYPE)*/
+  sections: Array<Section> = new Array();
   /** Colonnes à afficher dans le tableau des Rubriques */
-  sectionColumns: string[] = ['id', 'name', 'type', 'remove'];
+  sectionColumns: Array<string> = ['id', 'name', 'type', 'edit', 'remove'];
   /** Enum Type*/
   enumTypeList = Object.values(EnumSectionType);
   /** Le dernier identifiant */
@@ -33,7 +35,7 @@ export class SectionComponent implements OnInit {
   public ngOnInit(): void {
     //Appel du Service - Récupère toutes les Rubriques en base
     this.sections = this.sectionService.readSections();
-
+    //Initialise le dernier identifiant
     this.lastId = this.sectionService.readLastId();
   }
 
@@ -61,7 +63,7 @@ export class SectionComponent implements OnInit {
   }
 
   /**
-   * Récupère dans la base les informations d'une Rubrique par rapport à son nom et son type
+   * Récupère dans la base les informations d'une Rubrique par rapport à son identifiant
    * 
    * @param id - number - L'identifiant de la Rubrique à lire
    */
@@ -69,7 +71,7 @@ export class SectionComponent implements OnInit {
 
     let idN: number = Number(id);
 
-    //Appel du service - Récupère une Rubrique par rapport à son nom et son type.
+    //Appel du service - Récupère une Rubrique par rapport à son identifiant.
     this.sectionService.readSection(idN);
   }
 
@@ -80,8 +82,7 @@ export class SectionComponent implements OnInit {
    */
   public updateSection(section: Section){
 
-    //Appel du service - Modifie la Rubrique.
-    this.sectionService.updateSection(section);
+    this.section = section;
   }
 
   /**

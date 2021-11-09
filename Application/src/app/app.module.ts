@@ -16,8 +16,9 @@ import { SavingComponent } from './pages/content/saving/saving.component'; // 3r
 import { LabelComponent } from './pages/content/label/label.component'; // 3rd stage
 import { SectionComponent } from './pages/content/label/section/section.component'; // 4th stage
 import { UndersectionComponent } from './pages/content/label/undersection/undersection.component'; // 4th stage
-import { BankaccountComponent } from './pages/content/label/bankaccount/bankaccount.component'; // 4th stage
+import { BankAccountComponent } from './pages/content/label/bankaccount/bankaccount.component'; // 4th stage
 import { PageNotFoundComponent } from './pages/page-not-found.component';
+import { SectionFormComponent } from './pages/content/label/section/section-form/section-form.component';
 
 import { RouterModule } from '@angular/router';
 
@@ -27,6 +28,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
+import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -49,8 +51,9 @@ import { UndersectionService } from './services/undersection.service';
     SavingComponent,
     SectionComponent,
     UndersectionComponent,
-    BankaccountComponent,
-    PageNotFoundComponent
+    BankAccountComponent,
+    PageNotFoundComponent,
+    SectionFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -62,7 +65,8 @@ import { UndersectionService } from './services/undersection.service';
     MatButtonModule,
     MatIconModule, 
     MatTabsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
   providers: [SectionService,
     UndersectionService,

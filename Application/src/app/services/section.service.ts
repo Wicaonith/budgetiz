@@ -14,6 +14,13 @@ export class SectionService {
    */
   public createSection(section: Section) {
     //TODO 
+    if(this.existSection(section.id)){
+      console.log('Update');
+      this.updateSection(section);
+    } else {
+      // Bah on le créer
+      console.log('Create');
+    }
   }
 
   /**
@@ -53,7 +60,7 @@ export class SectionService {
    * 
    * @param section - Section - La Rubrique à modifier
    */
-  updateSection(section: Section){
+  updateSection(section: Section) {
     //TODO 
   }
 
@@ -72,7 +79,7 @@ export class SectionService {
    * @param name - string - Le nom de la Rubrique à controler
    * @param type - string - Le type de la Rubrique à controler
    * 
-   * @returns Section - La Rubrique
+   * @returns boolean - true si elle existe
    */
   public controlSection(name: string, type: string): boolean {
 
@@ -83,6 +90,23 @@ export class SectionService {
     for (let section of sections) {
       // ... et s'il en existe une similaire...
       if (section.name === name && section.type === type) {
+        //... on retourne true
+        return true;
+      }
+    }
+    // Cas où la Rubrique n'existe pas.
+    return false;
+  }
+
+  public existSection(id: number) {
+
+    // Récupération de toutes les Rubriques
+    let sections = this.readSections();
+
+    // On parcourt toutes les Rubriques...
+    for (let section of sections) {
+      // ... et s'il en existe une similaire...
+      if (section.id === id) {
         //... on retourne true
         return true;
       }

@@ -13,11 +13,11 @@ import { UndersectionService } from 'src/app/services/undersection.service';
 export class UndersectionComponent implements OnInit {
 
   /** Liste des Sous Rubriques (ID/NAME/SECTION/TYPE/INTAB)*/
-  undersections: Undersection[] = [];
+  undersections: Array<Undersection> = new Array();
   /** Colonnes à afficher dans le tableau des Sous-Rubriques */
-  undersectionColumns: string[] = ['id', 'name', 'section', 'type', 'display', 'remove'];
+  undersectionColumns: Array<string> = ['id', 'name', 'section', 'type', 'display', 'remove'];
   /** Liste des Rubriques mères */
-  sections: Section[] = [];
+  sections: Array<Section> = new Array();
   /** Enum Type*/
   enumTypeList = Object.values(EnumSectionType);
   /** Le dernier identifiant */

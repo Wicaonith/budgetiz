@@ -8,12 +8,12 @@ import { EnumSectionType } from 'src/app/models/enum/enumSectionType';
   templateUrl: './bankaccount.component.html',
   styleUrls: ['../../../pages.component.css']
 })
-export class BankaccountComponent implements OnInit {
+export class BankAccountComponent implements OnInit {
 
   /** Liste des Comptes (NAME/TYPE)*/
-  account: BankAccount[] = [];
+  account: Array<BankAccount> = new Array();
   /** Colonnes à afficher dans le tableau des Comptes */
-  accountColumns: string[] = ['name', 'type', 'remove'];
+  accountColumns: Array<string> = ['name', 'type', 'remove'];
 
   /** Enum Type*/
   enumTypeList = Object.values(EnumSectionType);
@@ -32,7 +32,6 @@ export class BankaccountComponent implements OnInit {
   ngOnInit(): void {
     this.account = TEST_BANKACCOUNT;
   }
-
 
   /**
    * Contrôle dans la base si une rubrique n'existe pas déjà avec la paire name/type
