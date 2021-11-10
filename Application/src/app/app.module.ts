@@ -18,7 +18,7 @@ import { SectionComponent } from './pages/content/label/section/section.componen
 import { UndersectionComponent } from './pages/content/label/undersection/undersection.component'; // 4th stage
 import { BankAccountComponent } from './pages/content/label/bankaccount/bankaccount.component'; // 4th stage
 import { PageNotFoundComponent } from './pages/page-not-found.component';
-import { SectionFormComponent } from './pages/content/label/section/section-form/section-form.component';
+import { SectionFormComponent } from './pages/content/label/section/section-form.component';
 
 import { RouterModule } from '@angular/router';
 
