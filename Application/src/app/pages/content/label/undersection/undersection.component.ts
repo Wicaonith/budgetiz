@@ -33,7 +33,7 @@ export class UndersectionComponent implements OnInit {
     // Lit les Sous-Rubriques stocké en base
     this.undersections = this.undersectionService.readUndersections();
     // Lit les Rubriques stocké en base
-    this.sections = this.sectionService.readSections();
+    this.sectionService.readSections().subscribe(sections => this.sections = sections);
     //Initialise le dernier identifiant
     this.lastId = this.undersectionService.readLastId();
   }

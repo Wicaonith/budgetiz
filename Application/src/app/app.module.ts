@@ -5,10 +5,8 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { PagesComponent } from './pages/pages.component'; // Main - 1st stage
-
 import { HeaderComponent } from './pages/header/header.component'; // 2nd stage
 import { FooterComponent } from './pages/footer/footer.component'; // 2nd stage
-
 import { HomeComponent } from './pages/content/home/home.component'; // 3rd stage
 import { DataComponent } from './pages/content/data/data.component'; // 3rd stage
 import { ImpotsComponent } from './pages/content/impots/impots.component'; // 3rd stage
@@ -18,7 +16,7 @@ import { SectionComponent } from './pages/content/label/section/section.componen
 import { UndersectionComponent } from './pages/content/label/undersection/undersection.component'; // 4th stage
 import { BankAccountComponent } from './pages/content/label/bankaccount/bankaccount.component'; // 4th stage
 import { PageNotFoundComponent } from './pages/page-not-found.component';
-import { SectionFormComponent } from './pages/content/label/section/section-form/section-form.component';
+import { SectionFormComponent } from './pages/content/label/section/section-form.component';
 
 import { RouterModule } from '@angular/router';
 
@@ -29,13 +27,14 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
 import { FormsModule } from '@angular/forms';
-
+import { HttpClientModule } from '@angular/common/http';
+import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { AppRoutingModule } from './app-routing.module';
 
 //Services
 import { SectionService } from './services/section.service';
 import { UndersectionService } from './services/undersection.service';
-
+import { InMemoryDataService } from './services/in-memory-data.service';
 
 
 @NgModule({
@@ -63,13 +62,16 @@ import { UndersectionService } from './services/undersection.service';
     MatSelectModule,
     MatInputModule,
     MatButtonModule,
-    MatIconModule, 
+    MatIconModule,
     MatTabsModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule,
+    HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService, { dataEncapsulation: false }),
   ],
   providers: [SectionService,
     UndersectionService,
+    InMemoryDataService,
   ],
   bootstrap: [AppComponent]
 })

@@ -1,36 +1,44 @@
 import { Injectable } from '@angular/core';
-import { TEST_SECTION } from '../mock/mock-section';
 import { Section } from '../models/section';
+import { Observable, of } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { catchError, map, tap } from 'rxjs/operators';
 
-@Injectable({
-  providedIn: 'root'
-})
+
+@Injectable({ providedIn: 'root' })
 export class SectionService {
 
+  private sectionsApiUrl = 'api/sections';
+
+  public constructor(private http: HttpClient) { }
   /**
    * Créer une Rubrique dans la base
    * 
    * @param section - Section - La Rubrique à créer
    */
   public createSection(section: Section) {
-    //TODO 
-    if(this.existSection(section.id)){
-      console.log('Update');
-      this.updateSection(section);
-    } else {
-      // Bah on le créer
-      console.log('Create');
-    }
+
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    };
+
+    return this.http.post(this.sectionsApiUrl, section, httpOptions).pipe<any, Section>(
+      tap(_ => this.log(`Modification de la Rubrique n°${section.id}`)), // Lorsque la récupération se passe bien
+      catchError(this.handleError<any>(`[Erreur] SectionService - updateSection(${section.id})`)) // Lors d'une erreur
+    );
   }
 
   /**
    * Récupère dans la base les informations de toutes les Rubriques
    * 
-   * @returns Section[] - Liste des Rubriques
+   * @returns Observable<Section[]> - Liste des Rubriques
    */
-  public readSections(): Section[] {
-    //TODO 
-    return TEST_SECTION;
+  public readSections(): Observable<Section[]> {
+
+    return this.http.get<Section[]>(this.sectionsApiUrl).pipe(
+      tap(_ => this.log(`Récupération de la liste des Rubriques`)), // Lorsque la récupération se passe bien
+      catchError(this.handleError(`[Erreur] SectionService - readSections()`, [])) // Lors d'une erreur
+    );
   }
 
   /**
@@ -40,19 +48,14 @@ export class SectionService {
    * 
    * @returns Section - La Rubrique lié à l'ID
    */
-  public readSection(id: number): Section {
+  public readSection(id: number): Observable<Section> {
 
-    // Récupération de toutes les Rubriques
-    let sections = this.readSections();
-    let retour!: Section;
+    const url = `${this.sectionsApiUrl}/${id}`;
 
-    for (let section of sections) {
-      if (section.id === id) {
-        retour = section;
-      }
-    }
-    // Cas où la Rubrique n'existe pas.
-    return retour;
+    return this.http.get<Section>(url).pipe(
+      tap(_ => this.log(`Récupération de la Rubrique`)), // Lorsque la récupération se passe bien
+      catchError(this.handleError<Section>(`[Erreur] SectionService - readSection(${id})`)) // Lors d'une erreur
+    );
   }
 
   /**
@@ -60,8 +63,16 @@ export class SectionService {
    * 
    * @param section - Section - La Rubrique à modifier
    */
-  updateSection(section: Section) {
-    //TODO 
+  public updateSection(section: Section): Observable<Section> {
+
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    };
+
+    return this.http.put(this.sectionsApiUrl, section, httpOptions).pipe<any, Section>(
+      tap(_ => this.log(`Modification de la Rubrique n°${section.id}`)), // Lorsque la récupération se passe bien
+      catchError(this.handleError<any>(`[Erreur] SectionService - updateSection(${section.id})`)) // Lors d'une erreur
+    );
   }
 
   /**
@@ -84,8 +95,8 @@ export class SectionService {
   public controlSection(name: string, type: string): boolean {
 
     // Récupération de toutes les Rubriques
-    let sections = this.readSections();
-
+    /*let sections = this.readSections();
+  
     // On parcourt toutes les Rubriques...
     for (let section of sections) {
       // ... et s'il en existe une similaire...
@@ -93,7 +104,7 @@ export class SectionService {
         //... on retourne true
         return true;
       }
-    }
+    }*/
     // Cas où la Rubrique n'existe pas.
     return false;
   }
@@ -104,13 +115,13 @@ export class SectionService {
     let sections = this.readSections();
 
     // On parcourt toutes les Rubriques...
-    for (let section of sections) {
+    /*for (let section of sections) {
       // ... et s'il en existe une similaire...
       if (section.id === id) {
         //... on retourne true
         return true;
       }
-    }
+    }*/
     // Cas où la Rubrique n'existe pas.
     return false;
   }
@@ -129,27 +140,30 @@ export class SectionService {
     return "[" + type.substr(0, 1) + "] " + name;
   }
 
+
   /**
-   * Récupère dans la base l'identifiant de la derniere Rubrique créé
+   * Permet la gestion de log
    * 
-   * @returns number - L'identifiant le plus grand
+   * @param log - string - 
    */
-  public readLastId(): number {
+  private log(log: string) {
+    console.info(log);
+  }
 
-    // Variable de retour
-    let lastId = 0;
+  /**
+   * Gestion des erreurs
+   * 
+   * @param operation 
+   * @param result 
+   * 
+   * @returns 
+   */
+  private handleError<T>(operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
+      console.error(error);
+      console.error(`${operation} failed: ${error.message}`);
 
-    // Récupération de toutes les Rubriques
-    let sections = this.readSections();
-
-    // On parcourt toutes les Rubriques...
-    for (let section of sections) {
-      // ... et s
-      if (section.id > lastId) {
-        lastId = section.id;
-      }
+      return of(result as T);
     }
-    // Retourne le dernier ID + 1 
-    return lastId + 1;
   }
 }

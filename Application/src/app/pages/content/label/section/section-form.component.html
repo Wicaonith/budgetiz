@@ -3,10 +3,12 @@
     <div class="formAdd-form">
         <div>
             <!-- Form input "ID" -->
-            <mat-form-field class="example-full-width" appearance="outline" >
+            <mat-form-field class="example-full-width" appearance="outline">
                 <mat-label>ID</mat-label>
                 <!-- Input -->
-                <input matInput name="idSection" placeholder="" value="{{ lastId }}" [(ngModel)]="section.id" #id="ngModel" required disabled>
+                <input matInput #idSection name="idSection" placeholder="" value="{{ lastId }}" [(ngModel)]="section.id"
+                    #id="ngModel" required disabled>
+                <mat-icon matSuffix (click)="idSection.value = lastId.toString();">autorenew</mat-icon>
             </mat-form-field>
         </div>
         <div>
@@ -14,7 +16,8 @@
             <mat-form-field class="example-full-width" appearance="outline">
                 <mat-label>Libellé</mat-label>
                 <!-- Input -->
-                <input matInput name="nameSection" placeholder="Ex. Habitat" value="" [(ngModel)]="section.name"  #name="ngModel" required>
+                <input matInput name="nameSection" placeholder="Ex. Habitat" value="" [(ngModel)]="section.name"
+                    #name="ngModel" required>
                 <!-- Message d'erreur -->
                 <mat-error *ngIf="required.invalid">{{getErrorMessageRequired()}}</mat-error>
             </mat-form-field>
@@ -34,7 +37,7 @@
             </mat-form-field>
         </div>
         <div>
-            <!-- Bouton "Enregistrer" --> 
+            <!-- Bouton "Enregistrer" -->
             <button mat-raised-button type="submit" [disabled]="!sectionForm.form.valid">Enregistrer</button>
         </div>
     </div>

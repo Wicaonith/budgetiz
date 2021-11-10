@@ -20,6 +20,8 @@ export class SectionFormComponent implements OnInit {
   lastId: number = 0;
   /** FormControl pour vérifier la validité des champs */
   required = new FormControl('', [Validators.required]);
+  /** Liste des Rubriques (ID/NAME/TYPE)*/
+  sections: Array<Section> = new Array();
 
   /** 
    * Constructeur du composant SectionFormComponent
@@ -30,24 +32,63 @@ export class SectionFormComponent implements OnInit {
    * Initialise le composant
    */
   public ngOnInit(): void {
-    this.lastId = this.sectionService.readLastId();
+
+    this.lastId = this.readLastId();
     this.section = new Section(this.lastId, "", "");
   }
 
+  /**
+   * Récupère dans la base l'identifiant de la derniere Rubrique créé
+   * 
+   * @returns number - L'identifiant le plus grand
+   */
+  public readLastId(): number {
+
+    // Variable de retour
+    let lastId = 0;
+
+    // Récupération de toutes les Rubriques
+    this.sectionService.readSections().subscribe(sections => this.sections = sections);
+
+
+    // On parcourt toutes les Rubriques...
+    for (let section of this.sections) {
+      // ... et s
+      if (section.id > lastId) {
+        lastId = section.id;
+      }
+    }
+    // Retourne le dernier ID + 1 
+    return lastId + 1;
+  }
+
   /** 
-   * Redirige après l'enregistrement du formulaire
+   * Lance la modification ou la création après l'enregistrement du formulaire
    */
   public onSubmit(): void {
-    this.sectionService.createSection(this.section);
-    console.log("Submit");
-    let link = ['/label'];
+
+    let controlSection!: Section;
+
+    this.sectionService.readSection(this.section.id).subscribe(sect => controlSection = sect);
+    alert(controlSection);
+    if (controlSection === null) {
+      console.log('create');
+      this.sectionService.createSection(this.section).subscribe(() => this.refreshTable());
+    } else {
+      this.sectionService.updateSection(this.section).subscribe(() => this.refreshTable());
+      console.log('update');
+    }
+  }
+
+  public refreshTable(): void {
+    let link = ['label/section']
     this.router.navigate(link);
   }
 
   /** 
    * Gère les erreurs si requis
    */
-  public getErrorMessageRequired() : string{
+  public getErrorMessageRequired(): string {
     if (this.required.hasError('required')) {
       return 'Valeur obligatoire';
     }

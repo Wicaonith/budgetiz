@@ -11,15 +11,13 @@ import { SectionService } from 'src/app/services/section.service';
 export class SectionComponent implements OnInit {
 
   /** Objet section du formulaire */
-  section : Section = new Section(0,"","");
+  section: Section = new Section(0, "", "");
   /** Liste des Rubriques (ID/NAME/TYPE)*/
   sections: Array<Section> = new Array();
   /** Colonnes à afficher dans le tableau des Rubriques */
   sectionColumns: Array<string> = ['id', 'name', 'type', 'edit', 'remove'];
   /** Enum Type*/
   enumTypeList = Object.values(EnumSectionType);
-  /** Le dernier identifiant */
-  lastId: number = 0;
 
   /**
    * Constructeur du composant SectionComponent 
@@ -34,9 +32,7 @@ export class SectionComponent implements OnInit {
    */
   public ngOnInit(): void {
     //Appel du Service - Récupère toutes les Rubriques en base
-    this.sections = this.sectionService.readSections();
-    //Initialise le dernier identifiant
-    this.lastId = this.sectionService.readLastId();
+    this.sectionService.readSections().subscribe(sections => this.sections = sections);
   }
 
   /**
@@ -80,9 +76,9 @@ export class SectionComponent implements OnInit {
    * 
    * @param section - Section - La Rubrique à modifier
    */
-  public updateSection(section: Section){
+  public updateSection(section: Section) {
 
-    this.section = section;
+    this.section = new Section(section.id, section.name, section.type);
   }
 
   /**
