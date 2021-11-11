@@ -20,7 +20,7 @@ export class SectionFormComponent implements OnInit {
   lastId: number = 0;
   /** FormControl pour vérifier la validité des champs */
   required = new FormControl('', [Validators.required]);
-  /** Liste des Rubriques (ID/NAME/TYPE)*/
+
   sections: Array<Section> = new Array();
 
   /** 
@@ -32,6 +32,8 @@ export class SectionFormComponent implements OnInit {
    * Initialise le composant
    */
   public ngOnInit(): void {
+    //Appel du Service - Récupère toutes les Rubriques en base
+    this.sectionService.readSections().subscribe(sections => this.sections = sections);
 
     this.lastId = this.readLastId();
     this.section = new Section(this.lastId, "", "");
@@ -46,10 +48,6 @@ export class SectionFormComponent implements OnInit {
 
     // Variable de retour
     let lastId = 0;
-
-    // Récupération de toutes les Rubriques
-    this.sectionService.readSections().subscribe(sections => this.sections = sections);
-
 
     // On parcourt toutes les Rubriques...
     for (let section of this.sections) {
@@ -69,20 +67,26 @@ export class SectionFormComponent implements OnInit {
 
     let controlSection!: Section;
 
+    // Si on récupère une Rubrique via l'ID, alors c'est qu'il existe, donc on appel la méthode "update" sinon "create"
     this.sectionService.readSection(this.section.id).subscribe(sect => controlSection = sect);
-    alert(controlSection);
+
     if (controlSection === null) {
       console.log('create');
-      this.sectionService.createSection(this.section).subscribe(() => this.refreshTable());
+      this.sectionService.createSection(this.section).subscribe(() => this.redirectTo('label/section'));
     } else {
-      this.sectionService.updateSection(this.section).subscribe(() => this.refreshTable());
+      this.sectionService.updateSection(this.section).subscribe(() => this.redirectTo('label/section'));
       console.log('update');
     }
   }
 
-  public refreshTable(): void {
-    let link = ['label/section']
-    this.router.navigate(link);
+/**
+ * Redirige vers l'url passé en paramètre
+ * 
+ * @param uri string - l'url de redirection
+ */
+  redirectTo(uri: string) {
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
+      this.router.navigate([uri]));
   }
 
   /** 

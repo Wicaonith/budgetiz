@@ -1,9 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { TEST_SECTION } from 'src/app/mock/mock-section';
-import { BankAccount } from 'src/app/models/bankAccount';
-import { EnumSectionType } from 'src/app/models/enum/enumSectionType';
-import { Section } from 'src/app/models/section';
-import { Undersection } from 'src/app/models/undersection';
+import { ThemePalette } from '@angular/material/core';
 
 @Component({
   selector: 'app-label',
@@ -12,6 +8,9 @@ import { Undersection } from 'src/app/models/undersection';
 })
 export class LabelComponent implements OnInit {
 
+  links: string[] = ['/label/section', '/label/undersection', '/label/account'];
+  activeLink : string = "";
+  background: ThemePalette;
   constructor() { }
 
   ngOnInit(): void {

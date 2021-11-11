@@ -80,8 +80,18 @@ export class SectionService {
    * 
    * @param section - Section - La Rubrique à supprimer
    */
-  public deleteSection(section: Section) {
-    //TODO 
+  public deleteSection(section: Section) : Observable<Section>{
+
+    const url = `${this.sectionsApiUrl}/${section.id}`;
+
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    };
+
+    return this.http.delete(url, httpOptions).pipe<any, Section>(
+      tap(_ => this.log(`Suppression de la Rubrique n°${section.id}`)), // Lorsque la récupération se passe bien
+      catchError(this.handleError<any>(`[Erreur] SectionService - deleteSection(${section.id})`)) // Lors d'une erreur
+    );
   }
 
   /**

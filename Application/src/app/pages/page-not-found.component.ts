@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
     <div class='page-not-found'>
       <p>Hey, cette page n'existe pas !</p>
       <br />
-      <a routerLink="/">
+      <a routerLink="/home">
         Retourner à l' accueil
       </a>
     </div>

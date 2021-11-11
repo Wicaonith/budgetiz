@@ -12,19 +12,27 @@ import { SectionComponent } from './pages/content/label/section/section.componen
 import { UndersectionComponent } from './pages/content/label/undersection/undersection.component';
 import { BankAccountComponent } from './pages/content/label/bankaccount/bankaccount.component';
 
+import { AuthGuard } from './services/auth-guard.service';
+
 const routes: Routes = [
-  { path: '', component: HomeComponent },
-  { path: 'label', 
-  component: LabelComponent,
-  children: [
-    { path: 'section', component: SectionComponent },
-    { path: 'undersection', component: UndersectionComponent },
-    { path: 'account', component: BankAccountComponent },
-  ]},
-  { path: 'impots', component: ImpotsComponent },
-  { path: 'saving', component: SavingComponent },
-  { path: 'data', component: DataComponent },
-  { path: '**', component: PageNotFoundComponent }
+  {
+    path: 'budgetiz',
+    canActivate:[AuthGuard],
+    children: [
+      { path: 'home', component: HomeComponent},
+      { path: 'label', 
+      component: LabelComponent,
+      children: [
+        { path: 'section', component: SectionComponent },
+        { path: 'undersection', component: UndersectionComponent },
+        { path: 'account', component: BankAccountComponent },
+      ]},
+      { path: 'impots', component: ImpotsComponent },
+      { path: 'saving', component: SavingComponent },
+      { path: 'data', component: DataComponent },
+      { path: '**', component: PageNotFoundComponent }
+    ]
+  }
 ];
 
 @NgModule({

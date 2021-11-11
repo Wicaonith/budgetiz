@@ -35,7 +35,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { SectionService } from './services/section.service';
 import { UndersectionService } from './services/undersection.service';
 import { InMemoryDataService } from './services/in-memory-data.service';
-
+import { AuthGuard } from './services/auth-guard.service';
 
 @NgModule({
   declarations: [
@@ -72,6 +72,7 @@ import { InMemoryDataService } from './services/in-memory-data.service';
   providers: [SectionService,
     UndersectionService,
     InMemoryDataService,
+    AuthGuard
   ],
   bootstrap: [AppComponent]
 })

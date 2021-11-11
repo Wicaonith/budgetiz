@@ -6,13 +6,13 @@
 </div>
 
 <ul class="navigation">
-  <li><a class="nav-left" [routerLink]="['/impots']" routerLinkActive="link-active">Résumé</a></li>
-  <li><a [routerLink]="['/saving']" routerLinkActive="link-active">Épargne</a></li>
+  <li><a class="nav-left" [routerLink]="['budgetiz/impots']" routerLinkActive="link-active">Résumé</a></li>
+  <li><a [routerLink]="['budgetiz/saving']" routerLinkActive="link-active">Épargne</a></li>
   <li>
-    <a class="nav-home" [routerLink]="['']" routerLinkActive="link-active" [routerLinkActiveOptions]="{exact: true}">
+    <a class="nav-home" [routerLink]="['budgetiz/home']" routerLinkActive="link-active" [routerLinkActiveOptions]="{exact: true}">
       <img src="assets/img/home_icon.png" width="20" height="20" title="Home" alt="Home">
     </a>
   </li>
-  <li><a [routerLink]="['/label']" routerLinkActive="link-active">Label</a></li>
-  <li><a class="nav-right" [routerLink]="['/data']" routerLinkActive="link-active">Données</a></li>
+  <li><a [routerLink]="['budgetiz/label/section']" routerLinkActive="link-active">Label</a></li>
+  <li><a class="nav-right" [routerLink]="['budgetiz/data']" routerLinkActive="link-active">Données</a></li>
 </ul>
