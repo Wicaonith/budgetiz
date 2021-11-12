@@ -1,9 +1,21 @@
+// Modules
 import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatTableModule } from '@angular/material/table';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTabsModule } from '@angular/material/tabs';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { AppRoutingModule } from './app-routing.module';
 import { BrowserModule } from '@angular/platform-browser';
 
+// Component
 import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
 import { PagesComponent } from './pages/pages.component'; // Main - 1st stage
 import { HeaderComponent } from './pages/header/header.component'; // 2nd stage
 import { FooterComponent } from './pages/footer/footer.component'; // 2nd stage
@@ -17,25 +29,14 @@ import { UndersectionComponent } from './pages/content/label/undersection/unders
 import { BankAccountComponent } from './pages/content/label/bankaccount/bankaccount.component'; // 4th stage
 import { PageNotFoundComponent } from './pages/page-not-found.component';
 import { SectionFormComponent } from './pages/content/label/section/section-form.component';
-
-import { RouterModule } from '@angular/router';
-
-import { MatTableModule } from '@angular/material/table';
-import { MatSelectModule } from '@angular/material/select';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatTabsModule } from '@angular/material/tabs';
-import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
-import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { AppRoutingModule } from './app-routing.module';
+import { LoginComponent } from './pages/login/login.component';
 
 //Services
 import { SectionService } from './services/section.service';
 import { UndersectionService } from './services/undersection.service';
 import { InMemoryDataService } from './services/in-memory-data.service';
 import { AuthGuard } from './services/auth-guard.service';
+
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import { AuthGuard } from './services/auth-guard.service';
     BankAccountComponent,
     PageNotFoundComponent,
     SectionFormComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,

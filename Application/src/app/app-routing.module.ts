@@ -13,20 +13,25 @@ import { UndersectionComponent } from './pages/content/label/undersection/unders
 import { BankAccountComponent } from './pages/content/label/bankaccount/bankaccount.component';
 
 import { AuthGuard } from './services/auth-guard.service';
+import { AuthService } from './services/auth.service';
+import { LoginComponent } from './pages/login/login.component';
 
 const routes: Routes = [
   {
     path: 'budgetiz',
-    canActivate:[AuthGuard],
+    canActivate: [AuthGuard],
     children: [
-      { path: 'home', component: HomeComponent},
-      { path: 'label', 
-      component: LabelComponent,
-      children: [
-        { path: 'section', component: SectionComponent },
-        { path: 'undersection', component: UndersectionComponent },
-        { path: 'account', component: BankAccountComponent },
-      ]},
+      { path: 'login', component: LoginComponent },
+      { path: 'home', component: HomeComponent },
+      {
+        path: 'label',
+        component: LabelComponent,
+        children: [
+          { path: 'section', component: SectionComponent },
+          { path: 'undersection', component: UndersectionComponent },
+          { path: 'account', component: BankAccountComponent },
+        ]
+      },
       { path: 'impots', component: ImpotsComponent },
       { path: 'saving', component: SavingComponent },
       { path: 'data', component: DataComponent },
@@ -37,6 +42,10 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [
+    AuthGuard,
+    AuthService
+  ]
 })
 export class AppRoutingModule { }
