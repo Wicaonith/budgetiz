@@ -1,43 +1,34 @@
 import { NgModule } from '@angular/core';
 
 import { Routes, RouterModule } from '@angular/router';
-
-import { LabelComponent } from './pages/content/label/label.component';
-import { SavingComponent } from './pages/content/saving/saving.component';
-import { DataComponent } from './pages/content/data/data.component';
-import { ImpotsComponent } from './pages/content/impots/impots.component';
-import { PageNotFoundComponent } from './pages/page-not-found.component';
-import { HomeComponent } from './pages/content/home/home.component';
-import { SectionComponent } from './pages/content/label/section/section.component';
-import { UndersectionComponent } from './pages/content/label/undersection/undersection.component';
-import { BankAccountComponent } from './pages/content/label/bankaccount/bankaccount.component';
+import { DatasComponent } from './modules/content/datas/components/datas.component';
+import { HomeComponent } from './modules/content/home/components/home.component';
+import { LabelsBankaccountComponent } from './modules/content/labels/components/labels-bankaccount.component';
+import { LabelsSectionsComponent } from './modules/content/labels/components/labels-sections.component';
+import { LabelsUndersectionsComponent } from './modules/content/labels/components/labels-undersections.component';
+import { SavingComponent } from './modules/content/saving/components/saving.component';
+import { TaxesComponent } from './modules/content/taxes/components/taxes.component';
+import { PageNotFoundComponent } from './page-not-found.component';
 
 import { AuthGuard } from './services/auth-guard.service';
 import { AuthService } from './services/auth.service';
-import { LoginComponent } from './pages/login/login.component';
 
 const routes: Routes = [
+  { path: '', redirectTo: 'budgetiz/home', pathMatch: 'full' },
   {
     path: 'budgetiz',
-    canActivate: [AuthGuard],
+    //canActivate: [AuthGuard],
     children: [
-      { path: 'login', component: LoginComponent },
       { path: 'home', component: HomeComponent },
-      {
-        path: 'label',
-        component: LabelComponent,
-        children: [
-          { path: 'section', component: SectionComponent },
-          { path: 'undersection', component: UndersectionComponent },
-          { path: 'account', component: BankAccountComponent },
-        ]
-      },
-      { path: 'impots', component: ImpotsComponent },
+      { path: 'labels/section', component: LabelsSectionsComponent },
+      { path: 'labels/undersection', component: LabelsUndersectionsComponent },
+      { path: 'labels/bankaccount', component: LabelsBankaccountComponent },
+      { path: 'datas', component: DatasComponent },
       { path: 'saving', component: SavingComponent },
-      { path: 'data', component: DataComponent },
-      { path: '**', component: PageNotFoundComponent }
+      { path: 'taxes', component: TaxesComponent },
     ]
-  }
+  },
+  { path: '**', component: PageNotFoundComponent }
 ];
 
 @NgModule({

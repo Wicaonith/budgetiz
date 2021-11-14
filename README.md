@@ -13,7 +13,5 @@ Run `npm run start:e` pour lancer l'application desktop
 Run `ng serve -o` pour lancer avec rafraichissement en temps réel
 
 
-# TODO 
-• * Mettre a place le routing sur les tabs dans "Label"
-• *** Voir pourquoi le ReadLastId() bug
-• *** Refaire le routing. 
+## TODO 
+# *** Voir pourquoi le ReadLastId() bug

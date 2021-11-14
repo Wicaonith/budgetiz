@@ -1,0 +1,141 @@
+/* Global */
+.main {
+    width:95%;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+h1 {
+    font-size: 25px;
+    margin: 15px 15px 15px 0;
+    padding: 0 0 0 10px;
+    border-bottom: #4da34d 3px solid;
+    border-left: #4da34d 20px solid;
+
+}
+
+.content-princ {
+    min-height: 700px;
+    max-width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+/* Page not found */
+.page-not-found {
+    width:30%;
+    margin-left:auto;
+    margin-right:auto;
+    margin-top: 50px;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    text-align: center;
+    border:#4da34d 5px solid;
+    font-size: 30px;
+}
+
+/* Header */
+.banner img {
+    margin: 5px 16px;
+}
+
+.banner-menu {
+    height: 100%;
+}
+
+.banner {
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 70px;
+    align-items: center;
+    background-color: #4da34d;
+    color: white;
+    text-align: center;
+    font-weight: 600;
+}
+
+.navigation {
+    margin: 0 0 0 0;
+    padding: 0;
+    list-style: none;
+    text-align: center;
+    height: 30px;
+}
+
+.navigation li {
+    display: inline ;
+    color: #fff ;
+    padding: 15px 0;
+}
+
+.navigation li a {
+    padding: 15px 1.5%;
+    background: #4da34d;
+    color: #fff;
+    font: 1em "Trebuchet MS",Arial,sans-serif;
+    line-height: 1em;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+}
+
+.nav-left {
+    border-bottom-left-radius: 30px;
+}
+
+.nav-right {
+    border-bottom-right-radius: 30px;
+}
+
+.nav-home img{
+    padding-top:8px
+}
+
+.navigation li a:hover, #navigation li a:focus, #navigation li a:active {
+    background: linear-gradient(#4da34d,#326e32);
+}
+
+/* Footer */
+.footer {
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 30px;
+    color: #4da34d;
+    text-align: right;
+    margin-top: 10px;
+    margin-right: auto;
+    margin-left: auto;
+    padding-top: 10px;
+    max-width: 80%;
+    border-top:#4da34d solid 1px;
+}
+
+/* Pages Label */
+.dataTable{
+    width: 100%;
+}
+
+.formAdd-form {
+    margin-top: 15px;
+}
+
+.formAdd-form div {
+    display: inline;
+    margin: 0 10px 0 10px;
+    margin-top: auto;
+    
+}
+
+::ng-deep .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+    background-color: #4da34d;
+}
+
+/* datatable */
+::ng-deep .mat-header-cell {
+    font-size: 15px;
+    font-weight: 600;
+}
