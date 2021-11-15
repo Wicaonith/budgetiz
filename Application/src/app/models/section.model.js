@@ -1,7 +1,7 @@
 module.exports = (sequelize, Sequelize) => {
     const Section = sequelize.define("bud_sections", {
         id: {
-            type: Sequelize.STRING,
+            type: Sequelize.INTEGER,
             primaryKey: true
         },
         name: {

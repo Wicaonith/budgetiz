@@ -17,11 +17,9 @@ export class FormSectionsComponent implements OnInit {
   /** Enum des Types de Rubriques */
   enumTypeList = Object.values(EnumSectionType);
   /** Dernier identifiant */
-  lastId!: number;
+  lastId: number = 0;
   /** FormControl pour vérifier la validité des champs */
   required = new FormControl('', [Validators.required]);
-
-  sections: Array<Section> = new Array();
 
   /** 
    * Constructeur du composant SectionFormComponent
@@ -32,32 +30,26 @@ export class FormSectionsComponent implements OnInit {
    * Initialise le composant
    */
   public ngOnInit(): void {
+
     //Appel du Service - Récupère toutes les Rubriques en base
-    this.sectionService.readSections().subscribe(sections => this.sections = sections);
+    this.sectionService.readSections().subscribe(
+      //Récupère dans la base l'identifiant de la derniere Rubrique créé
+      (sections: Section[]) => {
 
-    this.lastId = this.readLastId();
-    this.section = new Section(this.lastId, "", "");
-  }
+        // On parcourt toutes les Rubriques...
+        for (let section of sections) {
+          // ... et si l'identifiant de la rubrique est supérieur à la variable lastId..
+          if (section.id > this.lastId) {
+            // ... on valorise lastId.
+            this.lastId = section.id;
+          }
+        }
+        // Retourne le dernier ID + 1 
+        this.lastId += 1;
 
-  /**
-   * Récupère dans la base l'identifiant de la derniere Rubrique créé
-   * 
-   * @returns number - L'identifiant le plus grand
-   */
-  public readLastId(): number {
-
-    // Variable de retour
-    let lastId = 0;
-
-    // On parcourt toutes les Rubriques...
-    for (let section of this.sections) {
-      // ... et s
-      if (section.id > lastId) {
-        lastId = section.id;
-      }
-    }
-    // Retourne le dernier ID + 1 
-    return lastId + 1;
+        // Initialisation des valeurs dans les champs inputs
+        this.section = new Section(this.lastId, "", "");
+      });
   }
 
   /** 
@@ -65,18 +57,21 @@ export class FormSectionsComponent implements OnInit {
    */
   public onSubmit(): void {
 
-    let controlSection!: Section;
-
     // Si on récupère une Rubrique via l'ID, alors c'est qu'il existe, donc on appel la méthode "update" sinon "create"
-    this.sectionService.readSection(this.section.id).subscribe(sect => controlSection = sect);
+    this.sectionService.readSection(this.section.id).subscribe(
+      (sect: Section) => {
 
-    if (controlSection === null) {
-      console.log('create');
-      this.sectionService.createSection(this.section).subscribe(() => this.redirectTo('label/section'));
-    } else {
-      this.sectionService.updateSection(this.section).subscribe(() => this.redirectTo('label/section'));
-      console.log('update');
-    }
+        // Si il n'existe pas de rubrique avec cet ID...
+        if (sect === undefined) {
+          // ... Alors on le crée ...
+          this.sectionService.createSection(this.section).subscribe(() => this.redirectTo('budgetiz/labels/section'));
+        } else {
+          // ... Sinon on modifie l'existant.
+          this.sectionService.updateSection(this.section).subscribe(() => this.redirectTo('budgetiz/labels/section'));
+          console.log('update');
+        }
+      }
+    )
   }
 
   /**

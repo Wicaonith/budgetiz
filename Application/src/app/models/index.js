@@ -22,5 +22,6 @@ db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
 db.section = require("./section.model.js")(sequelize, Sequelize);
+db.undersection = require("./undersection.model.js")(sequelize, Sequelize);
 
 module.exports = db;

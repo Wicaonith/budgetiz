@@ -3,11 +3,11 @@
     <div class="formAdd-form">
         <div>
             <!-- Form input "ID" -->
-            <mat-form-field class="example-full-width" appearance="outline">
+            <mat-form-field class="idForm" appearance="outline">
                 <mat-label>ID</mat-label>
                 <!-- Input -->
-                <input matInput #idSection name="idSection" placeholder="" value="{{ lastId }}" [(ngModel)]="section.id"
-                    #id="ngModel" required disabled>
+                <input matInput #idSection name="idSection" placeholder="" value=" {{this.lastId }}"
+                    [(ngModel)]="section.id" #id="ngModel" required disabled>
                 <mat-icon matSuffix (click)="idSection.value = lastId.toString();">autorenew</mat-icon>
             </mat-form-field>
         </div>

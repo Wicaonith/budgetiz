@@ -37,43 +37,6 @@ export class LabelsSectionsComponent implements OnInit {
   }
 
   /**
-   * Créer dans la base une rubrique avec la paire name/type
-   * 
-   * @param id - number - L'identifiant de la rubrique à créer
-   * @param name - string - Le libellé de la rubrique à créer
-   * @param type - string - Le type de la rubrique à créer
-   */
-  public createSection(id: string, name: string, type: string): void {
-
-    let idN: number = Number(id);
-
-    // On vérifie si la Rubrique existe ...
-    if (!this.controlSection(name, type)) {
-
-      //... Si non, on formatte le nom...
-      name = this.sectionService.formatSectionName(name, type);
-      // ...puis on la créer...
-      let section = new Section(idN, name, type);
-      //... et on l'ajoute en base
-      this.sectionService.createSection(section);
-    }
-  }
-
-  /**
-   * Récupère dans la base les informations d'une Rubrique par rapport à son identifiant
-   * 
-   * @param id - number - L'identifiant de la Rubrique à lire
-   */
-  public readSection(id: string): Section {
-
-    let idN: number = Number(id);
-
-    //Appel du service - Récupère une Rubrique par rapport à son identifiant.
-    return new Section(0, "", "");
-    //this.sectionService.readSection(idN).subscribe(sect => section = sect);
-  }
-
-  /**
    * Modifie la Rubrique correspondante a celle passé en paramètre
    * 
    * @param section - Section - La Rubrique à modifier
@@ -93,7 +56,7 @@ export class LabelsSectionsComponent implements OnInit {
     // Controle si une données l'utilise pas !
     if (true) {
       //... alors Appel du service - Supprime la Rubrique.
-      this.sectionService.deleteSection(section).subscribe(_ => this.redirectTo('label/section'));
+      this.sectionService.deleteSection(section).subscribe(_ => this.redirectTo('budgetiz/labels/section'));
     } else {
       alert("Une donnée utilise la Rubrique. Veuillez la modifier");
     }
@@ -107,18 +70,5 @@ export class LabelsSectionsComponent implements OnInit {
   redirectTo(uri: string) {
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
       this.router.navigate([uri]));
-  }
-
-
-  /**
-   * Contrôle dans la base si une rubrique n'existe pas déjà avec la paire name/type
-   * 
-   * @param name - string - Le libellé de la rubrique à contrôler
-   * @param type - string - Le type de la rubrique à contrôler
-   */
-  public controlSection(name: string, type: string): boolean {
-
-    //Appel du service - Contrôle une Rubrique par rapport à son nom et son type.
-    return this.sectionService.controlSection(name, type);
   }
 }

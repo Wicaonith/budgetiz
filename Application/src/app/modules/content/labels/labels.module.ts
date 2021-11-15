@@ -9,6 +9,7 @@ import { LabelsSectionsComponent } from './components/labels-sections.component'
 import { LabelsUndersectionsComponent } from './components/labels-undersections.component';
 import { LabelsBankaccountComponent } from './components/labels-bankaccount.component';
 import { FormSectionsComponent } from './components/forms/form-sections.component';
+import { FormUndersectionsComponent } from './components/forms/form-undersections.component';
 
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatIconModule } from '@angular/material/icon';
@@ -25,6 +26,7 @@ import { MatButtonModule } from '@angular/material/button';
     LabelsUndersectionsComponent,
     LabelsBankaccountComponent,
     FormSectionsComponent,
+    FormUndersectionsComponent
   ],
   imports: [
     CommonModule,

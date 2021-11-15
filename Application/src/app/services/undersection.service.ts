@@ -1,5 +1,7 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { TEST_UNDERSECTION } from '../mock/mock-undersection';
+import { Observable, of } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 import { Undersection } from '../models/undersection';
 
 @Injectable({
@@ -7,14 +9,25 @@ import { Undersection } from '../models/undersection';
 })
 export class UndersectionService {
 
+  private undersectionsApiUrl = 'http://localhost:8080/api/undersection';
+
+  public constructor(private http: HttpClient) { }
+
   /**
    * Créer la Sous-Rubrique à créer
    * 
    * @param undersection - Undersection - La sous-Rubrique à creer
    */
-  public createUndersection(undersection: Undersection) {
+  public createUndersection(undersection: Undersection): Observable<Undersection> {
 
-    //TODO
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    };
+    console.log(undersection.inTab);
+    return this.http.post(this.undersectionsApiUrl, undersection, httpOptions).pipe<any, Undersection>(
+      tap(_ => this.log(`Modification de la Rubrique n°${undersection.id}`)), // Lorsque la récupération se passe bien
+      catchError(this.handleError<any>(`[Erreur] UndersectionService - createUndersection(${undersection.id})`)) // Lors d'une erreur
+    );
   }
 
   /**
@@ -22,32 +35,29 @@ export class UndersectionService {
    * 
    * @returns Undersection[] - Liste des Sous-Rubriques
    */
-  public readUndersections(): Undersection[] {
+  public readUndersections(): Observable<Undersection[]> {
 
-    //TODO
-    return TEST_UNDERSECTION;
+    return this.http.get<Undersection[]>(this.undersectionsApiUrl).pipe(
+      tap(_ => this.log(`Récupération de la liste des Sous-Rubriques`)), // Lorsque la récupération se passe bien
+      catchError(this.handleError(`[Erreur] UndersectionService - readUndersections()`, [])) // Lors d'une erreur
+    );
   }
 
   /**
    * Récupère dans la base les informations d'une Sous-Rubrique par rapport à son identifiant
    * 
-   * @param id - number - L'identifiant de la Rubrique à lire
+   * @param id - number - L'identifiant de la Sous-Rubrique à lire
    * 
    * @returns Section - La Sous-Rubrique lié à l'ID
    */
-  public readUndersection(id: number): Undersection {
+  public readUndersection(id: number): Observable<Undersection> {
 
-    // Récupération de toutes les Sous-Rubriques
-    let sections = this.readUndersections();
-    let retour!: Undersection;
+    const url = `${this.undersectionsApiUrl}/${id}`;
 
-    for (let section of sections) {
-      if (section.id === id) {
-        retour = section;
-      }
-    }
-    // Cas où la Sous-Rubrique n'existe pas.
-    return retour;
+    return this.http.get<Undersection>(url).pipe(
+      tap(_ => this.log(`Récupération de la Rubrique`)), // Lorsque la récupération se passe bien
+      catchError(this.handleError<Undersection>(`[Erreur] UndersectionService - readUndersection(${id})`)) // Lors d'une erreur
+    );
   }
 
   /**
@@ -55,8 +65,18 @@ export class UndersectionService {
    * 
    * @param undersection - Undersection - La Sous-Rubrique à modifier
    */
-  public updateUndersection(undersection: Undersection) {
-    //TODO
+  public updateUndersection(undersection: Undersection): Observable<Undersection> {
+
+    const url = `${this.undersectionsApiUrl}/${undersection.id}`;
+
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    };
+
+    return this.http.put(url, undersection, httpOptions).pipe<any, Undersection>(
+      tap(_ => this.log(`Modification de la Rubrique n°${undersection.id}`)), // Lorsque la récupération se passe bien
+      catchError(this.handleError<any>(`[Erreur] UndersectionService - updateUndersection(${undersection.id})`)) // Lors d'une erreur
+    );
   }
 
   /**
@@ -64,58 +84,61 @@ export class UndersectionService {
    * 
    * @param undersection - Undersection - La Sous-Rubrique à supprimer
    */
-  public deleteUndersection(undersection: Undersection) {
-    //TODO
+  public deleteUndersection(undersection: Undersection): Observable<Undersection> {
+
+    const url = `${this.undersectionsApiUrl}/${undersection.id}`;
+
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    };
+
+    return this.http.delete(url, httpOptions).pipe<any, Undersection>(
+      tap(_ => this.log(`Suppression de la Rubrique n°${undersection.id}`)), // Lorsque la récupération se passe bien
+      catchError(this.handleError<any>(`[Erreur] UndersectionService - deleteUndersection(${undersection.id})`)) // Lors d'une erreur
+    );
   }
 
   /**
-   * Contrôle l'existance dans la base d'une Sous-Rubrique par rapport à son nom et sa Rubrique mère
+   * Supprime la Sous-Rubrique correspondante à celle passé en paramètre
    * 
-   * @param name - string - Le nom de la Sous-Rubrique à controler
-   * @param sectionId - string - L'identifiant de la Rubrique mère à controler
-   * 
-   * @returns boolean - true si elle existe
+   * @param undersection - Undersection - La Sous-Rubrique à supprimer
    */
-  public controlUndersection(name: string, sectionId: string): boolean {
+  public deleteUndersections(): Observable<Undersection> {
 
-    let sectionIdN = Number(sectionId);
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    };
 
-    // Récupération de toutes les Sous-Rubriques
-    let undersections = this.readUndersections();
+    return this.http.delete(this.undersectionsApiUrl, httpOptions).pipe<any, Undersection>(
+      tap(_ => this.log(`Suppression de toutes les Sous-Rubrique `)), // Lorsque la récupération se passe bien
+      catchError(this.handleError<any>(`[Erreur] UndersectionService - deleteUndersections()`)) // Lors d'une erreur
+    );
+  }
 
-    // On parcourt toutes les Sous-Rubriques...
-    for (let undersection of undersections) {
-      // ... et s'il en existe une similaire...
-      if (undersection.name === name && undersection.section.id === sectionIdN) {
-        //... on retourne true
-        return true;
-      }
-    }
-    // Cas où la Sous-Rubrique n'existe pas.
-    return false;
+
+  /**
+   * Permet la gestion de log
+   * 
+   * @param log - string - 
+   */
+  private log(log: string) {
+    console.info(log);
   }
 
   /**
-   * Récupère dans la base l'identifiant de la derniere Rubrique créé
+   * Gestion des erreurs
    * 
-   * @returns number - L'identifiant le plus grand
+   * @param operation 
+   * @param result 
+   * 
+   * @returns 
    */
-  public readLastId(): number {
+  private handleError<T>(operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
+      console.error(error);
+      console.error(`${operation} failed: ${error.message}`);
 
-    // Variable de retour
-    let lastId = 0;
-
-    // Récupération de toutes les Rubriques
-    let undersections = this.readUndersections();
-
-    // On parcourt toutes les Rubriques...
-    for (let undersection of undersections) {
-      // ... et s
-      if (undersection.id > lastId) {
-        lastId = undersection.id;
-      }
+      return of(result as T);
     }
-    // Retourne le dernier ID + 1 
-    return lastId + 1;
   }
 }

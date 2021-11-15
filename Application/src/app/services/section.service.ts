@@ -10,7 +10,7 @@ import { catchError, tap } from 'rxjs/operators';
 })
 export class SectionService {
 
-  private sectionsApiUrl = 'http://localhost:8080/api/section/';
+  private sectionsApiUrl = 'http://localhost:8080/api/section';
 
   public constructor(private http: HttpClient) { }
 
@@ -19,15 +19,16 @@ export class SectionService {
    * 
    * @param section - Section - La Rubrique à créer
    */
-  public createSection(section: Section) {
+  public createSection(section: Section): Observable<Section> {
 
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     };
+    section = this.formatSectionName(section);
 
     return this.http.post(this.sectionsApiUrl, section, httpOptions).pipe<any, Section>(
       tap(_ => this.log(`Modification de la Rubrique n°${section.id}`)), // Lorsque la récupération se passe bien
-      catchError(this.handleError<any>(`[Erreur] SectionService - updateSection(${section.id})`)) // Lors d'une erreur
+      catchError(this.handleError<any>(`[Erreur] SectionService - createSection(${section.id})`)) // Lors d'une erreur
     );
   }
 
@@ -68,11 +69,15 @@ export class SectionService {
    */
   public updateSection(section: Section): Observable<Section> {
 
+    const url = `${this.sectionsApiUrl}/${section.id}`;
+
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     };
 
-    return this.http.put(this.sectionsApiUrl, section, httpOptions).pipe<any, Section>(
+    section = this.formatSectionName(section);
+
+    return this.http.put(url, section, httpOptions).pipe<any, Section>(
       tap(_ => this.log(`Modification de la Rubrique n°${section.id}`)), // Lorsque la récupération se passe bien
       catchError(this.handleError<any>(`[Erreur] SectionService - updateSection(${section.id})`)) // Lors d'une erreur
     );
@@ -98,59 +103,34 @@ export class SectionService {
   }
 
   /**
-   * Contrôle l'existance dans la base d'une Rubrique par rapport à son nom et son type.
-   * 
-   * @param name - string - Le nom de la Rubrique à controler
-   * @param type - string - Le type de la Rubrique à controler
-   * 
-   * @returns boolean - true si elle existe
-   */
-  public controlSection(name: string, type: string): boolean {
+ * Supprime la Rubrique correspondante à celle passé en paramètre
+ * 
+ * @param section - Section - La Rubrique à supprimer
+ */
+  public deleteSections(): Observable<Section> {
 
-    // Récupération de toutes les Rubriques
-    /*let sections = this.readSections();
-  
-    // On parcourt toutes les Rubriques...
-    for (let section of sections) {
-      // ... et s'il en existe une similaire...
-      if (section.name === name && section.type === type) {
-        //... on retourne true
-        return true;
-      }
-    }*/
-    // Cas où la Rubrique n'existe pas.
-    return false;
-  }
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    };
 
-  public existSection(id: number) {
-
-    // Récupération de toutes les Rubriques
-    let sections = this.readSections();
-
-    // On parcourt toutes les Rubriques...
-    /*for (let section of sections) {
-      // ... et s'il en existe une similaire...
-      if (section.id === id) {
-        //... on retourne true
-        return true;
-      }
-    }*/
-    // Cas où la Rubrique n'existe pas.
-    return false;
+    return this.http.delete(this.sectionsApiUrl, httpOptions).pipe<any, Section>(
+      tap(_ => this.log(`Suppression de toutes les Rubriques`)), // Lorsque la récupération se passe bien
+      catchError(this.handleError<any>(`[Erreur] SectionService - deleteSections()`)) // Lors d'une erreur
+    );
   }
 
   /**
    * Formatte le nom de la Rubrique sous la forme "[R] Salaire"
    * [1ere lettre du type] + Nom 
    * 
-   * @param name - string - Le libellé à formatter
-   * @param type - string - Le type nécessaire au formattage
+   * @param section - Section - La rubrique a formatter
    * 
-   * @returns string - Le nom de la Rubrique formatté
+   * @returns Section - La Rubrique avec le nom formatté
    */
-  public formatSectionName(name: string, type: string): string {
+  public formatSectionName(section: Section): Section {
 
-    return "[" + type.substr(0, 1) + "] " + name;
+    section.name = "[" + section.type.substr(0, 1) + "] " + section.name;
+    return section;
   }
 
 

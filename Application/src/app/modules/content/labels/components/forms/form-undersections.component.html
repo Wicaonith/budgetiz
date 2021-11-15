@@ -1,1 +1,43 @@
-<p>form-undersections works!</p>
+<!-- Formulaire d'ajout de nouvelles Sous-Rubriques -->
+<form *ngIf="undersection" (ngSubmit)="onSubmit()" #undersectionForm="ngForm">
+    <div class="formAdd-form">
+        <div>
+            <!-- Form input "ID" -->
+            <mat-form-field class="idForm" appearance="outline">
+                <mat-label>ID</mat-label>
+                <!-- Input -->
+                <input matInput #idUndersection name="idUndersection" placeholder="" value=" {{this.lastId }}"
+                    [(ngModel)]="undersection.id" #id="ngModel" required disabled>
+                <mat-icon matSuffix (click)="idUndersection.value = lastId.toString();">autorenew</mat-icon>
+            </mat-form-field>
+        </div>
+        <div>
+            <!-- Form input "Libelle" -->
+            <mat-form-field appearance="outline">
+                <mat-label>Libellé</mat-label>
+                <!-- Input -->
+                <input matInput name="nameUndersection" placeholder="Ex. Habitat" value=""
+                    [(ngModel)]="undersection.name" #name="ngModel" required>
+                <!-- Message d'erreur -->
+                <mat-error *ngIf="required.invalid">{{getErrorMessageRequired()}}</mat-error>
+            </mat-form-field>
+        </div>
+        <div>
+            <!-- Form combobox "Type de Rubrique"-->
+            <mat-form-field appearance="outline">
+                <mat-label>Rubrique mère</mat-label>
+                <mat-select name="sectionUndersection" [(ngModel)]="undersection.section" #section="ngModel" required>
+                    <mat-option *ngFor="let section of sections" [value]="section">
+                        {{section.name}}
+                    </mat-option>
+                </mat-select>
+                <!-- Message d'erreur -->
+                <mat-error *ngIf="required.invalid">{{getErrorMessageRequired()}}</mat-error>
+            </mat-form-field>
+        </div>
+        <div>
+            <!-- Bouton "Enregistrer" -->
+            <button mat-raised-button type="submit" [disabled]="!undersectionForm.form.valid">Enregistrer</button>
+        </div>
+    </div>
+</form>
