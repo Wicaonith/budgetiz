@@ -3,7 +3,7 @@ import { TEST_UNDERSECTION } from '../mock/mock-undersection';
 import { Undersection } from '../models/undersection';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UndersectionService {
 
@@ -76,24 +76,24 @@ export class UndersectionService {
    * 
    * @returns boolean - true si elle existe
    */
-     public controlUndersection(name: string, sectionId: string): boolean {
+  public controlUndersection(name: string, sectionId: string): boolean {
 
-      let sectionIdN = Number(sectionId);
+    let sectionIdN = Number(sectionId);
 
-      // Récupération de toutes les Sous-Rubriques
-      let undersections = this.readUndersections();
-  
-      // On parcourt toutes les Sous-Rubriques...
-      for (let undersection of undersections) {
-        // ... et s'il en existe une similaire...
-        if (undersection.name === name && undersection.section.id === sectionIdN) {
-          //... on retourne true
-          return true;
-        }
+    // Récupération de toutes les Sous-Rubriques
+    let undersections = this.readUndersections();
+
+    // On parcourt toutes les Sous-Rubriques...
+    for (let undersection of undersections) {
+      // ... et s'il en existe une similaire...
+      if (undersection.name === name && undersection.section.id === sectionIdN) {
+        //... on retourne true
+        return true;
       }
-      // Cas où la Sous-Rubrique n'existe pas.
-      return false;
     }
+    // Cas où la Sous-Rubrique n'existe pas.
+    return false;
+  }
 
   /**
    * Récupère dans la base l'identifiant de la derniere Rubrique créé

@@ -5,12 +5,15 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, tap } from 'rxjs/operators';
 
 
-@Injectable({ providedIn: 'root' })
+@Injectable({
+  providedIn: 'root',
+})
 export class SectionService {
 
-  private sectionsApiUrl = 'api/sections';
+  private sectionsApiUrl = 'http://localhost:8080/api/section/';
 
   public constructor(private http: HttpClient) { }
+
   /**
    * Créer une Rubrique dans la base
    * 
@@ -80,7 +83,7 @@ export class SectionService {
    * 
    * @param section - Section - La Rubrique à supprimer
    */
-  public deleteSection(section: Section) : Observable<Section>{
+  public deleteSection(section: Section): Observable<Section> {
 
     const url = `${this.sectionsApiUrl}/${section.id}`;
 

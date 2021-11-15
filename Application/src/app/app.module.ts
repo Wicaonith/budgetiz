@@ -5,9 +5,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 
-// Modules Mock
-import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
-
 // Modules Budgetiz'
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -20,7 +17,6 @@ import { DatasModule } from './modules/content/datas/datas.module';
 //Services
 import { SectionService } from './services/section.service';
 import { UndersectionService } from './services/undersection.service';
-import { InMemoryDataService } from './services/in-memory-data.service';
 import { AuthGuard } from './services/auth-guard.service';
 import { AuthService } from './services/auth.service';
 
@@ -42,7 +38,6 @@ import { ContentComponent } from './modules/content/content.component';
     LabelsModule,
     HomeModule,
     DatasModule,
-    HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService, { dataEncapsulation: false }),
   ],
   declarations: [
     AppComponent,
@@ -53,7 +48,6 @@ import { ContentComponent } from './modules/content/content.component';
   ],
   providers: [SectionService,
     UndersectionService,
-    InMemoryDataService,
     AuthGuard,
     AuthService,
   ],
