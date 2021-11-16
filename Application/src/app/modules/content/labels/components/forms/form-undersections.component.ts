@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Section } from 'src/app/models/section';
+import { Section } from 'src/app/models/section.model';
 import { Undersection } from 'src/app/models/undersection';
 import { SectionService } from 'src/app/services/section.service';
 import { UndersectionService } from 'src/app/services/undersection.service';
@@ -14,7 +14,7 @@ import { UndersectionService } from 'src/app/services/undersection.service';
 export class FormUndersectionsComponent implements OnInit {
 
   /** L'objet lié au Formulaire */
-  @Input() undersection: Undersection = new Undersection(0, "", new Section(0, "", ""), true);
+  @Input() undersection: Undersection = new Undersection(0, "", new Section("", "", ""), true);
   /** Liste des Rubriques mères */
   sections: Array<Section> = new Array();
   /** Dernier identifiant */
@@ -49,11 +49,11 @@ export class FormUndersectionsComponent implements OnInit {
         this.lastId += 1;
 
         // Initialisation des valeurs dans les champs inputs
-        this.undersection = new Undersection(this.lastId, "", new Section(0, "", ""), true);
+        this.undersection = new Undersection(this.lastId, "", new Section("", "", ""), true);
       });
 
     //Appel du Service - Récupère toutes les Rubriques en base
-    this.sectionService.readSections().subscribe(sections => this.sections = sections);
+    this.sectionService.readSections().subscribe((sections: Section[]) => this.sections = sections);
   }
 
   /** 

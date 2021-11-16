@@ -5,6 +5,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 
+// Module Firebase
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+
 // Modules Budgetiz'
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -25,6 +29,7 @@ import { PageNotFoundComponent } from './page-not-found.component';
 import { HeaderComponent } from './modules/header/components/header.component';
 import { FooterComponent } from './modules/footer/components/footer.component';
 import { ContentComponent } from './modules/content/content.component';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   imports: [
@@ -38,6 +43,8 @@ import { ContentComponent } from './modules/content/content.component';
     LabelsModule,
     HomeModule,
     DatasModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule, // for firestore
   ],
   declarations: [
     AppComponent,

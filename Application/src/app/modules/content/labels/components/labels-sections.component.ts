@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { EnumSectionType } from 'src/app/models/enum/enumSectionType';
-import { Section } from 'src/app/models/section';
+import { Section } from 'src/app/models/section.model';
 import { SectionService } from 'src/app/services/section.service';
 
 @Component({
@@ -12,9 +12,9 @@ import { SectionService } from 'src/app/services/section.service';
 export class LabelsSectionsComponent implements OnInit {
 
   /** Objet section du formulaire */
-  section: Section = new Section(0, "", "");
+  section: Section = new Section("", "", "");
   /** Liste des Rubriques (ID/NAME/TYPE)*/
-  sections: Array<Section> = new Array();
+  sections: Section[] = [];
   /** Colonnes à afficher dans le tableau des Rubriques */
   sectionColumns: Array<string> = ['id', 'name', 'type', 'edit', 'remove'];
   /** Enum Type*/
@@ -33,7 +33,7 @@ export class LabelsSectionsComponent implements OnInit {
    */
   public ngOnInit(): void {
     //Appel du Service - Récupère toutes les Rubriques en base
-    this.sectionService.readSections().subscribe(sections => this.sections = sections);
+    this.sections = this.sectionService.readSections();
   }
 
   /**
@@ -43,7 +43,7 @@ export class LabelsSectionsComponent implements OnInit {
    */
   public updateSection(section: Section): void {
 
-    this.section = new Section(section.id, section.name, section.type);
+    this.section = { ...section };
   }
 
   /**
@@ -51,12 +51,12 @@ export class LabelsSectionsComponent implements OnInit {
    * 
    * @param section - Section - La section à supprimer
    */
-  public deleteSection(section: Section): void {
+  public deleteSection(id: string): void {
 
     // Controle si une données l'utilise pas !
     if (true) {
       //... alors Appel du service - Supprime la Rubrique.
-      this.sectionService.deleteSection(section).subscribe(_ => this.redirectTo('budgetiz/labels/section'));
+      this.sectionService.deleteSection(id).then(() => this.redirectTo('budgetiz/labels/section'));
     } else {
       alert("Une donnée utilise la Rubrique. Veuillez la modifier");
     }

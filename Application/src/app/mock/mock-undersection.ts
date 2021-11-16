@@ -1,5 +1,5 @@
 import { EnumSectionType } from "src/app/models/enum/enumSectionType";
-import { Section } from "../models/section";
+import { Section } from "../models/section.model";
 import { Undersection } from "../models/undersection";
 
 export const TEST_UNDERSECTION: Undersection[] = [

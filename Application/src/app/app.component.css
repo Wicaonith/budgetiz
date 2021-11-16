@@ -1,6 +1,6 @@
 /* Global */
 .main {
-    width:95%;
+    width:100%;
     margin-left:auto;
     margin-right:auto;
 }
@@ -16,7 +16,7 @@ h1 {
 
 .content-princ {
     min-height: 700px;
-    max-width: 80%;
+    max-width: 95%;
     margin-left: auto;
     margin-right: auto;
     margin-top: 20px;
@@ -153,11 +153,16 @@ h1 {
 }
 
 .cell-button {
-    width:60px;
+    max-width:45px;
     text-align: center;
 }
 
 .cell-id {
     width:60px;
     text-align: center;
+}
+
+.edit-button {
+    padding: 0;
+    min-width:30px;
 }

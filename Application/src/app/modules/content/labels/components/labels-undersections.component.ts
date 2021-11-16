@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { EnumSectionType } from 'src/app/models/enum/enumSectionType';
-import { Section } from 'src/app/models/section';
+import { Section } from 'src/app/models/section.model';
 import { Undersection } from 'src/app/models/undersection';
 import { SectionService } from 'src/app/services/section.service';
 import { UndersectionService } from 'src/app/services/undersection.service';
@@ -13,7 +13,7 @@ import { UndersectionService } from 'src/app/services/undersection.service';
 })
 export class LabelsUndersectionsComponent implements OnInit {
 
-  undersection: Undersection = new Undersection(0, "", new Section(0, "", ""), true);
+  undersection: Undersection = new Undersection(0, "", new Section("", "", ""), true);
   /** Liste des Sous Rubriques (ID/NAME/SECTION/TYPE/INTAB)*/
   undersections: Array<Undersection> = new Array();
   /** Colonnes à afficher dans le tableau des Sous-Rubriques */
@@ -47,8 +47,7 @@ export class LabelsUndersectionsComponent implements OnInit {
               // On parcourt toutes les Rubriques...
               for (let section of sections) {
 
-                let id: number = Number(undersection.section);
-                if (id === section.id) {
+                if (undersection.section.id === section.id) {
 
                   undersection.section = section;
                 }
@@ -57,7 +56,6 @@ export class LabelsUndersectionsComponent implements OnInit {
             }
           }
         );
-
       }
     );
   }

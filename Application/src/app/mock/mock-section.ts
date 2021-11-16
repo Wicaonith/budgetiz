@@ -1,7 +1,7 @@
 import { EnumSectionType } from "src/app/models/enum/enumSectionType";
-import { Section } from "src/app/models/section";
+import { Section } from "src/app/models/section.model";
 
-export const TEST_SECTION : Section[] = [
+export const TEST_SECTION: Section[] = [
     {
         id: 1,
         name: "Salaire",

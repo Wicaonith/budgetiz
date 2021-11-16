@@ -1,5 +1,5 @@
 import { BankAccount } from "./bankAccount";
-import { Section } from "./section";
+import Section from "./section.model";
 import { Undersection } from "./undersection";
 
 
@@ -17,7 +17,7 @@ export class DataTransaction {
     /** La rubrique de la transaction */
     section: Section;
     /** La sous rubrique de la transaction */
-    undersection : Undersection;
+    undersection: Undersection;
     /** Le compte ayant la transaction */
     account: BankAccount;
 
@@ -31,7 +31,7 @@ export class DataTransaction {
      * @param undersection - Undersection - La sous rubrique de la transaction
      * @param account - BankAccount - Le compte ayant la transaction
      */
-    constructor(id: number, month: string, amount:number, section: Section, undersection : Undersection, account: BankAccount){
+    constructor(id: number, month: string, amount: number, section: Section, undersection: Undersection, account: BankAccount) {
 
         this.id = id;
         this.month = month;

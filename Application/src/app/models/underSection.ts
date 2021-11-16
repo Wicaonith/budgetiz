@@ -1,5 +1,4 @@
-import { Section } from "./section";
-
+import { Section } from "./section.model";
 
 /**
  * L'objet modélisant les Sous rubriques dans l'application

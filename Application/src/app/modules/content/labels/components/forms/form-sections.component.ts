@@ -1,8 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { map } from 'rxjs/operators';
 import { EnumSectionType } from 'src/app/models/enum/enumSectionType';
-import { Section } from 'src/app/models/section';
+import { Section } from 'src/app/models/section.model';
 import { SectionService } from 'src/app/services/section.service';
 
 @Component({
@@ -13,7 +14,7 @@ import { SectionService } from 'src/app/services/section.service';
 export class FormSectionsComponent implements OnInit {
 
   /** L'objet lié au Formulaire */
-  @Input() section: Section = new Section(0, "", "");
+  @Input() section: Section = new Section("", "", "");
   /** Enum des Types de Rubriques */
   enumTypeList = Object.values(EnumSectionType);
   /** Dernier identifiant */
@@ -32,24 +33,20 @@ export class FormSectionsComponent implements OnInit {
   public ngOnInit(): void {
 
     //Appel du Service - Récupère toutes les Rubriques en base
-    this.sectionService.readSections().subscribe(
-      //Récupère dans la base l'identifiant de la derniere Rubrique créé
-      (sections: Section[]) => {
-
-        // On parcourt toutes les Rubriques...
-        for (let section of sections) {
-          // ... et si l'identifiant de la rubrique est supérieur à la variable lastId..
-          if (section.id > this.lastId) {
-            // ... on valorise lastId.
-            this.lastId = section.id;
-          }
+    this.sectionService.readSections().subscribe((sections: Section[]) => {
+      for (let section of sections) {
+        // ... et si l'identifiant de la rubrique est supérieur à la variable lastId..
+        if (Number(section.id) > this.lastId) {
+          // ... on valorise lastId.
+          this.lastId = Number(section.id);
         }
-        // Retourne le dernier ID + 1 
-        this.lastId += 1;
+      }
+      // Retourne le dernier ID + 1 
+      this.lastId += 1;
 
-        // Initialisation des valeurs dans les champs inputs
-        this.section = new Section(this.lastId, "", "");
-      });
+      // Initialisation des valeurs dans les champs inputs
+      this.section.id = this.lastId.toString();
+    });
   }
 
   /** 
@@ -57,6 +54,9 @@ export class FormSectionsComponent implements OnInit {
    */
   public onSubmit(): void {
 
+    this.sectionService.createSection(this.section).then(() => {
+      this.redirectTo('budgetiz/labels/section')
+    });
     // Si on récupère une Rubrique via l'ID, alors c'est qu'il existe, donc on appel la méthode "update" sinon "create"
     this.sectionService.readSection(this.section.id).subscribe(
       (sect: Section) => {
@@ -64,15 +64,39 @@ export class FormSectionsComponent implements OnInit {
         // Si il n'existe pas de rubrique avec cet ID...
         if (sect === undefined) {
           // ... Alors on le crée ...
-          this.sectionService.createSection(this.section).subscribe(() => this.redirectTo('budgetiz/labels/section'));
+          this.sectionService.createSection(this.section).then(() => {
+            this.redirectTo('budgetiz/labels/section')
+          });
         } else {
+
+          if (this.section.name.startsWith('[')) {
+            this.section.name = this.section.name.substr(3).trim();
+          }
+          this.section = this.formatSectionName(this.section);
+
           // ... Sinon on modifie l'existant.
-          this.sectionService.updateSection(this.section).subscribe(() => this.redirectTo('budgetiz/labels/section'));
-          console.log('update');
+          this.sectionService.updateSection(this.section).then(() => {
+            this.redirectTo('budgetiz/labels/section')
+          });
         }
       }
     )
   }
+
+  /**
+ * Formatte le nom de la Rubrique sous la forme "[R] Salaire"
+ * [1ere lettre du type] + Nom 
+ * 
+ * @param section - Section - La rubrique a formatter
+ * 
+ * @returns Section - La Rubrique avec le nom formatté
+ */
+  public formatSectionName(section: Section): Section {
+
+    section.name = "[" + section.type.substr(0, 1) + "] " + section.name;
+    return section;
+  }
+
 
   /**
    * Redirige vers l'url passé en paramètre
