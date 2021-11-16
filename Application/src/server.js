@@ -20,8 +20,8 @@ app.get("/", (req, res) => {
     res.json({ message: "API Budgetiz" });
 });
 
-require("./app/routes/section.routes")(app);
-require("./app/routes/undersection.routes")(app);
+require("./database/routes/section.routes")(app);
+require("./database/routes/undersection.routes")(app);
 
 // Set port, listen for requests
 const PORT = process.env.PORT || 8080;
@@ -29,5 +29,5 @@ app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}.`);
 });
 
-const db = require("./app/models");
+const db = require("./database/models");
 db.sequelize.sync();

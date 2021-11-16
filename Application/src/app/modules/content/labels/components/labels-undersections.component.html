@@ -21,11 +21,6 @@
         <td mat-cell *matCellDef="let undersection"> {{undersection.section.name}} </td>
     </ng-container>
 
-    <ng-container matColumnDef="type">
-        <th mat-header-cell *matHeaderCellDef> Type </th>
-        <td mat-cell *matCellDef="let undersection"> {{undersection.section.type}} </td>
-    </ng-container>
-
     <ng-container matColumnDef="display">
         <th mat-header-cell class="cell-button" *matHeaderCellDef></th>
         <td mat-cell class="cell-button" *matCellDef="let undersection">

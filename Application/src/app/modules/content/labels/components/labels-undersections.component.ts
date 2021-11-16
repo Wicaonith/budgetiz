@@ -17,7 +17,7 @@ export class LabelsUndersectionsComponent implements OnInit {
   /** Liste des Sous Rubriques (ID/NAME/SECTION/TYPE/INTAB)*/
   undersections: Array<Undersection> = new Array();
   /** Colonnes à afficher dans le tableau des Sous-Rubriques */
-  undersectionColumns: Array<string> = ['id', 'name', 'section', 'type', 'display', 'edit', 'remove'];
+  undersectionColumns: Array<string> = ['id', 'name', 'section', 'display', 'edit', 'remove'];
   /** Enum Type*/
   enumTypeList = Object.values(EnumSectionType);
   /** Le dernier identifiant */
