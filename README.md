@@ -33,7 +33,6 @@ Feature - Mettre en place la page Datas
 Feature - Mettre en place la page Principale (Home)
 Feature - Deployer
 
-Fix - Supprimer la connexion a MySQL
 Fix - Vérification de la Documentation
 
 ## V2.0.0
