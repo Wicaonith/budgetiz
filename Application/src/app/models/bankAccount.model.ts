@@ -1,10 +1,15 @@
+import { Entity } from "../services/firestoreCrud.service";
+
 /**
  * L'objet modélisant les Comptes bancaires dans l'application
  */
-export class BankAccount{
+export class BankAccount implements Entity {
+
+    /** L'identifiant du compte */
+    id: string
 
     /** Le nom du compte ("Compte Courant", "Livret A", etc.) */
-    name: string; 
+    name: string;
 
     /** Le type de compte (Courant / Epargne) */
     type: string;
@@ -12,11 +17,12 @@ export class BankAccount{
     /**
      * Constructeur de la classe BankAccount
      * 
+     * @param id - string - L'identifiant du compte
      * @param name - string - Le nom du compte ("Compte Courant", "Livret A", etc.) 
      * @param type - string - Le type de compte (Courant / Epargne)
      */
-    constructor(name :string, type: string){
-        
+    constructor(id: string, name: string, type: string) {
+        this.id = id;
         this.name = name;
         this.type = type;
     }

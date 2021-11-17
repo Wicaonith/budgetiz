@@ -16,7 +16,7 @@
             <mat-form-field appearance="outline">
                 <mat-label>Libellé</mat-label>
                 <!-- Input -->
-                <input matInput name="nameUndersection" placeholder="Ex. Habitat" value=""
+                <input matInput name="nameUndersection" placeholder="Ex. Facture EDF" value=""
                     [(ngModel)]="undersection.name" #name="ngModel" required>
                 <!-- Message d'erreur -->
                 <mat-error *ngIf="required.invalid">{{getErrorMessageRequired()}}</mat-error>

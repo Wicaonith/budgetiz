@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
-import { Undersection } from '../models/undersection';
+import { Undersection } from '../models/undersection.model';
 import { FirestoreCrudService } from './firestoreCrud.service';
 
 @Injectable({

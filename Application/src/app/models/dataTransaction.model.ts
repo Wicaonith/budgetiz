@@ -1,6 +1,6 @@
-import { BankAccount } from "./bankAccount";
-import Section from "./section.model";
-import { Undersection } from "./undersection";
+import { BankAccount } from "./bankAccount.model";
+import { Section } from "./section.model";
+import { Undersection } from "./undersection.model";
 
 
 /**

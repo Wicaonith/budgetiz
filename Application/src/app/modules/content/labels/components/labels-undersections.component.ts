@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { EnumSectionType } from 'src/app/models/enum/enumSectionType';
 import { Section } from 'src/app/models/section.model';
-import { Undersection } from 'src/app/models/undersection';
+import { Undersection } from 'src/app/models/undersection.model';
 import { SectionService } from 'src/app/services/section.service';
 import { UndersectionService } from 'src/app/services/undersection.service';
 

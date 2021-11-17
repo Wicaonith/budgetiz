@@ -33,20 +33,26 @@ export class FormSectionsComponent implements OnInit {
   public ngOnInit(): void {
 
     //Appel du Service - Récupère toutes les Rubriques en base
-    this.sectionService.readSections().subscribe((sections: Section[]) => {
-      for (let section of sections) {
-        // ... et si l'identifiant de la rubrique est supérieur à la variable lastId..
-        if (Number(section.id) > this.lastId) {
-          // ... on valorise lastId.
-          this.lastId = Number(section.id);
-        }
-      }
-      // Retourne le dernier ID + 1 
-      this.lastId += 1;
+    this.sectionService.readSections().subscribe(
+      (sections: Section[]) => {
 
-      // Initialisation des valeurs dans les champs inputs
-      this.section.id = this.lastId.toString();
-    });
+        let isInit: boolean = this.lastId === 0;
+        for (let section of sections) {
+          // ... et si l'identifiant de la rubrique est supérieur à la variable lastId..
+          if (Number(section.id) > this.lastId) {
+            // ... on valorise lastId.
+            this.lastId = Number(section.id);
+          }
+        }
+        if (isInit) {
+          // Valorise lastId avec le prochain Identifiant à ajouter.
+          this.lastId += 1;
+        }
+
+        // Initialisation des valeurs dans les champs inputs
+        this.section.id = this.lastId.toString();
+      }
+    );
   }
 
   /** 

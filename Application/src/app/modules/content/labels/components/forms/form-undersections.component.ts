@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Section } from 'src/app/models/section.model';
-import { Undersection } from 'src/app/models/undersection';
+import { Undersection } from 'src/app/models/undersection.model';
 import { SectionService } from 'src/app/services/section.service';
 import { UndersectionService } from 'src/app/services/undersection.service';
 
@@ -37,6 +37,8 @@ export class FormUndersectionsComponent implements OnInit {
       //Récupère dans la base l'identifiant de la derniere Rubrique créé
       (undersections: Undersection[]) => {
 
+        let isInit: boolean = this.lastId === 0;
+
         // On parcourt toutes les Rubriques...
         for (let undersection of undersections) {
           // ... et si l'identifiant de la rubrique est supérieur à la variable lastId..
@@ -45,9 +47,10 @@ export class FormUndersectionsComponent implements OnInit {
             this.lastId = Number(undersection.id);
           }
         }
-        // Retourne le dernier ID + 1 
-        this.lastId += 1;
-
+        if (isInit) {
+          // Valorise lastId avec le prochain Identifiant à ajouter.
+          this.lastId += 1;
+        }
         // Initialisation des valeurs dans les champs inputs
         this.undersection = new Undersection(this.lastId.toString(), "", new Section("", "", ""), true);
       });
