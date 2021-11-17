@@ -13,7 +13,7 @@ import { UndersectionService } from 'src/app/services/undersection.service';
 })
 export class LabelsUndersectionsComponent implements OnInit {
 
-  undersection: Undersection = new Undersection(0, "", new Section("", "", ""), true);
+  undersection: Undersection = new Undersection("", "", new Section("", "", ""), true);
   /** Liste des Sous Rubriques (ID/NAME/SECTION/TYPE/INTAB)*/
   undersections: Array<Undersection> = new Array();
   /** Colonnes à afficher dans le tableau des Sous-Rubriques */
@@ -67,7 +67,7 @@ export class LabelsUndersectionsComponent implements OnInit {
    */
   public displayInTab(undersection: Undersection) {
     undersection.inTab = !undersection.inTab;
-    this.undersectionService.updateUndersection(undersection).subscribe(_ => this.redirectTo('budgetiz/labels/undersection'));
+    this.undersectionService.updateUndersection(undersection).subscribe(() => this.redirectTo('budgetiz/labels/undersection'));
   }
 
   /**
@@ -77,10 +77,8 @@ export class LabelsUndersectionsComponent implements OnInit {
    */
   public readUndersection(id: string) {
 
-    let idN: number = Number(id);
-
     //Appel du service - Récupère une Sous-Rubrique par rapport à son identifiant.
-    this.undersectionService.readUndersection(idN);
+    this.undersectionService.readUndersection(id);
   }
 
   /**
@@ -104,7 +102,7 @@ export class LabelsUndersectionsComponent implements OnInit {
     // Controle si une données l'utilise pas !
     if (true) {
       //... alors Appel du service - Supprime la Rubrique.
-      this.undersectionService.deleteUndersection(undersection).subscribe(_ => this.redirectTo('budgetiz/labels/undersection'));
+      this.undersectionService.deleteUndersection(undersection.id).subscribe(() => this.redirectTo('budgetiz/labels/undersection'));
     } else {
       alert("Une donnée utilise la Rubrique. Veuillez la modifier");
     }

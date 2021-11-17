@@ -1,25 +1,25 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
-import { map } from 'rxjs/operators';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { Section } from '../models/section.model';
 import { FirestoreCrudService } from './firestoreCrud.service';
 
 @Injectable({
   providedIn: 'root',
 })
+/**
+ * 
+ */
 export class SectionService {
-
-  crudService: FirestoreCrudService<Section>;
 
   // Path de la BDD Firebase pour la table Section
   private dbPath = '/sections';
 
+  crudService: FirestoreCrudService<Section>;
 
   // AngularFirestore should be found by Angular DI System
   constructor(afs: AngularFirestore) {
     // Let's create our CrusService and use the a Collection with the name 'sections'
-    this.crudService = new FirestoreCrudService<Section>(afs, '/sections');
+    this.crudService = new FirestoreCrudService<Section>(afs, this.dbPath);
   }
 
   /**
@@ -52,7 +52,7 @@ export class SectionService {
    * @returns Section - La Rubrique lié à l'ID
    */
   public readSection(id: string): any {
-    return /*this.crudService.get(id);*/
+    return this.crudService.get(id);
   }
 
   /**

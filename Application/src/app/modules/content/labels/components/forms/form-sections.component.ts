@@ -54,43 +54,37 @@ export class FormSectionsComponent implements OnInit {
    */
   public onSubmit(): void {
 
-    this.sectionService.createSection(this.section).then(() => {
-      this.redirectTo('budgetiz/labels/section')
-    });
     // Si on récupère une Rubrique via l'ID, alors c'est qu'il existe, donc on appel la méthode "update" sinon "create"
-    this.sectionService.readSection(this.section.id).subscribe(
-      (sect: Section) => {
+    let sect = this.sectionService.readSection(this.section.id);
+    // Si il n'existe pas de rubrique avec cet ID...
+    if (sect === undefined) {
+      //... alors on le formatte ...
+      this.section = this.formatSectionName(this.section);
+      // ... et on le crée ...
+      this.sectionService.createSection(this.section);
+    } else {
 
-        // Si il n'existe pas de rubrique avec cet ID...
-        if (sect === undefined) {
-          // ... Alors on le crée ...
-          this.sectionService.createSection(this.section).then(() => {
-            this.redirectTo('budgetiz/labels/section')
-          });
-        } else {
-
-          if (this.section.name.startsWith('[')) {
-            this.section.name = this.section.name.substr(3).trim();
-          }
-          this.section = this.formatSectionName(this.section);
-
-          // ... Sinon on modifie l'existant.
-          this.sectionService.updateSection(this.section).then(() => {
-            this.redirectTo('budgetiz/labels/section')
-          });
-        }
+      //... Sinon on le formatte ...
+      if (this.section.name.startsWith('[')) {
+        this.section.name = this.section.name.substr(3).trim();
       }
-    )
+      this.section = this.formatSectionName(this.section);
+
+      // ... et on modifie l'existant.
+      this.sectionService.updateSection(this.section);
+    }
+    // On recharge la page
+    this.redirectTo('budgetiz/labels/section')
   }
 
   /**
- * Formatte le nom de la Rubrique sous la forme "[R] Salaire"
- * [1ere lettre du type] + Nom 
- * 
- * @param section - Section - La rubrique a formatter
- * 
- * @returns Section - La Rubrique avec le nom formatté
- */
+   * Formatte le nom de la Rubrique sous la forme "[R] Salaire"
+   * [1ere lettre du type] + Nom 
+   * 
+   * @param section - Section - La rubrique a formatter
+   * 
+   * @returns Section - La Rubrique avec le nom formatté
+   */
   public formatSectionName(section: Section): Section {
 
     section.name = "[" + section.type.substr(0, 1) + "] " + section.name;

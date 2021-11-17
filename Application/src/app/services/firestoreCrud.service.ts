@@ -57,15 +57,15 @@ export class FirestoreCrudService<T extends Entity> {
     }
 
     /**
-     * Our get method will fetch a single Entity by it's Document ID
+     * Our get method will fetch a single Entity by it's ID
      */
-    /*get(id: string): Observable<T> {
+    get(id: string): any {
         return this.collection.doc<T>(id).snapshotChanges().pipe(
             // We want to map the document into a Typed JS Object
             map(doc => {
                 // Only if the entity exists should we build an object out of it
                 if (doc.payload.exists) {
-                    const data = doc.payload.data() as T;
+                    const data = doc.payload.data();
                     const payloadId = doc.payload.id;
                     return { id: payloadId, ...data };
                 } else {
@@ -73,7 +73,7 @@ export class FirestoreCrudService<T extends Entity> {
                 }
             })
         );
-    }*/
+    }
 
     /*
      * Our list method will get all the Entities in the Collection
@@ -93,7 +93,7 @@ export class FirestoreCrudService<T extends Entity> {
 
     /* Our Update method takes the full updated Entity
      * Including it's ID property which it will use to find the
-     * Document. This is a Hard Update.
+     * Entity. This is a Hard Update.
      */
     update(entity: T): Promise<T> {
         return new Promise<T>((resolve) => {
