@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { EnumSectionType } from 'src/app/models/enum/enumSectionType';
 import { Section } from 'src/app/models/section.model';
@@ -23,7 +24,7 @@ export class FormSectionsComponent implements OnInit {
   required = new FormControl('', [Validators.required]);
 
   /** 
-   * Constructeur du composant SectionFormComponent
+   * Constructeur du composant FormSectionsComponent
    */
   public constructor(private sectionService: SectionService, private router: Router) { }
 
@@ -51,6 +52,13 @@ export class FormSectionsComponent implements OnInit {
 
         // Initialisation des valeurs dans les champs inputs
         this.section.id = this.lastId.toString();
+      },
+      (err: any) => {
+        this.handleError(`[Erreur] FormSectionsComponent - ngOnInit()`, err);
+      },
+      () => {
+        // onComplete
+        // Nothing
       }
     );
   }
@@ -60,27 +68,37 @@ export class FormSectionsComponent implements OnInit {
    */
   public onSubmit(): void {
 
-    // Si on récupère une Rubrique via l'ID, alors c'est qu'il existe, donc on appel la méthode "update" sinon "create"
-    let sect = this.sectionService.readSection(this.section.id);
-    // Si il n'existe pas de rubrique avec cet ID...
-    if (sect === undefined) {
-      //... alors on le formatte ...
-      this.section = this.formatSectionName(this.section);
-      // ... et on le crée ...
-      this.sectionService.createSection(this.section);
-    } else {
+    // Si on récupère une Rubrique via l'ID, alors c'est qu'elle existe, donc on appelle la méthode "update" sinon "create"
+    this.sectionService.readSection(this.section.id).subscribe(
+      (sect: Section) => {
+        console.log(sect);
+        // Si il n'existe pas de rubrique avec cet ID...
+        if (sect === undefined) {
+          //... alors on le formatte ...
+          this.section = this.formatSectionName(this.section);
+          // ... et on le crée ...
+          this.sectionService.createSection(this.section);
+        } else {
 
-      //... Sinon on le formatte ...
-      if (this.section.name.startsWith('[')) {
-        this.section.name = this.section.name.substr(3).trim();
+          //... Sinon on le formatte ...
+          if (this.section.name.startsWith('[')) {
+            this.section.name = this.section.name.substr(3).trim();
+          }
+          this.section = this.formatSectionName(this.section);
+
+          // ... et on modifie l'existant.
+          this.sectionService.updateSection(this.section);
+        }
+      },
+      (err: any) => {
+        this.handleError(`[Erreur] FormSectionsComponent - onSubmit()`, err);
+      },
+      () => {
+        // onComplete
+        // On recharge la page
+        this.redirectTo('budgetiz/labels/section');
       }
-      this.section = this.formatSectionName(this.section);
-
-      // ... et on modifie l'existant.
-      this.sectionService.updateSection(this.section);
-    }
-    // On recharge la page
-    this.redirectTo('budgetiz/labels/section')
+    );
   }
 
   /**
@@ -116,5 +134,21 @@ export class FormSectionsComponent implements OnInit {
       return 'Valeur obligatoire';
     }
     return '';
+  }
+
+  /**
+   * Gestion des erreurs
+   * 
+   * @param operation 
+   * @param result 
+   * 
+   * @returns 
+   */
+  private handleError<T>(operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
+      console.error(error);
+      console.error(`${operation} failed: ${error.message}`);
+      return of(result as T);
+    }
   }
 }

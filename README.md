@@ -26,14 +26,20 @@ Run `ng serve -o` pour lancer avec rafraichissement en temps réel
 # ROADMAP 
 
 ## V1.0.0
+/!\ Revoir le get() 
+
 Feature - Mettre en place la page Section
+    |- Contrôle sur le deleteSection() - LabelsSectionsComponent
 Feature - Mettre en place la page Undersection
-Feature - Mettre en place la page Bank Account
+    |- Contrôle sur le deleteUndersection() - LabelsUndersectionComponent
+Feature - Mettre en place la page BankAccount
+    |- Contrôle sur le deleteBankAccount() - LabelsBankAccountComponent
 Feature - Mettre en place la page Datas
 Feature - Mettre en place la page Principale (Home)
 Feature - Deployer
 
 Fix - Vérification de la Documentation
+Fix - Vérification des imports, suppresion des inutilisés
 
 ## V2.0.0
 Feature - Mettre en place la page des Provisions (à spécifier).

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { EnumSectionType } from 'src/app/models/enum/enumSectionType';
 import { Section } from 'src/app/models/section.model';
 import { SectionService } from 'src/app/services/section.service';
 
@@ -17,8 +16,6 @@ export class LabelsSectionsComponent implements OnInit {
   sections: Section[] = [];
   /** Colonnes à afficher dans le tableau des Rubriques */
   sectionColumns: Array<string> = ['id', 'name', 'type', 'edit', 'remove'];
-  /** Enum Type*/
-  enumTypeList = Object.values(EnumSectionType);
 
   /**
    * Constructeur du composant SectionComponent 

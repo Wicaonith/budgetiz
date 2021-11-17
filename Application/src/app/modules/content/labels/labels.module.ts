@@ -7,9 +7,10 @@ import { LabelsRoutingModule } from './labels-routing.module';
 import { LabelsTabsComponent } from './components/tabs/labels-tabs.component';
 import { LabelsSectionsComponent } from './components/labels-sections.component';
 import { LabelsUndersectionsComponent } from './components/labels-undersections.component';
-import { LabelsBankaccountComponent } from './components/labels-bankaccount.component';
+import { LabelsBankAccountComponent } from './components/labels-bankaccount.component';
 import { FormSectionsComponent } from './components/forms/form-sections.component';
 import { FormUndersectionsComponent } from './components/forms/form-undersections.component';
+import { FormBankAccountComponent } from './components/forms/form-bankaccounts.component';
 
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatIconModule } from '@angular/material/icon';
@@ -24,9 +25,10 @@ import { MatButtonModule } from '@angular/material/button';
     LabelsTabsComponent,
     LabelsSectionsComponent,
     LabelsUndersectionsComponent,
-    LabelsBankaccountComponent,
+    LabelsBankAccountComponent,
     FormSectionsComponent,
-    FormUndersectionsComponent
+    FormUndersectionsComponent,
+    FormBankAccountComponent
   ],
   imports: [
     CommonModule,

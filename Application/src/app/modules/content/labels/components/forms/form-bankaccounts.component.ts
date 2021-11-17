@@ -1,55 +1,97 @@
-import { Component, OnInit } from '@angular/core';
-import { TEST_BANKACCOUNT } from 'src/app/mock/mock-bankaccount';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { BankAccount } from 'src/app/models/bankAccount.model';
-import { EnumSectionType } from 'src/app/models/enum/enumSectionType';
+import { EnumBankAccountType } from 'src/app/models/enum/enumBankAccountType';
+import { BankAccountService } from 'src/app/services/bankaccount.service';
 
 @Component({
-  selector: 'app-bankaccount',
-  templateUrl: './bankaccount.component.html',
-  styleUrls: ['../../../../app.component.css']
+  selector: 'app-form-bankaccount',
+  templateUrl: './form-bankaccounts.component.html',
+  styleUrls: ['../../../../../app.component.css']
 })
-export class BankAccountComponent implements OnInit {
+export class FormBankAccountComponent implements OnInit {
 
-  /** Liste des Comptes (NAME/TYPE)*/
-  account: Array<BankAccount> = new Array();
-  /** Colonnes à afficher dans le tableau des Comptes */
-  accountColumns: Array<string> = ['name', 'type', 'remove'];
+  /** L'objet lié au Formulaire */
+  @Input() bankAccount: BankAccount = new BankAccount("", "", "");
+  /** Enum des Types de Rubriques */
+  enumTypeList = Object.values(EnumBankAccountType);
+  /** Dernier identifiant */
+  lastId: number = 0;
+  /** FormControl pour vérifier la validité des champs */
+  required = new FormControl('', [Validators.required]);
 
-  /** Enum Type*/
-  enumTypeList = Object.values(EnumSectionType);
-
+  /** 
+   * Constructeur du composant FormBankAccountComponent
+   */
+  public constructor(private bankAccountService: BankAccountService, private router: Router) { }
 
   /**
-   * Constructeur vide
+   * Initialise le composant
    */
-  constructor() { }
+  public ngOnInit(): void {
 
+    //Appel du Service - Récupère toutes les Rubriques en base
+    this.bankAccountService.readBankAccounts().subscribe(
+      (bankAccounts: BankAccount[]) => {
 
-  /**
-   * Appel a l'initialisation
-   * Instancie le tableau des Sous-Rubriques
+        let isInit: boolean = this.lastId === 0;
+        for (let bankAccount of bankAccounts) {
+          // ... et si l'identifiant de la rubrique est supérieur à la variable lastId..
+          if (Number(bankAccount.id) > this.lastId) {
+            // ... on valorise lastId.
+            this.lastId = Number(bankAccount.id);
+          }
+        }
+        if (isInit) {
+          // Valorise lastId avec le prochain Identifiant à ajouter.
+          this.lastId += 1;
+        }
+
+        // Initialisation des valeurs dans les champs inputs
+        this.bankAccount.id = this.lastId.toString();
+      }
+    );
+  }
+
+  /** 
+   * Lance la modification ou la création après l'enregistrement du formulaire
    */
-  ngOnInit(): void {
-    this.account = TEST_BANKACCOUNT;
+  public onSubmit(): void {
+
+    // Si on récupère une Rubrique via l'ID, alors c'est qu'il existe, donc on appel la méthode "update" sinon "create"
+    let ba = this.bankAccountService.readBankAccount(this.bankAccount.id);
+    // Si il n'existe pas de rubrique avec cet ID...
+    if (ba === undefined) {
+      // ... alors on le crée ...
+      this.bankAccountService.createBankAccount(this.bankAccount);
+    } else {
+
+      // ... alors on modifie l'existant.
+      this.bankAccountService.updateBankAccount(this.bankAccount);
+    }
+    // On recharge la page
+    this.redirectTo('budgetiz/labels/bankaccount')
   }
 
   /**
-   * Créer dans la base le compte bancaire avec la paire nom/type
+   * Redirige vers l'url passé en paramètre
    * 
-   * @param name - string - Le libellé de la rubrique à créer
-   * @param type - string - Le type de la rubrique à créer
+   * @param uri string - l'url de redirection
    */
-  createBankAccount(name: string, type: string): void {
-    console.log("createBankAccount");
+  redirectTo(uri: string) {
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
+      this.router.navigate([uri]));
   }
 
-  /**
-   * Supprime le compte bancaire correspondant a la ligne.
-   * 
-   * @param section - Section - La section à supprimer
+  /** 
+   * Gère les erreurs si requis
    */
-  removeBankAccount(bankAccount: BankAccount) {
-    console.log("removeBankAccount");
+  public getErrorMessageRequired(): string {
+    if (this.required.hasError('required')) {
+      return 'Valeur obligatoire';
+    }
+    return '';
   }
 
 }
