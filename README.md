@@ -12,7 +12,7 @@ Run `npm run start:e` pour lancer l'application desktop
 
 Run `ng serve -o` pour lancer avec rafraichissement en temps réel
 
-# Dépendance
+# Dépendances
     @angular/cli: ~12.2.11
     @angular/router: ~12.2.0
     @angular/core: ~12.2.0"
@@ -23,24 +23,36 @@ Run `ng serve -o` pour lancer avec rafraichissement en temps réel
     rxjs: ~6.6.0,
     tslib: ^2.3.0,
 
-# ROADMAP 
+# Roadmap
 
 ## V1.0.0
 /!\ Revoir le get() 
 
 Feature - Mettre en place la page Section
+
     |- Contrôle sur le deleteSection() - LabelsSectionsComponent
+    
 Feature - Mettre en place la page Undersection
+
     |- Contrôle sur le deleteUndersection() - LabelsUndersectionComponent
+    
 Feature - Mettre en place la page BankAccount
+
     |- Contrôle sur le deleteBankAccount() - LabelsBankAccountComponent
+    
 Feature - Mettre en place la page Datas
+
 Feature - Mettre en place la page Principale (Home)
+
 Feature - Deployer
 
 Fix - Vérification de la Documentation
+
 Fix - Vérification des imports, suppresion des inutilisés
+
 
 ## V2.0.0
 Feature - Mettre en place la page des Provisions (à spécifier).
+
 Feature - Mettre en place la page de l'Epargne (à spécifier).
+
