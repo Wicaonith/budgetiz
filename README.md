@@ -42,7 +42,7 @@ Feature - Mettre en place la page BankAccount
     
 Feature - Mettre en place la page Datas
 
-Feature - Mettre en place la page Principale (Home)
+Feature - Mettre en place la page du tableau
 
 Feature - Deployer
 
@@ -52,6 +52,8 @@ Fix - Vérification des imports, suppresion des inutilisés
 
 
 ## V2.0.0
+Feature - Mettre en place la page Principale (Home) (à spécifier)
+
 Feature - Mettre en place la page des Provisions (à spécifier).
 
 Feature - Mettre en place la page de l'Epargne (à spécifier).
