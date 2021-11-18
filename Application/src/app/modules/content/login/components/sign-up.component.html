@@ -1,0 +1,31 @@
+<!-- Formulaire d'ajout de nouvelles Sous-Rubriques -->
+<form *ngIf="login" (ngSubmit)="onSubmit()" #loginForm="ngForm">
+    <div class="formAdd-form">
+        <div>
+            <!-- Form input "Email" -->
+            <mat-form-field appearance="outline">
+                <mat-label>Email</mat-label>
+                <!-- Input -->
+                <input matInput #emailLogin name="emailLogin" placeholder="placeholder@gmail.com" value=""
+                    [(ngModel)]="login.email" #id="ngModel" required>
+                <mat-error *ngIf="required.invalid">{{getErrorMessageRequired()}}</mat-error>
+            </mat-form-field>
+        </div>
+        <br />
+        <div>
+            <!-- Form input "Mot de passe" -->
+            <mat-form-field appearance="outline">
+                <mat-label>Mot de passe</mat-label>
+                <!-- Input -->
+                <input matInput name="passLogin" placeholder="**********" value="" [(ngModel)]="login.password"
+                    #name="ngModel" [type]="'password'" required>
+                <!-- Message d'erreur -->
+                <mat-error *ngIf="required.invalid">{{getErrorMessageRequired()}}</mat-error>
+            </mat-form-field>
+        </div>
+        <div>
+            <!-- Bouton "Enregistrer" -->
+            <button mat-raised-button type="submit" [disabled]="!loginForm.form.valid">Enregistrer</button>
+        </div>
+    </div>
+</form>
