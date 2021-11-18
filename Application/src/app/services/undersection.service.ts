@@ -51,7 +51,7 @@ export class UndersectionService {
    * 
    * @returns Section - La Sous-Rubrique lié à l'ID
    */
-  public readUndersection(id: string): any {
+  public readUndersection(id: number): any {
 
     return this.crudService.get(id);
   }
@@ -73,7 +73,7 @@ export class UndersectionService {
    * 
    * @param undersection - Undersection - La Sous-Rubrique à supprimer
    */
-  public deleteUndersection(id: string): any {
+  public deleteUndersection(id: number): any {
 
     return this.crudService.delete(id).then(() => {
       console.log(`Suppression de la Rubrique n°${id}`); // Lorsque la suppression se passe bien

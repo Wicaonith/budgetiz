@@ -10,7 +10,7 @@ function firebaseSerialize<T>(object: T) {
 
 // We need a base Entity interface that our models will extend
 export interface Entity {
-    id?: string; // Optional for new entities
+    id?: number; // Optional for new entities
 }
 
 export class FirestoreCrudService<T extends Entity> {
@@ -30,14 +30,14 @@ export class FirestoreCrudService<T extends Entity> {
      * as an Optional Id, which will allow us to set
      * the Entity into a specific Document in the Collection
      */
-    add(entity: T, id?: string): Promise<T> {
+    add(entity: T, id?: number): Promise<T> {
         // We want to create a Typed Return of the added Entity
         return new Promise<T>((resolve) => {
             if (id) {
                 console.log("add: " + id);
                 // If there is an ID Provided, lets specifically set the Document
                 this.collection
-                    .doc(id)
+                    .doc(id.toString())
                     .set({ ...entity })
                     .then(() => {
                         resolve(entity);
@@ -59,8 +59,8 @@ export class FirestoreCrudService<T extends Entity> {
     /**
      * Our get method will fetch a single Entity by it's ID
      */
-    get(id: string): any {
-        return this.collection.doc<T>(id).snapshotChanges().pipe(
+    get(id: number): any {
+        return this.collection.doc<T>(id.toString()).snapshotChanges().pipe(
             // We want to map the document into a Typed JS Object
             map(doc => {
                 // Only if the entity exists should we build an object out of it
@@ -84,7 +84,7 @@ export class FirestoreCrudService<T extends Entity> {
             map(changes => {
                 return changes.map(a => {
                     const data = a.payload.doc.data() as T;
-                    data.id = a.payload.doc.id;
+                    data.id = Number(a.payload.doc.id);
                     return data;
                 });
             })
@@ -98,7 +98,7 @@ export class FirestoreCrudService<T extends Entity> {
     update(entity: T): Promise<T> {
         return new Promise<T>((resolve) => {
             this.collection
-                .doc<T>(entity.id as string)
+                .doc<T>(entity.id?.toString() as string)
                 .set(firebaseSerialize(entity))
                 .then(() => {
                     resolve({
@@ -108,10 +108,10 @@ export class FirestoreCrudService<T extends Entity> {
         });
     }
 
-    delete(id: string): Promise<void> {
+    delete(id: number): Promise<void> {
         return new Promise<void>((resolve) => {
             this.collection
-                .doc<T>(id)
+                .doc<T>(id.toString())
                 .delete()
                 .then(() => {
                     resolve();

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { MatSort, Sort } from '@angular/material/sort';
 import { Router } from '@angular/router';
 import { Section } from 'src/app/models/section.model';
 import { SectionService } from 'src/app/services/section.service';
@@ -8,22 +9,23 @@ import { SectionService } from 'src/app/services/section.service';
   templateUrl: './labels-sections.component.html',
   styleUrls: ['../../../../app.component.css']
 })
-export class LabelsSectionsComponent implements OnInit {
+export class LabelsSectionsComponent implements OnInit, AfterViewInit {
 
   /** Objet section du formulaire */
-  section: Section = new Section("", "", "");
+  section: Section = new Section(0, "", "");
   /** Liste des Rubriques (ID/NAME/TYPE)*/
-  sections: Section[] = [];
+  sections: Array<Section> = new Array();
   /** Colonnes à afficher dans le tableau des Rubriques */
   sectionColumns: Array<string> = ['id', 'name', 'type', 'edit', 'remove'];
-
+  @ViewChild(MatSort) sort: MatSort = new MatSort;
   /**
    * Constructeur du composant SectionComponent 
    * 
    * @param sectionService - SectionService - Injection du service SectionService
    */
-  constructor(private router: Router, private sectionService: SectionService) { }
+  constructor(private router: Router, private sectionService: SectionService) {
 
+  }
   /**
    * Appel a l'initialisation
    * Instancie le tableau des Rubriques
@@ -31,6 +33,14 @@ export class LabelsSectionsComponent implements OnInit {
   public ngOnInit(): void {
     //Appel du Service - Récupère toutes les Rubriques en base
     this.sections = this.sectionService.readSections();
+  }
+
+
+  public ngAfterViewInit(): void {
+    this.sectionService.readSections().subscribe((sections: Section[]) => {
+      this.sections = sections;
+      //this.sections.sort = this.sort;
+    });
   }
 
   /**
@@ -48,7 +58,7 @@ export class LabelsSectionsComponent implements OnInit {
    * 
    * @param section - Section - La section à supprimer
    */
-  public deleteSection(id: string): void {
+  public deleteSection(id: number): void {
 
     // Controle si une données l'utilise pas !
     if (true) {
@@ -56,6 +66,15 @@ export class LabelsSectionsComponent implements OnInit {
       this.sectionService.deleteSection(id).then(() => this.redirectTo('budgetiz/labels/section'));
     } else {
       alert("Une donnée utilise la Rubrique. Veuillez la modifier");
+    }
+  }
+
+  /** Announce the change in sort state for assistive technology. */
+  announceSortChange(sortState: Sort) {
+    if (sortState.direction) {
+      console.log(`Sorted ${sortState.direction}ending`);
+    } else {
+      console.log('Sorting cleared');
     }
   }
 

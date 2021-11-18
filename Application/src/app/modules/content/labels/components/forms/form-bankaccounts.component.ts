@@ -13,7 +13,7 @@ import { BankAccountService } from 'src/app/services/bankaccount.service';
 export class FormBankAccountComponent implements OnInit {
 
   /** L'objet lié au Formulaire */
-  @Input() bankAccount: BankAccount = new BankAccount("", "", "");
+  @Input() bankAccount: BankAccount = new BankAccount(0, "", "");
   /** Enum des Types de Rubriques */
   enumTypeList = Object.values(EnumBankAccountType);
   /** Dernier identifiant */
@@ -38,9 +38,9 @@ export class FormBankAccountComponent implements OnInit {
         let isInit: boolean = this.lastId === 0;
         for (let bankAccount of bankAccounts) {
           // ... et si l'identifiant de la rubrique est supérieur à la variable lastId..
-          if (Number(bankAccount.id) > this.lastId) {
+          if (bankAccount.id > this.lastId) {
             // ... on valorise lastId.
-            this.lastId = Number(bankAccount.id);
+            this.lastId = bankAccount.id;
           }
         }
         if (isInit) {
@@ -49,7 +49,7 @@ export class FormBankAccountComponent implements OnInit {
         }
 
         // Initialisation des valeurs dans les champs inputs
-        this.bankAccount.id = this.lastId.toString();
+        this.bankAccount.id = this.lastId;
       }
     );
   }

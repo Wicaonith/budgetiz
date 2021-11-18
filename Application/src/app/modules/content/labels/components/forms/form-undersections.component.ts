@@ -14,7 +14,7 @@ import { UndersectionService } from 'src/app/services/undersection.service';
 export class FormUndersectionsComponent implements OnInit {
 
   /** L'objet lié au Formulaire */
-  @Input() undersection: Undersection = new Undersection("0", "", new Section("", "", ""), true);
+  @Input() undersection: Undersection = new Undersection(0, "", new Section(0, "", ""), true);
   /** Liste des Rubriques mères */
   sections: Array<Section> = new Array();
   /** Dernier identifiant */
@@ -52,7 +52,7 @@ export class FormUndersectionsComponent implements OnInit {
           this.lastId += 1;
         }
         // Initialisation des valeurs dans les champs inputs
-        this.undersection = new Undersection(this.lastId.toString(), "", new Section("", "", ""), true);
+        this.undersection = new Undersection(this.lastId, "", new Section(0, "", ""), true);
       });
 
     //Appel du Service - Récupère toutes les Rubriques en base

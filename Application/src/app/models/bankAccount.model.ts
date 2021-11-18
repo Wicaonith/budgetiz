@@ -6,7 +6,7 @@ import { Entity } from "../services/firestoreCrud.service";
 export class BankAccount implements Entity {
 
     /** L'identifiant du compte */
-    id: string
+    id: number
 
     /** Le nom du compte ("Compte Courant", "Livret A", etc.) */
     name: string;
@@ -17,11 +17,11 @@ export class BankAccount implements Entity {
     /**
      * Constructeur de la classe BankAccount
      * 
-     * @param id - string - L'identifiant du compte
+     * @param id - number - L'identifiant du compte
      * @param name - string - Le nom du compte ("Compte Courant", "Livret A", etc.) 
      * @param type - string - Le type de compte (Courant / Epargne)
      */
-    constructor(id: string, name: string, type: string) {
+    constructor(id: number, name: string, type: string) {
         this.id = id;
         this.name = name;
         this.type = type;

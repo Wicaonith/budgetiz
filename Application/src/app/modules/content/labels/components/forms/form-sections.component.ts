@@ -15,7 +15,7 @@ import { SectionService } from 'src/app/services/section.service';
 export class FormSectionsComponent implements OnInit {
 
   /** L'objet lié au Formulaire */
-  @Input() section: Section = new Section("", "", "");
+  @Input() section: Section = new Section(0, "", "");
   /** Enum des Types de Rubriques */
   enumTypeList = Object.values(EnumSectionType);
   /** Dernier identifiant */
@@ -40,9 +40,9 @@ export class FormSectionsComponent implements OnInit {
         let isInit: boolean = this.lastId === 0;
         for (let section of sections) {
           // ... et si l'identifiant de la rubrique est supérieur à la variable lastId..
-          if (Number(section.id) > this.lastId) {
+          if (section.id > this.lastId) {
             // ... on valorise lastId.
-            this.lastId = Number(section.id);
+            this.lastId = section.id;
           }
         }
         if (isInit) {
@@ -51,7 +51,7 @@ export class FormSectionsComponent implements OnInit {
         }
 
         // Initialisation des valeurs dans les champs inputs
-        this.section.id = this.lastId.toString();
+        this.section.id = this.lastId;
       },
       (err: any) => {
         this.handleError(`[Erreur] FormSectionsComponent - ngOnInit()`, err);

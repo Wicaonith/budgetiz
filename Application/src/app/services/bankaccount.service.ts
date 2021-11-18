@@ -32,7 +32,7 @@ export class BankAccountService {
     return this.crudService.list();
   }
 
-  public readBankAccount(id: string): any {
+  public readBankAccount(id: number): any {
     return this.crudService.get(id);
   }
 
@@ -43,7 +43,7 @@ export class BankAccountService {
     });
   }
 
-  public deleteBankAccount(id: string): any {
+  public deleteBankAccount(id: number): any {
 
     return this.crudService.delete(id).then(() => {
       console.log(`Suppression ddu compte n°${id}`); // Lorsque la suppression se passe bien

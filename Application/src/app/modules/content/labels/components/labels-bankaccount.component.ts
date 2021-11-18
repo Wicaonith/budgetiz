@@ -11,7 +11,7 @@ import { BankAccountService } from 'src/app/services/bankaccount.service';
 export class LabelsBankAccountComponent implements OnInit {
 
   /** Objet section du formulaire */
-  bankAccount: BankAccount = new BankAccount("", "", "");
+  bankAccount: BankAccount = new BankAccount(0, "", "");
   /** Liste des Rubriques (ID/NAME/TYPE)*/
   bankAccounts: BankAccount[] = [];
   /** Colonnes à afficher dans le tableau des Rubriques */
@@ -34,7 +34,7 @@ export class LabelsBankAccountComponent implements OnInit {
   }
 
 
-  public deleteSection(id: string): void {
+  public deleteSection(id: number): void {
 
     // Controle si une données l'utilise pas !
     if (true) {

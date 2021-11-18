@@ -51,7 +51,7 @@ export class SectionService {
    * 
    * @returns Section - La Rubrique lié à l'ID
    */
-  public readSection(id: string): any {
+  public readSection(id: number): any {
     return this.crudService.get(id);
   }
 
@@ -72,7 +72,7 @@ export class SectionService {
    * 
    * @param section - Section - La Rubrique à supprimer
    */
-  public deleteSection(id: string): any {
+  public deleteSection(id: number): any {
 
     return this.crudService.delete(id).then(() => {
       console.log(`Suppression de la Rubrique n°${id}`); // Lorsque la suppression se passe bien

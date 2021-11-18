@@ -13,7 +13,7 @@ import { UndersectionService } from 'src/app/services/undersection.service';
 })
 export class LabelsUndersectionsComponent implements OnInit {
 
-  undersection: Undersection = new Undersection("", "", new Section("", "", ""), true);
+  undersection: Undersection = new Undersection(0, "", new Section(0, "", ""), true);
   /** Liste des Sous Rubriques (ID/NAME/SECTION/TYPE/INTAB)*/
   undersections: Array<Undersection> = new Array();
   /** Colonnes à afficher dans le tableau des Sous-Rubriques */
@@ -75,7 +75,7 @@ export class LabelsUndersectionsComponent implements OnInit {
    * 
    * @param id - number - L'identifiant de la Sous-Rubrique à lire
    */
-  public readUndersection(id: string) {
+  public readUndersection(id: number) {
 
     //Appel du service - Récupère une Sous-Rubrique par rapport à son identifiant.
     this.undersectionService.readUndersection(id);
