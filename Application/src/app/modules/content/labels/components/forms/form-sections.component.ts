@@ -12,16 +12,26 @@ import { SectionService } from 'src/app/services/section.service';
   templateUrl: './form-sections.component.html',
   styleUrls: ['../../../../../app.component.css']
 })
+/**
+ * Classe Composant FormSectionsComponent
+ * 
+ * @use Permet d'afficher le formulaire d'ajout et de modification des Rubriques
+ */
 export class FormSectionsComponent implements OnInit {
 
   /** L'objet lié au Formulaire */
   @Input() section: Section = new Section(0, "", "");
+
   /** Enum des Types de Rubriques */
   enumTypeList = Object.values(EnumSectionType);
+
   /** Dernier identifiant */
   lastId: number = 0;
+
   /** FormControl pour vérifier la validité des champs */
   required = new FormControl('', [Validators.required]);
+  /** Permet de savoir si la Rubrique soumise par le formulaire est à créer ou modifier */
+  isModif: boolean = false;
 
   /** 
    * Constructeur du composant FormSectionsComponent
@@ -35,32 +45,32 @@ export class FormSectionsComponent implements OnInit {
 
     //Appel du Service - Récupère toutes les Rubriques en base
     this.sectionService.readSections().subscribe(
-      (sections: Section[]) => {
+      (sections: Section[]) => { // onNext
 
-        let isInit: boolean = this.lastId === 0;
-        for (let section of sections) {
-          // ... et si l'identifiant de la rubrique est supérieur à la variable lastId..
-          if (section.id > this.lastId) {
-            // ... on valorise lastId.
-            this.lastId = section.id;
-          }
-        }
-        if (isInit) {
-          // Valorise lastId avec le prochain Identifiant à ajouter.
-          this.lastId += 1;
-        }
-
-        // Initialisation des valeurs dans les champs inputs
-        this.section.id = this.lastId;
+        this.readLastId(sections);
       },
-      (err: any) => {
+      (err: any) => { // onError
         this.handleError(`[Erreur] FormSectionsComponent - ngOnInit()`, err);
-      },
-      () => {
-        // onComplete
-        // Nothing
       }
     );
+  }
+  public readLastId(sections: Section[]): void {
+
+    let isInit: boolean = this.lastId === 0;
+    for (let section of sections) {
+      // ... et si l'identifiant de la rubrique est supérieur à la variable lastId..
+      if (section.id > this.lastId) {
+        // ... on valorise lastId.
+        this.lastId = section.id;
+      }
+    }
+    if (isInit) {
+      // Valorise lastId avec le prochain Identifiant à ajouter.
+      this.lastId += 1;
+    }
+
+    // Initialisation des valeurs dans les champs inputs
+    this.section.id = this.lastId;
   }
 
   /** 
@@ -70,35 +80,31 @@ export class FormSectionsComponent implements OnInit {
 
     // Si on récupère une Rubrique via l'ID, alors c'est qu'elle existe, donc on appelle la méthode "update" sinon "create"
     this.sectionService.readSection(this.section.id).subscribe(
-      (sect: Section) => {
-        console.log(sect);
-        // Si il n'existe pas de rubrique avec cet ID...
-        if (sect === undefined) {
-          //... alors on le formatte ...
-          this.section = this.formatSectionName(this.section);
-          // ... et on le crée ...
-          this.sectionService.createSection(this.section);
-        } else {
-
-          //... Sinon on le formatte ...
-          if (this.section.name.startsWith('[')) {
-            this.section.name = this.section.name.substr(3).trim();
-          }
-          this.section = this.formatSectionName(this.section);
-
-          // ... et on modifie l'existant.
-          this.sectionService.updateSection(this.section);
-        }
+      (sect: Section) => { // onNext
+        this.isModif = sect === undefined
       },
-      (err: any) => {
-        this.handleError(`[Erreur] FormSectionsComponent - onSubmit()`, err);
-      },
-      () => {
-        // onComplete
-        // On recharge la page
-        this.redirectTo('budgetiz/labels/section');
+      (err: any) => { // onError
+        this.handleError(`[Erreur] FormSectionsComponent - ngOnInit()`, err);
       }
     );
+
+    // Si il n'existe pas de rubrique avec cet ID...
+    if (!this.isModif) {
+      //... alors on le formatte ...
+      this.section = this.formatSectionName(this.section);
+      // ... et on le crée ...
+      this.sectionService.createSection(this.section);
+    } else {
+
+      //... Sinon on le formatte ...
+      if (this.section.name.startsWith('[')) {
+        this.section.name = this.section.name.substr(3).trim();
+      }
+      this.section = this.formatSectionName(this.section);
+
+      // ... et on modifie l'existant.
+      this.sectionService.updateSection(this.section);
+    }
   }
 
   /**
@@ -121,7 +127,7 @@ export class FormSectionsComponent implements OnInit {
    * 
    * @param uri string - l'url de redirection
    */
-  redirectTo(uri: string) {
+  redirectTo(uri: string): void {
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
       this.router.navigate([uri]));
   }

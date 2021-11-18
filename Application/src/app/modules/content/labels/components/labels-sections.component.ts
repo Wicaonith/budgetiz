@@ -1,6 +1,8 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatSort, Sort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { Observable, of } from 'rxjs';
 import { Section } from 'src/app/models/section.model';
 import { SectionService } from 'src/app/services/section.service';
 
@@ -13,10 +15,12 @@ export class LabelsSectionsComponent implements OnInit, AfterViewInit {
 
   /** Objet section du formulaire */
   section: Section = new Section(0, "", "");
-  /** Liste des Rubriques (ID/NAME/TYPE)*/
-  sections: Array<Section> = new Array();
   /** Colonnes à afficher dans le tableau des Rubriques */
   sectionColumns: Array<string> = ['id', 'name', 'type', 'edit', 'remove'];
+
+  /** Données du tableau : Liste des Rubriques (ID/NAME/TYPE)*/
+  datasource = new MatTableDataSource<Section>();
+
   @ViewChild(MatSort) sort: MatSort = new MatSort;
   /**
    * Constructeur du composant SectionComponent 
@@ -31,16 +35,27 @@ export class LabelsSectionsComponent implements OnInit, AfterViewInit {
    * Instancie le tableau des Rubriques
    */
   public ngOnInit(): void {
-    //Appel du Service - Récupère toutes les Rubriques en base
-    this.sections = this.sectionService.readSections();
+
   }
 
 
   public ngAfterViewInit(): void {
+    //Appel du Service - Récupère toutes les Rubriques en base
     this.sectionService.readSections().subscribe((sections: Section[]) => {
-      this.sections = sections;
-      //this.sections.sort = this.sort;
-    });
+      // Met à jour le tableau
+      this.datasource = new MatTableDataSource(sections);
+      if (this.sort) { // Vérifier qu'il y a bien un tri
+        this.datasource.sort = this.sort;
+      }
+
+    },
+      (err: any) => {
+        this.handleError(`[Erreur] FormSectionsComponent - ngOnInit()`, err);
+      },
+      () => {
+        // onComplete
+        // Nothing
+      });
   }
 
   /**
@@ -86,5 +101,21 @@ export class LabelsSectionsComponent implements OnInit, AfterViewInit {
   redirectTo(uri: string) {
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
       this.router.navigate([uri]));
+  }
+
+  /**
+ * Gestion des erreurs
+ * 
+ * @param operation 
+ * @param result 
+ * 
+ * @returns 
+ */
+  private handleError<T>(operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
+      console.error(error);
+      console.error(`${operation} failed: ${error.message}`);
+      return of(result as T);
+    }
   }
 }
