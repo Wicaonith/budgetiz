@@ -8,7 +8,6 @@ import { BrowserModule } from '@angular/platform-browser';
 // Module Firebase
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
-import { AngularFireAuthModule } from "@angular/fire/auth";
 
 // Modules Budgetiz'
 import { AppRoutingModule } from './app-routing.module';
@@ -18,7 +17,6 @@ import { SavingModule } from './modules/content/saving/saving.module';
 import { LabelsModule } from './modules/content/labels/labels.module';
 import { HomeModule } from './modules/content/home/home.module';
 import { DatasModule } from './modules/content/datas/datas.module';
-import { LoginModule } from './modules/content/login/login.module';
 
 //Services
 import { SectionService } from './services/section.service';
@@ -45,10 +43,8 @@ import { environment } from 'src/environments/environment';
     LabelsModule,
     HomeModule,
     DatasModule,
-    LoginModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule, // for firestore
-    AngularFireAuthModule
   ],
   declarations: [
     AppComponent,

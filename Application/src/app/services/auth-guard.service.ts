@@ -7,13 +7,15 @@ export class AuthGuard implements CanActivate {
     constructor(private authService: AuthService, private router: Router) { }
 
     public canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-        let url: string = state.url;
+        let url:string = state.url;
         return this.checkLogin(url);
     }
 
-    public checkLogin(url: string): boolean {
+    public checkLogin(url: string) : boolean {
 
-
+        if(this.authService.isLoggedIn) {return true;}
+        this.authService.redirectUrl = url;
+        this.router.navigate(['/login']);
 
         return false
     }

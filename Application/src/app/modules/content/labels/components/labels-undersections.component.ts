@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { EnumSectionType } from 'src/app/models/enum/enumSectionType';
 import { Section } from 'src/app/models/section.model';
