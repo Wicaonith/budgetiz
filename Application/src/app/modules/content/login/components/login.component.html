@@ -1,0 +1,73 @@
+<div class="login-page">
+    <div class="content-login">
+        <button mat-raised-button (click)="googleLogin()">
+            <img src="assets/img/google_icon.png" width="20" height="20" title="Google-Signin" alt="Google-Signin"
+                style="margin-right:5px">
+            Connexion avec Google
+        </button>
+        <br /><br />
+        <p class="separator"> ou </p>
+        <br />
+        <form *ngIf="login" (ngSubmit)="onSubmit()" #loginForm="ngForm">
+            <!-- Form input "ID" -->
+            <mat-form-field appearance="outline">
+                <mat-label>Email</mat-label>
+                <input matInput type="email" name="email" placeholder="Email" value="" [(ngModel)]="login.userEmail"
+                    #userEmail="ngModel" required>
+            </mat-form-field>
+            <br />
+            <mat-form-field appearance="outline">
+                <mat-label>Mot de passe</mat-label>
+                <input matInput type="password" name="email" placeholder="Mot de passe" value=""
+                    [(ngModel)]="login.userPassword" #userPassword="ngModel" required>
+            </mat-form-field>
+            <br />
+            <div class="login-button">
+                <button mat-raised-button class="login-button" type="submit"
+                    [disabled]="!loginForm.form.valid">Connexion</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+<!--
+
+<h3 class="login-card-header">Select an option!</h3>
+<hr>
+<ul class="login-providers">
+    <li>
+        <div class="login-button google">Sign In With Google</div>
+<div class="login-button github" (click)="emailEnabled = true;">Sign In With Email</div>
+</li>
+</ul>
+</div>
+<ng-template #emailLogin>
+    <h3 class="login-card-header">Email Login</h3>
+    <hr>
+    <div class="email-login">
+        <div class="email-field">
+            <input type="email" placeholder="Email" [(ngModel)]="userEmail">
+        </div>
+        <div class="password-field">
+            <input type="password" placeholder="Password" [(ngModel)]="userPassword">
+        </div>
+        <div class="buttons">
+            <div class="email-login-btn btn1" (click)="emailPasswordLogin()">Login</div>
+            <div class="email-login-btn btn2" (click)="emailPasswordSignUp()">Sign Up</div>
+        </div>
+        <div class="other-options">
+            <ul>
+                <li><a href="" (click)="emailEnabled = false">Back To Providers</a></li>
+                <li><a href="">Forgot Password?</a></li>
+            </ul>
+        </div>
+    </div>
+</ng-template>
+</div>-->

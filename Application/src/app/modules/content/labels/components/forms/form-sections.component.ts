@@ -3,9 +3,9 @@ import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { EnumSectionType } from 'src/app/models/enum/enumSectionType';
-import { Section } from 'src/app/models/section.model';
-import { SectionService } from 'src/app/services/section.service';
+import { EnumSectionType } from 'src/app/shared/enum/enumSectionType';
+import { Section } from 'src/app/shared/models/section.model';
+import { SectionService } from 'src/app/shared/services/section.service';
 
 @Component({
   selector: 'app-form-sections',

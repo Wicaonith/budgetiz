@@ -3,8 +3,8 @@ import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { Section } from 'src/app/models/section.model';
-import { SectionService } from 'src/app/services/section.service';
+import { Section } from 'src/app/shared/models/section.model';
+import { SectionService } from 'src/app/shared/services/section.service';
 
 @Component({
   selector: 'app-labels-sections',

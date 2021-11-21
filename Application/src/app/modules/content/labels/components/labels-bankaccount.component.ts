@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { BankAccount } from 'src/app/models/bankAccount.model';
-import { BankAccountService } from 'src/app/services/bankaccount.service';
+import { BankAccount } from 'src/app/shared/models/bankAccount.model';
+import { BankAccountService } from 'src/app/shared/services/bankAccount/bankaccount.service';
 
 @Component({
   selector: 'app-labels-bankaccount',

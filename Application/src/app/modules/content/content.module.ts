@@ -1,27 +1,28 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
-import { HomeComponent } from './home/components/home.component';
-import { SavingComponent } from './saving/components/saving.component';
-import { LabelsBankaccountComponent } from './labels/components/labels-bankaccount.component';
-import { LabelsSectionsComponent } from './labels/components/labels-sections.component';
-import { LabelsUndersectionsComponent } from './labels/components/labels-undersections.component';
-import { DatasComponent } from './datas/components/datas.component';
-import { TaxesComponent } from './taxes/components/taxes.component';
 
+import { LabelsModule } from './labels/labels.module';
+import { TaxesModule } from './taxes/taxes.module';
+import { SavingModule } from './saving/saving.module';
+import { HomeModule } from './home/home.module';
+import { DatasModule } from './datas/datas.module';
+import { LoginModule } from './login/login.module';
 
 @NgModule({
   declarations: [
-    HomeComponent,
-    SavingComponent,
-    LabelsBankaccountComponent,
-    LabelsSectionsComponent,
-    LabelsUndersectionsComponent,
-    DatasComponent,
-    TaxesComponent,
   ],
   imports: [
     CommonModule,
+    FormsModule,
+    // Modules des Pages
+    LabelsModule,
+    TaxesModule,
+    SavingModule,
+    HomeModule,
+    DatasModule,
+    LoginModule,
   ]
 })
 export class ContentModule { }

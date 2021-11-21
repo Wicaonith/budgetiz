@@ -1,3 +1,6 @@
+/* Import */
+@import '~firebaseui/dist/firebaseui.css';
+
 /* Global */
 .main {
     width:100%;
@@ -21,6 +24,24 @@ h1 {
     margin-right: auto;
     margin-top: 20px;
     margin-bottom: 20px;
+}
+
+.separator {
+    text-align: center;
+    height: 0.5em;
+    border-bottom: 1px solid black;
+    margin-bottom: 0.5em;
+}
+.separator:first-line {
+    background-color: white;
+}
+.separator:before {
+    content: "__";
+    color: white;
+}
+.separator:after {
+    content: "__";
+    color: white;
 }
 
 /* Page not found */
@@ -165,4 +186,29 @@ h1 {
 .edit-button {
     padding: 0;
     min-width:30px;
+}
+
+
+/* Page Login */
+.login-page {
+    width:15%;
+    min-width: 230px;
+    border:#4da34d 3px solid;
+    border-radius: 10%;
+    padding:30px 30px 30px 30px;
+    margin-right:auto;
+    margin-left:auto;
+    margin-top: 5%;
+}
+
+.content-login {
+    margin-right:auto;
+    margin-left:auto;
+    width: 200px;
+}
+
+.login-button {
+    width:100px;
+    margin-right:auto;
+    margin-left:auto;
 }

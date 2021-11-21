@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { LabelsRoutingModule } from './labels-routing.module';
+import { FormsModule } from '@angular/forms';
 
 //Component
 import { LabelsTabsComponent } from './components/tabs/labels-tabs.component';
@@ -12,6 +12,8 @@ import { FormSectionsComponent } from './components/forms/form-sections.componen
 import { FormUndersectionsComponent } from './components/forms/form-undersections.component';
 import { FormBankAccountComponent } from './components/forms/form-bankaccounts.component';
 
+
+// Material Module
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
@@ -23,10 +25,10 @@ import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
   declarations: [
-    LabelsTabsComponent,
     LabelsSectionsComponent,
     LabelsUndersectionsComponent,
     LabelsBankAccountComponent,
+    LabelsTabsComponent,
     FormSectionsComponent,
     FormUndersectionsComponent,
     FormBankAccountComponent
@@ -35,6 +37,7 @@ import { MatSortModule } from '@angular/material/sort';
     CommonModule,
     FormsModule,
     LabelsRoutingModule,
+    // Modules de Material
     MatTabsModule,
     MatIconModule,
     MatTableModule,

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { BankAccount } from '../models/bankAccount.model';
-import { FirestoreCrudService } from './firestoreCrud.service';
+import { BankAccount } from '../../models/bankAccount.model';
+import { FirestoreCrudService } from '../firestoreCrud.service';
 
 @Injectable({
   providedIn: 'root'

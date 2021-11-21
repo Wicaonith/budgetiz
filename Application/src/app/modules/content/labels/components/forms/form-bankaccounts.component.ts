@@ -1,9 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { BankAccount } from 'src/app/models/bankAccount.model';
-import { EnumBankAccountType } from 'src/app/models/enum/enumBankAccountType';
-import { BankAccountService } from 'src/app/services/bankaccount.service';
+import { BankAccount } from 'src/app/shared/models/bankAccount.model';
+import { EnumBankAccountType } from 'src/app/shared/enum/enumBankAccountType';
+import { BankAccountService } from 'src/app/shared/services/bankAccount/bankaccount.service';
 
 @Component({
   selector: 'app-form-bankaccount',
