@@ -37,6 +37,13 @@
             </mat-form-field>
         </div>
         <div>
+            <!-- Form idUser-->
+            <mat-form-field appearance="outline" class="invisible">
+                <!-- Input -->
+                <input matInput name="idUserSection" value="" [(ngModel)]="section.idUser" #idUser="ngModel">
+            </mat-form-field>
+        </div>
+        <div>
             <!-- Bouton "Enregistrer" -->
             <button mat-raised-button type="submit" [disabled]="!sectionForm.form.valid">Enregistrer</button>
         </div>

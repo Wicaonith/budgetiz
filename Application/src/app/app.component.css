@@ -60,6 +60,11 @@ h2 {
     color: green;
 }
 
+.invisible {
+    visibility: hidden;
+    height: 0;
+    width: 0;
+}
 
 /* Page not found */
 .page-not-found {

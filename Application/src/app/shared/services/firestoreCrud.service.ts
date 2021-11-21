@@ -11,6 +11,7 @@ function firebaseSerialize<T>(object: T) {
 // We need a base Entity interface that our models will extend
 export interface Entity {
     id?: number; // Optional for new entities
+    idUser?: string;
 }
 
 export class FirestoreCrudService<T extends Entity> {
@@ -34,7 +35,6 @@ export class FirestoreCrudService<T extends Entity> {
         // We want to create a Typed Return of the added Entity
         return new Promise<T>((resolve) => {
             if (id) {
-                console.log("add: " + id);
                 // If there is an ID Provided, lets specifically set the Document
                 this.collection
                     .doc(id.toString())
@@ -95,27 +95,11 @@ export class FirestoreCrudService<T extends Entity> {
      * Including it's ID property which it will use to find the
      * Entity. This is a Hard Update.
      */
-    update(entity: T): Promise<T> {
-        return new Promise<T>((resolve) => {
-            this.collection
-                .doc<T>(entity.id?.toString() as string)
-                .set(firebaseSerialize(entity))
-                .then(() => {
-                    resolve({
-                        ...entity,
-                    });
-                });
-        });
+    update(entity: T): Promise<void> {
+        return this.collection.doc<T>(entity.id?.toString()).set(entity, { merge: true });
     }
 
     delete(id: number): Promise<void> {
-        return new Promise<void>((resolve) => {
-            this.collection
-                .doc<T>(id.toString())
-                .delete()
-                .then(() => {
-                    resolve();
-                });
-        });
+        return this.collection.doc<T>(id?.toString()).delete();
     }
 }

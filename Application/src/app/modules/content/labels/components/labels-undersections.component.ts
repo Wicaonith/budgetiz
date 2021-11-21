@@ -3,8 +3,8 @@ import { Router } from '@angular/router';
 import { EnumSectionType } from 'src/app/shared/enum/enumSectionType';
 import { Section } from 'src/app/shared/models/section.model';
 import { Undersection } from 'src/app/shared/models/undersection.model';
-import { SectionService } from 'src/app/shared/services/section.service';
-import { UndersectionService } from 'src/app/shared/services/undersection.service';
+import { SectionService } from 'src/app/shared/services/sections/section.service';
+import { UndersectionService } from 'src/app/shared/services/undersections/undersection.service';
 
 @Component({
   selector: 'app-labels-undersections',
@@ -13,7 +13,7 @@ import { UndersectionService } from 'src/app/shared/services/undersection.servic
 })
 export class LabelsUndersectionsComponent implements OnInit {
 
-  undersection: Undersection = new Undersection(0, "", new Section(0, "", ""), true);
+  undersection: Undersection = new Undersection(0, "", new Section(0, "", "", ""), true, "");
   /** Liste des Sous Rubriques (ID/NAME/SECTION/TYPE/INTAB)*/
   undersections: Array<Undersection> = new Array();
   /** Colonnes à afficher dans le tableau des Sous-Rubriques */
@@ -89,7 +89,7 @@ export class LabelsUndersectionsComponent implements OnInit {
   public updateUndersection(undersection: Undersection) {
 
     //Appel du service - Modifie la Sous-Rubrique.
-    this.undersection = new Undersection(undersection.id, undersection.name, undersection.section, undersection.inTab);
+    this.undersection = new Undersection(undersection.id, undersection.name, undersection.section, undersection.inTab, undersection.idUser);
   }
 
   /**

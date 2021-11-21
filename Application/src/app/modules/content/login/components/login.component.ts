@@ -40,7 +40,12 @@ export class LoginComponent {
     if (user) {
       console.log("CONNECTÉ OMG");
     }
-    this.router.navigate(['budgetiz/home']);
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(
+      () => {
+        this.router.navigate(['budgetiz/home']);
+      }
+    );
+
   }
 
   emailPasswordLogin() {

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Section } from '../models/section.model';
-import { FirestoreCrudService } from './firestoreCrud.service';
+import { Section } from '../../models/section.model';
+import { FirestoreCrudService } from '../firestoreCrud.service';
 
 @Injectable({
   providedIn: 'root',
@@ -16,17 +16,10 @@ export class SectionService {
 
   crudService: FirestoreCrudService<Section>;
 
-  // AngularFirestore should be found by Angular DI System
   constructor(afs: AngularFirestore) {
-    // Let's create our CrusService and use the a Collection with the name 'sections'
     this.crudService = new FirestoreCrudService<Section>(afs, this.dbPath);
   }
 
-  /**
-   * Créer une Rubrique dans la base
-   * 
-   * @param section - Section - La Rubrique à créer
-   */
   public createSection(section: Section): any {
 
     // Insertion en base de la Rubrique
@@ -35,31 +28,15 @@ export class SectionService {
     });
   }
 
-  /**
-   * Récupère dans la base les informations de toutes les Rubriques
-   * 
-   * @returns Observable<Section[]> - Liste des Rubriques
-   */
   public readSections(): any {
     return this.crudService.list();
   }
 
-  /**
-   * Récupère dans la base les informations d'une Rubrique par rapport à son nom et son type.
-   * 
-   * @param id - number - L'identifiant de la Rubrique à lire
-   * 
-   * @returns Section - La Rubrique lié à l'ID
-   */
+
   public readSection(id: number): any {
     return this.crudService.get(id);
   }
 
-  /**
-   * Modifie la Rubrique correspondante a celle passé en paramètre
-   * 
-   * @param section - Section - La Rubrique à modifier
-   */
   public updateSection(section: Section): any {
 
     return this.crudService.update({ ...section }).then(() => {
@@ -67,23 +44,12 @@ export class SectionService {
     });
   }
 
-  /**
-   * Supprime la Rubrique correspondante à celle passé en paramètre
-   * 
-   * @param section - Section - La Rubrique à supprimer
-   */
   public deleteSection(id: number): any {
-
     return this.crudService.delete(id).then(() => {
-      console.log(`Suppression de la Rubrique n°${id}`); // Lorsque la suppression se passe bien
+      console.log(`Suppression de la Rubrique n°${id.toString()}`); // Lorsque la suppression se passe bien
     });
   }
 
-  /**
-   * Permet la gestion de log
-   * 
-   * @param log - string - 
-   */
   private log(log: string) {
     console.info(log);
   }

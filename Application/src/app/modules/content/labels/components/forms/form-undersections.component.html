@@ -36,6 +36,13 @@
             </mat-form-field>
         </div>
         <div>
+            <!-- Form idUser-->
+            <mat-form-field appearance="outline" class="invisible">
+                <!-- Input -->
+                <input matInput name="idUserUndersection" value="" [(ngModel)]="undersection.idUser" #idUser="ngModel">
+            </mat-form-field>
+        </div>
+        <div>
             <!-- Bouton "Enregistrer" -->
             <button mat-raised-button type="submit" [disabled]="!undersectionForm.form.valid">Enregistrer</button>
         </div>

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BankAccount } from 'src/app/shared/models/bankAccount.model';
-import { BankAccountService } from 'src/app/shared/services/bankAccount/bankaccount.service';
+import { BankAccountsService } from 'src/app/shared/services/bankAccounts/bankaccounts.service';
 
 @Component({
   selector: 'app-labels-bankaccount',
@@ -11,7 +11,7 @@ import { BankAccountService } from 'src/app/shared/services/bankAccount/bankacco
 export class LabelsBankAccountComponent implements OnInit {
 
   /** Objet section du formulaire */
-  bankAccount: BankAccount = new BankAccount(0, "", "");
+  bankAccount: BankAccount = new BankAccount(0, "", "", "");
   /** Liste des Rubriques (ID/NAME/TYPE)*/
   bankAccounts: BankAccount[] = [];
   /** Colonnes à afficher dans le tableau des Rubriques */
@@ -20,11 +20,11 @@ export class LabelsBankAccountComponent implements OnInit {
   /**
    * Constructeur du composant SectionComponent 
    */
-  constructor(private router: Router, private bankAccountService: BankAccountService) { }
+  constructor(private router: Router, private bankAccountsService: BankAccountsService) { }
 
   public ngOnInit(): void {
     //Appel du Service - Récupère toutes les Rubriques en base
-    this.bankAccounts = this.bankAccountService.readBankAccounts();
+    this.bankAccounts = this.bankAccountsService.readBankAccounts();
   }
 
 
@@ -39,7 +39,7 @@ export class LabelsBankAccountComponent implements OnInit {
     // Controle si une données l'utilise pas !
     if (true) {
       //... alors Appel du service - Supprime la Rubrique.
-      this.bankAccountService.deleteBankAccount(id).then(() => this.redirectTo('budgetiz/labels/bankaccount'));
+      this.bankAccountsService.deleteBankAccount(id).then(() => this.redirectTo('budgetiz/labels/bankaccount'));
     } else {
       alert("Une donnée utilise la Rubrique. Veuillez la modifier");
     }

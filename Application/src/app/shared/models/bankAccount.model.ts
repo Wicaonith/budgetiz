@@ -14,6 +14,8 @@ export class BankAccount implements Entity {
     /** Le type de compte (Courant / Epargne) */
     type: string;
 
+    idUser: string
+
     /**
      * Constructeur de la classe BankAccount
      * 
@@ -21,9 +23,10 @@ export class BankAccount implements Entity {
      * @param name - string - Le nom du compte ("Compte Courant", "Livret A", etc.) 
      * @param type - string - Le type de compte (Courant / Epargne)
      */
-    constructor(id: number, name: string, type: string) {
+    constructor(id: number, name: string, type: string, idUser: string) {
         this.id = id;
         this.name = name;
         this.type = type;
+        this.idUser = idUser;
     }
 }

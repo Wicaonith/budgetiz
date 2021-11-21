@@ -9,10 +9,10 @@ import { FirestoreCrudService } from '../firestoreCrud.service';
 /**
  * 
  */
-export class BankAccountService {
+export class BankAccountsService {
 
   // Path de la BDD Firebase pour la table BankAccount
-  private dbPath = '/bankaccount';
+  private dbPath = '/bankaccounts';
 
   crudService: FirestoreCrudService<BankAccount>;
 

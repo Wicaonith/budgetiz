@@ -5,7 +5,8 @@ import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { EnumSectionType } from 'src/app/shared/enum/enumSectionType';
 import { Section } from 'src/app/shared/models/section.model';
-import { SectionService } from 'src/app/shared/services/section.service';
+import { SectionService } from 'src/app/shared/services/sections/section.service';
+import { UtilsService } from 'src/app/shared/services/utils.service';
 
 @Component({
   selector: 'app-form-sections',
@@ -20,7 +21,7 @@ import { SectionService } from 'src/app/shared/services/section.service';
 export class FormSectionsComponent implements OnInit {
 
   /** L'objet lié au Formulaire */
-  @Input() section: Section = new Section(0, "", "");
+  @Input() section: Section = new Section(0, "", "", "");
 
   /** Enum des Types de Rubriques */
   enumTypeList = Object.values(EnumSectionType);
@@ -30,13 +31,14 @@ export class FormSectionsComponent implements OnInit {
 
   /** FormControl pour vérifier la validité des champs */
   required = new FormControl('', [Validators.required]);
+
   /** Permet de savoir si la Rubrique soumise par le formulaire est à créer ou modifier */
   isModif: boolean = false;
 
   /** 
    * Constructeur du composant FormSectionsComponent
    */
-  public constructor(private sectionService: SectionService, private router: Router) { }
+  public constructor(private sectionService: SectionService, private utilsService: UtilsService, private router: Router) { }
 
   /**
    * Initialise le composant
@@ -46,14 +48,15 @@ export class FormSectionsComponent implements OnInit {
     //Appel du Service - Récupère toutes les Rubriques en base
     this.sectionService.readSections().subscribe(
       (sections: Section[]) => { // onNext
-
         this.readLastId(sections);
       },
       (err: any) => { // onError
         this.handleError(`[Erreur] FormSectionsComponent - ngOnInit()`, err);
       }
     );
+    this.section.idUser = this.utilsService.getUserUID();
   }
+
   public readLastId(sections: Section[]): void {
 
     let isInit: boolean = this.lastId === 0;
@@ -105,7 +108,13 @@ export class FormSectionsComponent implements OnInit {
       // ... et on modifie l'existant.
       this.sectionService.updateSection(this.section);
     }
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(
+      () => {
+        this.router.navigate(['budgetiz/labels/section']);
+      }
+    );
   }
+
 
   /**
    * Formatte le nom de la Rubrique sous la forme "[R] Salaire"
@@ -122,19 +131,11 @@ export class FormSectionsComponent implements OnInit {
   }
 
 
-  /**
-   * Redirige vers l'url passé en paramètre
-   * 
-   * @param uri string - l'url de redirection
-   */
   redirectTo(uri: string): void {
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
       this.router.navigate([uri]));
   }
 
-  /** 
-   * Gère les erreurs si requis
-   */
   public getErrorMessageRequired(): string {
     if (this.required.hasError('required')) {
       return 'Valeur obligatoire';
@@ -142,14 +143,6 @@ export class FormSectionsComponent implements OnInit {
     return '';
   }
 
-  /**
-   * Gestion des erreurs
-   * 
-   * @param operation 
-   * @param result 
-   * 
-   * @returns 
-   */
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       console.error(error);

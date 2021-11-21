@@ -21,6 +21,8 @@ export class DataTransaction {
     /** Le compte ayant la transaction */
     account: BankAccount;
 
+    idUser: string;
+
     /**
      * Contructeur de la classe DataTransaction
      * 
@@ -30,8 +32,9 @@ export class DataTransaction {
      * @param section - Section - La rubrique de la transaction
      * @param undersection - Undersection - La sous rubrique de la transaction
      * @param account - BankAccount - Le compte ayant la transaction
+     * @param idUser - string - L'identifiant de l'utilisateur
      */
-    constructor(id: number, month: string, amount: number, section: Section, undersection: Undersection, account: BankAccount) {
+    constructor(id: number, month: string, amount: number, section: Section, undersection: Undersection, account: BankAccount, idUser: string) {
 
         this.id = id;
         this.month = month;
@@ -39,5 +42,6 @@ export class DataTransaction {
         this.section = section;
         this.undersection = undersection;
         this.account = account;
+        this.idUser = idUser;
     }
 }

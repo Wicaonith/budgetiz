@@ -20,6 +20,8 @@ export class Undersection implements Entity {
     /** L'indicateur de la présence dans la tableau récapitulatif */
     inTab: boolean;
 
+    idUser: string;
+
     /**
      * Constructeur de la classe Undersection
      * 
@@ -28,10 +30,11 @@ export class Undersection implements Entity {
      * @param section - Undersection - La rubrique mère
      * @param inTab - boolean - Determine l'affichage dans le tableau ou non
      */
-    constructor(id: number, name: string, section: Section, inTab: boolean) {
+    constructor(id: number, name: string, section: Section, inTab: boolean, idUser: string) {
         this.id = id;
         this.name = name;
         this.section = section;
         this.inTab = inTab;
+        this.idUser = idUser;
     }
 }

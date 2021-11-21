@@ -4,7 +4,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { Section } from 'src/app/shared/models/section.model';
-import { SectionService } from 'src/app/shared/services/section.service';
+import { SectionService } from 'src/app/shared/services/sections/section.service';
 
 @Component({
   selector: 'app-labels-sections',
@@ -14,7 +14,7 @@ import { SectionService } from 'src/app/shared/services/section.service';
 export class LabelsSectionsComponent implements OnInit, AfterViewInit {
 
   /** Objet section du formulaire */
-  section: Section = new Section(0, "", "");
+  section: Section = new Section(0, "", "", "");
   /** Colonnes à afficher dans le tableau des Rubriques */
   sectionColumns: Array<string> = ['id', 'name', 'type', 'edit', 'remove'];
 

@@ -3,7 +3,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BankAccount } from 'src/app/shared/models/bankAccount.model';
 import { EnumBankAccountType } from 'src/app/shared/enum/enumBankAccountType';
-import { BankAccountService } from 'src/app/shared/services/bankAccount/bankaccount.service';
+import { BankAccountsService } from 'src/app/shared/services/bankAccounts/bankaccounts.service';
 
 @Component({
   selector: 'app-form-bankaccount',
@@ -13,7 +13,7 @@ import { BankAccountService } from 'src/app/shared/services/bankAccount/bankacco
 export class FormBankAccountComponent implements OnInit {
 
   /** L'objet lié au Formulaire */
-  @Input() bankAccount: BankAccount = new BankAccount(0, "", "");
+  @Input() bankAccount: BankAccount = new BankAccount(0, "", "", "");
   /** Enum des Types de Rubriques */
   enumTypeList = Object.values(EnumBankAccountType);
   /** Dernier identifiant */
@@ -24,7 +24,7 @@ export class FormBankAccountComponent implements OnInit {
   /** 
    * Constructeur du composant FormBankAccountComponent
    */
-  public constructor(private bankAccountService: BankAccountService, private router: Router) { }
+  public constructor(private BankAccountsService: BankAccountsService, private router: Router) { }
 
   /**
    * Initialise le composant
@@ -32,7 +32,7 @@ export class FormBankAccountComponent implements OnInit {
   public ngOnInit(): void {
 
     //Appel du Service - Récupère toutes les Rubriques en base
-    this.bankAccountService.readBankAccounts().subscribe(
+    this.BankAccountsService.readBankAccounts().subscribe(
       (bankAccounts: BankAccount[]) => {
 
         let isInit: boolean = this.lastId === 0;
@@ -60,15 +60,15 @@ export class FormBankAccountComponent implements OnInit {
   public onSubmit(): void {
 
     // Si on récupère une Rubrique via l'ID, alors c'est qu'il existe, donc on appel la méthode "update" sinon "create"
-    let ba = this.bankAccountService.readBankAccount(this.bankAccount.id);
+    let ba = this.BankAccountsService.readBankAccount(this.bankAccount.id);
     // Si il n'existe pas de rubrique avec cet ID...
     if (ba === undefined) {
       // ... alors on le crée ...
-      this.bankAccountService.createBankAccount(this.bankAccount);
+      this.BankAccountsService.createBankAccount(this.bankAccount);
     } else {
 
       // ... alors on modifie l'existant.
-      this.bankAccountService.updateBankAccount(this.bankAccount);
+      this.BankAccountsService.updateBankAccount(this.bankAccount);
     }
     // On recharge la page
     this.redirectTo('budgetiz/labels/bankaccount')

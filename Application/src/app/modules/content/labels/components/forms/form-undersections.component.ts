@@ -3,8 +3,8 @@ import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Section } from 'src/app/shared/models/section.model';
 import { Undersection } from 'src/app/shared/models/undersection.model';
-import { SectionService } from 'src/app/shared/services/section.service';
-import { UndersectionService } from 'src/app/shared/services/undersection.service';
+import { SectionService } from 'src/app/shared/services/sections/section.service';
+import { UndersectionService } from 'src/app/shared/services/undersections/undersection.service';
 
 @Component({
   selector: 'app-form-undersections',
@@ -14,7 +14,7 @@ import { UndersectionService } from 'src/app/shared/services/undersection.servic
 export class FormUndersectionsComponent implements OnInit {
 
   /** L'objet lié au Formulaire */
-  @Input() undersection: Undersection = new Undersection(0, "", new Section(0, "", ""), true);
+  @Input() undersection: Undersection = new Undersection(0, "", new Section(0, "", "", ""), true, "");
   /** Liste des Rubriques mères */
   sections: Array<Section> = new Array();
   /** Dernier identifiant */
@@ -52,7 +52,7 @@ export class FormUndersectionsComponent implements OnInit {
           this.lastId += 1;
         }
         // Initialisation des valeurs dans les champs inputs
-        this.undersection = new Undersection(this.lastId, "", new Section(0, "", ""), true);
+        this.undersection = new Undersection(this.lastId, "", new Section(0, "", "", ""), true, "");
       });
 
     //Appel du Service - Récupère toutes les Rubriques en base
