@@ -1,0 +1,39 @@
+<div class="signup-page">
+    <div class="content-signup">
+        <h2>Créer un compte</h2>
+        <form *ngIf="signUp" (ngSubmit)="onSubmit()" #signUpForm="ngForm">
+            <!-- Form input "ID" -->
+            <mat-form-field appearance="outline">
+                <mat-label>Email</mat-label>
+                <input matInput type="email" name="email" placeholder="Email" value="" [(ngModel)]="signUp.userEmail"
+                    #userEmail="ngModel" required>
+                <!-- Message d'erreur -->
+                <mat-error *ngIf="required.invalid">{{getErrorMessageRequired()}}</mat-error>
+            </mat-form-field>
+            <br />
+            <mat-form-field appearance="outline">
+                <mat-label>Mot de passe</mat-label>
+                <input matInput type="password" name="email" placeholder="Mot de passe" value=""
+                    [(ngModel)]="signUp.userPassword" #userPassword="ngModel" required>
+                <!-- Message d'erreur -->
+                <mat-error *ngIf="required.invalid">{{getErrorMessageRequired()}}</mat-error>
+            </mat-form-field>
+            <br />
+            <mat-form-field appearance="outline">
+                <mat-label>Confirmation mot de passe</mat-label>
+                <input matInput type="password" name="email" placeholder="Mot de passe" value=""
+                    [(ngModel)]="signUp.userConfirmedPassword" #userPassword="ngModel" required>
+                <!-- Message d'erreur -->
+                <mat-error *ngIf="required.invalid">{{getErrorMessageRequired()}}</mat-error>
+            </mat-form-field>
+            <mat-error *ngIf="errorMsg !== ''">{{ errorMsg }}</mat-error>
+            <div class="signup-button">
+                <button mat-raised-button class="signup-button" type="submit"
+                    [disabled]="!signUpForm.form.valid">Connexion</button>
+            </div>
+        </form>
+        <p class="login-create-link">
+            <a href="budgetiz/login">Retour</a>
+        </p>
+    </div>
+</div>

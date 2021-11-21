@@ -17,6 +17,13 @@ h1 {
 
 }
 
+h2 {
+    font-size: 16px;
+    margin: 15px 15px 15px 0;
+    padding: 0 0 0 10px;
+    border-left: #4da34d 10px solid;
+}
+
 .content-princ {
     min-height: 700px;
     max-width: 95%;
@@ -44,9 +51,19 @@ h1 {
     color: white;
 }
 
+::ng-deep .mat-error{
+    margin-bottom: 10px;
+}
+
+::ng-deep .mat-hint{
+    margin-bottom: 10px;
+    color: green;
+}
+
+
 /* Page not found */
 .page-not-found {
-    width:30%;
+    width:60%;
     margin-left:auto;
     margin-right:auto;
     margin-top: 50px;
@@ -59,7 +76,8 @@ h1 {
 
 /* Header */
 .banner img {
-    margin: 5px 16px;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 
 .banner-menu {
@@ -117,6 +135,17 @@ h1 {
 
 .navigation li a:hover, #navigation li a:focus, #navigation li a:active {
     background: linear-gradient(#4da34d,#326e32);
+}
+
+.banner_icon {
+   margin-left: 50px;
+}
+
+.logout-button {
+    float: right;
+    text-align: center;
+    padding-top: 10px;
+    margin-right:20px;
 }
 
 /* Footer */
@@ -211,4 +240,58 @@ h1 {
     width:100px;
     margin-right:auto;
     margin-left:auto;
+}
+
+.login-create-link {
+    margin-top:5px; 
+    text-align:center
+}
+
+/* Page SignUp */
+.signup-page {
+    width:15%;
+    min-width: 230px;
+    border:#4da34d 3px solid;
+    border-radius: 10%;
+    padding:30px 30px 30px 30px;
+    margin-right:auto;
+    margin-left:auto;
+    margin-top: 5%;
+}
+
+.content-signup {
+    margin-right:auto;
+    margin-left:auto;
+    width: 200px;
+}
+
+.signup-button {
+    width:100px;
+    margin-right:auto;
+    margin-left:auto;
+}
+
+/* Page Reset Pwd */
+.reset-pwd-page {
+    width:15%;
+    min-width: 250px;
+    border:#4da34d 3px solid;
+    border-radius: 10%;
+    padding:30px 30px 30px 30px;
+    margin-right:auto;
+    margin-left:auto;
+    margin-top: 5%;
+}
+
+.content-reset-pwd {
+    margin-right:auto;
+    margin-left:auto;
+    width: 100%;
+}
+
+.reset-pwd-button {
+    width:125px;
+    margin-right:auto;
+    margin-left:auto;
+    margin-top: 5px;
 }

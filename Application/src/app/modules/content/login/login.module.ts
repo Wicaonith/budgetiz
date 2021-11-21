@@ -2,8 +2,10 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-
+// Component
 import { LoginComponent } from './components/login.component';
+import { SingupComponent } from './components/singup.component';
+import { ResetPwdComponent } from './components/reset-pwd.component';
 
 
 // Material Module
@@ -19,7 +21,9 @@ import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
     declarations: [
-        LoginComponent
+        LoginComponent,
+        SingupComponent,
+        ResetPwdComponent
     ],
     imports: [
         CommonModule,

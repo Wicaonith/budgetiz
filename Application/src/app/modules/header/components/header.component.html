@@ -1,6 +1,9 @@
 <!-- Banner -->
 <div class="banner">
-    <img width="67" height="50" title="Budgetiz' Logo" alt="Budgetiz' Logo" src="assets/img/logo_icon.png" />
+    <img width="67" height="50" class="banner_icon" title="Budgetiz' Logo" alt="Budgetiz' Logo"
+        src="assets/img/logo_icon.png" />
+    <a (click)="logout()"><img *ngIf="displayLogOut" class="logout-button" width="30" height="30" title="Logout"
+            alt="Logout" src="assets/img/logout_icon.png" /></a>
     <br />
 </div>
 

@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/shared/services/authentication/auth.service';
 
@@ -20,12 +21,11 @@ export class Login {
 export class LoginComponent {
 
   @Input() login: Login = new Login("", "");
-  emailEnabled: boolean = false;
-  errorMessage: string = '';
+  /** FormControl pour vérifier la validité des champs */
+  required = new FormControl('', [Validators.required]);
+  errorMsg: string = "";
 
-  constructor(private authService: AuthService, private router: Router) {
-
-  }
+  constructor(private authService: AuthService, private router: Router) { }
 
   googleLogin() {
     alert("Pas encore implémenté");
@@ -45,21 +45,36 @@ export class LoginComponent {
 
   emailPasswordLogin() {
     if (this.login.userEmail && this.login.userPassword) {
-      this.authService.signInWithEmail(this.login.userEmail, this.login.userPassword).then((res: any) => {
-        console.log('LoginComponent:: emailPasswordLogin:: successful login', res);
-      }).catch((err: any) => {
-        console.log('LoginComponent:: emailPasswordLogin:: login failed:', err);
-      });
+      this.authService.signInWithEmail(this.login.userEmail, this.login.userPassword).then(
+        (res: any) => {
+          console.log('LoginComponent:: emailPasswordLogin:: successful login', res);
+        }
+      ).catch(
+        (err: any) => {
+          console.log('LoginComponent:: emailPasswordLogin:: login failed:', err);
+          if (err.code === "auth/invalid-email") {
+            this.manageError("L'adresse email n'est pas au bon format");
+          }
+          if (err.code === "auth/user-not-found") {
+            this.manageError("L'utilisateur n'existe pas");
+          }
+        }
+      );
     }
   }
 
-  emailPasswordSignUp() {
-    if (this.login.userEmail && this.login.userPassword) {
-      this.authService.signUpWithEmail(this.login.userEmail, this.login.userPassword).then((res: any) => {
-        console.log('LoginComponent:: successful login', res);
-      }).catch((err: any) => {
-        console.log('LoginComponent:: emailPasswordSignUp:: sign up failed:', err);
-      });
+  /** 
+   * Gère les erreurs si requis
+   */
+  public getErrorMessageRequired(): string {
+    if (this.required.hasError('required')) {
+      return 'Valeur obligatoire';
     }
+    return '';
   }
+
+  manageError(message: string) {
+    this.errorMsg = message;
+  }
+
 }

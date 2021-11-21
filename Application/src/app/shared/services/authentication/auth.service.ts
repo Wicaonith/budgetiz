@@ -40,15 +40,42 @@ export class AuthService {
     }
 
     signUpWithEmail(email: string, password: string) {
-        return this.afAuth.createUserWithEmailAndPassword(email, password);
+        return this.afAuth.createUserWithEmailAndPassword(email, password).then(
+            () => {
+                this.sendVerificationMail();
+            }
+        );
+    }
+
+    sendPasswordResetEmail(email: string) {
+        return this.afAuth.sendPasswordResetEmail(email).then(
+            () => {
+                console.log("Email de reset de password envoyé");
+            }
+        );
     }
 
     logout() {
         this.afAuth.signOut().then(
             () => {
                 localStorage.removeItem('userUID');
-                this.router.navigate(['/'])
+                this.router.navigate(['budgetiz/login'])
             }
         );
+    }
+
+
+    sendVerificationMail() {
+        return this.afAuth.currentUser.then(
+            (u: firebase.User | null) => {
+                if (u != null) {
+                    u.sendEmailVerification();
+                }
+            }
+        ).then(
+            () => {
+                this.router.navigate(['budgetiz/home']);
+            }
+        )
     }
 }

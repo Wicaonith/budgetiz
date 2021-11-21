@@ -10,13 +10,17 @@ import { LoginComponent } from './modules/content/login/components/login.compone
 import { SavingComponent } from './modules/content/saving/components/saving.component';
 import { TaxesComponent } from './modules/content/taxes/components/taxes.component';
 import { PageNotFoundComponent } from './page-not-found.component';
+import { SingupComponent } from './modules/content/login/components/singup.component';
 
 import { AuthGuard } from './shared/services/authGuard/auth-guard.service';
 import { AuthService } from './shared/services/authentication/auth.service';
+import { ResetPwdComponent } from './modules/content/login/components/reset-pwd.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'budgetiz/home', pathMatch: 'full' },
   { path: 'budgetiz/login', component: LoginComponent },
+  { path: 'budgetiz/signup', component: SingupComponent },
+  { path: 'budgetiz/resetpassword', component: ResetPwdComponent },
   {
     path: 'budgetiz',
     canActivate: [AuthGuard],

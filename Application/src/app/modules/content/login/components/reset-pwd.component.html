@@ -1,0 +1,24 @@
+<div class="reset-pwd-page">
+    <div class="content-reset-pwd">
+        <h2>Réinitialiser le mot de passe</h2>
+        <form *ngIf="resetPwdEmail" (ngSubmit)="onSubmit()" #resetPwdForm="ngForm">
+            <!-- Form input "ID" -->
+            <mat-form-field appearance="outline" style="width:100%">
+                <mat-label>Email</mat-label>
+                <input matInput type="email" name="email" placeholder="Email" value="" [(ngModel)]="resetPwdEmail.email"
+                    #resetPwd="ngModel" required>
+                <!-- Message d'erreur -->
+                <mat-error *ngIf="required.invalid">{{getErrorMessageRequired()}}</mat-error>
+            </mat-form-field>
+            <mat-error *ngIf="errorMsg !== ''">{{ errorMsg }}</mat-error>
+            <mat-hint *ngIf="hintMsg !== ''">{{ hintMsg }}</mat-hint>
+            <div class="reset-pwd-button">
+                <button mat-raised-button class="reset-pwd-button" type="submit"
+                    [disabled]="!resetPwdForm.form.valid">Envoyer email</button>
+            </div>
+            <p class="login-create-link">
+                <a href="budgetiz/login">Retour</a>
+            </p>
+        </form>
+    </div>
+</div>
