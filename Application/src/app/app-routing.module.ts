@@ -1,20 +1,20 @@
 import { NgModule } from '@angular/core';
 
 import { Routes, RouterModule } from '@angular/router';
-import { DatasComponent } from './modules/content/datas/components/datas.component';
 import { HomeComponent } from './modules/content/home/components/home.component';
-import { LabelsBankAccountComponent } from './modules/content/labels/components/labels-bankaccount.component';
-import { LabelsSectionsComponent } from './modules/content/labels/components/labels-sections.component';
-import { LabelsUndersectionsComponent } from './modules/content/labels/components/labels-undersections.component';
 import { LoginComponent } from './modules/content/login/components/login.component';
 import { SavingComponent } from './modules/content/saving/components/saving.component';
 import { TaxesComponent } from './modules/content/taxes/components/taxes.component';
 import { PageNotFoundComponent } from './page-not-found.component';
 import { SingupComponent } from './modules/content/login/components/singup.component';
+import { LabelsSectionsComponent } from './modules/content/labels/components/sections/labels-sections.component';
+import { LabelsBankAccountComponent } from './modules/content/labels/components/bankaccounts/labels-bankaccount.component';
+import { LabelsUndersectionsComponent } from './modules/content/labels/components/undersections/labels-undersections.component';
+import { ResetPwdComponent } from './modules/content/login/components/reset-pwd.component';
+import { TransactionsComponent } from './modules/content/transactions/components/transactions.component';
 
 import { AuthGuard } from './shared/services/authGuard/auth-guard.service';
 import { AuthService } from './shared/services/authentication/auth.service';
-import { ResetPwdComponent } from './modules/content/login/components/reset-pwd.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'budgetiz/home', pathMatch: 'full' },
@@ -29,7 +29,7 @@ const routes: Routes = [
       { path: 'labels/section', component: LabelsSectionsComponent },
       { path: 'labels/undersection', component: LabelsUndersectionsComponent },
       { path: 'labels/bankaccount', component: LabelsBankAccountComponent },
-      { path: 'datas', component: DatasComponent },
+      { path: 'transactions', component: TransactionsComponent },
       { path: 'saving', component: SavingComponent },
       { path: 'taxes', component: TaxesComponent },
     ]

@@ -5,7 +5,7 @@ import { BankAccount } from 'src/app/shared/models/bankAccount.model';
 import { EnumBankAccountType } from 'src/app/shared/enum/enumBankAccountType';
 import { BankAccountsService } from 'src/app/shared/services/bankAccounts/bankaccounts.service';
 import { Observable, of } from 'rxjs';
-import { UtilsService } from 'src/app/shared/services/utils.service';
+import { UtilsService } from 'src/app/shared/services/utils/utils.service';
 
 @Component({
   selector: 'app-form-bankaccount',

@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-labels-tabs',
   templateUrl: './labels-tabs.component.html',
-  styleUrls: ['../../../../../app.component.css']
+  styleUrls: ['../../../../app.component.css']
 })
 export class LabelsTabsComponent implements OnInit {
 

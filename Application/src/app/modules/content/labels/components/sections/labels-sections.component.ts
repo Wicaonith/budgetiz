@@ -9,7 +9,7 @@ import { SectionService } from 'src/app/shared/services/sections/section.service
 @Component({
   selector: 'app-labels-sections',
   templateUrl: './labels-sections.component.html',
-  styleUrls: ['../../../../app.component.css']
+  styleUrls: ['../../../../../app.component.css']
 })
 export class LabelsSectionsComponent implements OnInit {
 

@@ -1,9 +1,7 @@
 <!-- Banner -->
 <div class="banner">
-    <img width="67" height="50" class="banner_icon" title="Budgetiz' Logo" alt="Budgetiz' Logo"
-        src="assets/img/logo_icon.png" />
-    <a (click)="logout()"><img *ngIf="displayLogOut" class="logout-button" width="30" height="30" title="Logout"
-            alt="Logout" src="assets/img/logout_icon.png" /></a>
+    <img width="67" height="50" class="banner_icon" title="Budgetiz' Logo" alt="Budgetiz' Logo" src="assets/img/logo_icon.png" />
+    <a (click)="logout()"><img *ngIf="displayLogOut" class="logout-button" width="30" height="30" title="Logout" alt="Logout" src="assets/img/logout_icon.png" /></a>
     <br />
 </div>
 
@@ -11,11 +9,10 @@
     <li><a class="nav-left" [routerLink]="['budgetiz/taxes']" routerLinkActive="link-active">Résumé</a></li>
     <li><a [routerLink]="['budgetiz/saving']" routerLinkActive="link-active">Épargne</a></li>
     <li>
-        <a class="nav-home" [routerLink]="['budgetiz/home']" routerLinkActive="link-active"
-            [routerLinkActiveOptions]="{exact: true}">
+        <a class="nav-home" [routerLink]="['budgetiz/home']" routerLinkActive="link-active" [routerLinkActiveOptions]="{exact: true}">
             <img src="assets/img/home_icon.png" width="20" height="20" title="Home" alt="Home">
         </a>
     </li>
     <li><a [routerLink]="['budgetiz/labels/section']" routerLinkActive="link-active">Label</a></li>
-    <li><a class="nav-right" [routerLink]="['budgetiz/datas']" routerLinkActive="link-active">Données</a></li>
+    <li><a class="nav-right" [routerLink]="['budgetiz/transactions']" routerLinkActive="link-active">Données</a></li>
 </ul>

@@ -1,0 +1,6 @@
+<h1>Labels</h1>
+<!-- Onglets de labels -->
+<nav mat-tab-nav-bar>
+    <a mat-tab-link *ngFor="let link of navLinks" [href]="link.path" (click)="activeLink = link.path" [active]="activeLink == link.path">
+        {{link.label}}</a>
+</nav>

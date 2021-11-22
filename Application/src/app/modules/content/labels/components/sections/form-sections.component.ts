@@ -2,11 +2,10 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { EnumSectionType } from 'src/app/shared/enum/enumSectionType';
 import { Section } from 'src/app/shared/models/section.model';
 import { SectionService } from 'src/app/shared/services/sections/section.service';
-import { UtilsService } from 'src/app/shared/services/utils.service';
+import { UtilsService } from 'src/app/shared/services/utils/utils.service';
 
 @Component({
   selector: 'app-form-sections',

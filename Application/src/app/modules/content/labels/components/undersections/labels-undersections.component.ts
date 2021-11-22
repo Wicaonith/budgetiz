@@ -12,7 +12,7 @@ import { UndersectionService } from 'src/app/shared/services/undersections/under
 @Component({
   selector: 'app-labels-undersections',
   templateUrl: './labels-undersections.component.html',
-  styleUrls: ['../../../../app.component.css']
+  styleUrls: ['../../../../../app.component.css']
 })
 export class LabelsUndersectionsComponent implements OnInit {
 

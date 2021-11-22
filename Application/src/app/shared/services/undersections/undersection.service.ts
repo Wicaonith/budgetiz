@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore, DocumentData, Query } from '@angular/fire/firestore';
 import { Undersection } from '../../models/undersection.model';
 import { FirestoreCrudService } from '../firestoreCrud.service';
-import { UtilsService } from '../utils.service';
+import { UtilsService } from '../utils/utils.service';
 
 @Injectable({
   providedIn: 'root',

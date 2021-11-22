@@ -7,8 +7,8 @@ import { LabelsModule } from './labels/labels.module';
 import { TaxesModule } from './taxes/taxes.module';
 import { SavingModule } from './saving/saving.module';
 import { HomeModule } from './home/home.module';
-import { DatasModule } from './datas/datas.module';
 import { LoginModule } from './login/login.module';
+import { TransactionsModule } from './transactions/transactions.module';
 
 @NgModule({
   declarations: [
@@ -21,8 +21,8 @@ import { LoginModule } from './login/login.module';
     TaxesModule,
     SavingModule,
     HomeModule,
-    DatasModule,
     LoginModule,
+    TransactionsModule
   ]
 })
 export class ContentModule { }

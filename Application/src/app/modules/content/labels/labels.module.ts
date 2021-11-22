@@ -4,14 +4,13 @@ import { LabelsRoutingModule } from './labels-routing.module';
 import { FormsModule } from '@angular/forms';
 
 //Component
-import { LabelsTabsComponent } from './components/tabs/labels-tabs.component';
-import { LabelsSectionsComponent } from './components/labels-sections.component';
-import { LabelsUndersectionsComponent } from './components/labels-undersections.component';
-import { LabelsBankAccountComponent } from './components/labels-bankaccount.component';
-import { FormSectionsComponent } from './components/forms/form-sections.component';
-import { FormUndersectionsComponent } from './components/forms/form-undersections.component';
-import { FormBankAccountComponent } from './components/forms/form-bankaccounts.component';
-
+import { LabelsSectionsComponent } from './components/sections/labels-sections.component';
+import { LabelsUndersectionsComponent } from './components/undersections/labels-undersections.component';
+import { LabelsBankAccountComponent } from './components/bankaccounts/labels-bankaccount.component';
+import { LabelsTabsComponent } from './components/labels-tabs.component';
+import { FormSectionsComponent } from './components/sections/form-sections.component';
+import { FormUndersectionsComponent } from './components/undersections/form-undersections.component';
+import { FormBankAccountComponent } from './components/bankaccounts/form-bankaccounts.component';
 
 // Material Module
 import { MatTabsModule } from '@angular/material/tabs';

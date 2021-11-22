@@ -6,7 +6,7 @@ import { Section } from 'src/app/shared/models/section.model';
 import { Undersection } from 'src/app/shared/models/undersection.model';
 import { SectionService } from 'src/app/shared/services/sections/section.service';
 import { UndersectionService } from 'src/app/shared/services/undersections/undersection.service';
-import { UtilsService } from 'src/app/shared/services/utils.service';
+import { UtilsService } from 'src/app/shared/services/utils/utils.service';
 
 @Component({
   selector: 'app-form-undersections',

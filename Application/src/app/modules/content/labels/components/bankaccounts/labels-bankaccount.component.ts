@@ -9,7 +9,7 @@ import { BankAccountsService } from 'src/app/shared/services/bankAccounts/bankac
 @Component({
   selector: 'app-labels-bankaccount',
   templateUrl: './labels-bankaccount.component.html',
-  styleUrls: ['../../../../app.component.css']
+  styleUrls: ['../../../../../app.component.css']
 })
 export class LabelsBankAccountComponent implements OnInit {
 
