@@ -5,7 +5,7 @@
             <!-- Form id-->
             <mat-form-field appearance="outline" class="invisible">
                 <!-- Input -->
-                <input matInput name="idSection" value="" [(ngModel)]="section.id" #idUser="ngModel">
+                <input matInput name="idSection" value="" [(ngModel)]="section.id" #id="ngModel">
             </mat-form-field>
         </div>
         <div>
@@ -13,8 +13,7 @@
             <mat-form-field class="idForm" appearance="outline">
                 <mat-label>ID</mat-label>
                 <!-- Input -->
-                <input matInput #idBaseSection name="idBaseSection" placeholder="" value=" {{this.lastId }}"
-                    [(ngModel)]="section.idBase" #idBase="ngModel" required disabled>
+                <input matInput #idBaseSection name="idBaseSection" placeholder="" value=" {{this.lastId }}" [(ngModel)]="section.idBase" #idBase="ngModel" required disabled>
                 <mat-icon matSuffix (click)="idBaseSection.value = lastId.toString();">autorenew</mat-icon>
             </mat-form-field>
         </div>
@@ -23,8 +22,7 @@
             <mat-form-field class="example-full-width" appearance="outline">
                 <mat-label>Libellé</mat-label>
                 <!-- Input -->
-                <input matInput name="nameSection" placeholder="Ex. Habitat" value="" [(ngModel)]="section.name"
-                    #name="ngModel" required>
+                <input matInput name="nameSection" placeholder="Ex. Habitat" value="" [(ngModel)]="section.name" #name="ngModel" required>
                 <!-- Message d'erreur -->
                 <mat-error *ngIf="required.invalid">{{getErrorMessageRequired()}}</mat-error>
             </mat-form-field>

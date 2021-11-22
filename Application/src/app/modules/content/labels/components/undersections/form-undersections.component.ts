@@ -50,7 +50,7 @@ export class FormUndersectionsComponent implements OnInit {
             this.undersections.push(undersection);
           },
           (err: any) => {
-            this.handleError(`[Erreur] FormSectionsComponent - ngOnInit()`, err);
+            this.utilsService.handleError(`[Erreur] FormSectionsComponent - ngOnInit()`, err);
           }
         );
       }
@@ -122,36 +122,7 @@ export class FormUndersectionsComponent implements OnInit {
     );
   }
 
-  /**
-   * Redirige vers l'url passé en paramètre
-   * 
-   * @param uri string - l'url de redirection
-   */
-  redirectTo(uri: string) {
-    this.router.navigateByUrl('/', { skipLocationChange: true }).then(
-      () => {
-        this.router.navigate([uri]);
-      }
-    );
-  }
-
-  /** 
-   * Gère les erreurs si requis
-   */
   public getErrorMessageRequired(): string {
-    if (this.required.hasError('required')) {
-      return 'Valeur obligatoire';
-    }
-    return '';
+    return this.utilsService.getErrorMessageRequired(this.required);
   }
-
-
-  private handleError<T>(operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
-      console.error(error);
-      console.error(`${operation} failed: ${error.message}`);
-      return of(result as T);
-    }
-  }
-
 }

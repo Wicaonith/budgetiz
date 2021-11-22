@@ -9,9 +9,12 @@ import { Undersection } from "./undersection.model";
  */
 export class Transaction implements Entity {
 
+    /** Identifiant Firebase */
     id: string;
     /** L'identifiant de la transaction */
     idBase: number;
+    /** L'année de la transaction */
+    year: number;
     /** Le mois de la transaction */
     month: string;
     /** La date de la transaction */
@@ -25,9 +28,10 @@ export class Transaction implements Entity {
 
     idUser: string;
 
-    constructor(id: string, idBase: number, month: string, date: Date, amount: number, section: Section, undersection: Undersection, account: BankAccount, idUser: string) {
+    constructor(id: string, idBase: number, year: number, month: string, date: Date, amount: number, undersection: Undersection, account: BankAccount, idUser: string) {
         this.id = id;
         this.idBase = idBase;
+        this.year = year;
         this.month = month;
         this.date = date;
         this.amount = amount;

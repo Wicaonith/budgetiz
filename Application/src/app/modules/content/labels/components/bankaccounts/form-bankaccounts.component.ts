@@ -25,6 +25,7 @@ export class FormBankAccountComponent implements OnInit {
   /** Permet de savoir si la Rubrique soumise par le formulaire est à créer ou modifier */
   isModif: boolean = false;
   bankAccounts: Array<BankAccount> = new Array();
+
   /** 
    * Constructeur du composant FormBankAccountComponent
    */
@@ -48,7 +49,7 @@ export class FormBankAccountComponent implements OnInit {
             this.bankAccounts.push(bankAccount);
           },
           (err: any) => {
-            this.handleError(`[Erreur] LabelsSectionsComponent - ngOnInit()`, err);
+            this.utilsService.handleError(`[Erreur] LabelsSectionsComponent - ngOnInit()`, err);
           }
         );
       }
@@ -96,34 +97,10 @@ export class FormBankAccountComponent implements OnInit {
       this.bankAccountsService.updateBankAccount(this.bankAccount);
     }
     // On recharge la page
-    this.redirectTo('budgetiz/labels/bankaccount')
+    this.utilsService.redirectTo('budgetiz/labels/bankaccount')
   }
 
-  /**
-   * Redirige vers l'url passé en paramètre
-   * 
-   * @param uri string - l'url de redirection
-   */
-  redirectTo(uri: string) {
-    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
-      this.router.navigate([uri]));
-  }
-
-  /** 
-   * Gère les erreurs si requis
-   */
   public getErrorMessageRequired(): string {
-    if (this.required.hasError('required')) {
-      return 'Valeur obligatoire';
-    }
-    return '';
-  }
-
-  private handleError<T>(operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
-      console.error(error);
-      console.error(`${operation} failed: ${error.message}`);
-      return of(result as T);
-    }
+    return this.utilsService.getErrorMessageRequired(this.required);
   }
 }

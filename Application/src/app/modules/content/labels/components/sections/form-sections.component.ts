@@ -25,7 +25,7 @@ export class FormSectionsComponent implements OnInit {
   /** Enum des Types de Rubriques */
   enumTypeList = Object.values(EnumSectionType);
 
-  /** Dernier identifiant */
+  /** Prochain identifiant à ajouter pour l'utilisateur en cours */
   lastId: number = 0;
 
   /** FormControl pour vérifier la validité des champs */
@@ -57,7 +57,7 @@ export class FormSectionsComponent implements OnInit {
             this.sections.push(section);
           },
           (err: any) => {
-            this.handleError(`[Erreur] FormSectionsComponent - ngOnInit()`, err);
+            this.utilsService.handleError(`[Erreur] FormSectionsComponent - ngOnInit()`, err);
           }
         );
       }
@@ -114,11 +114,7 @@ export class FormSectionsComponent implements OnInit {
       // ... et on modifie l'existant.
       this.sectionService.updateSection(this.section);
     }
-    this.router.navigateByUrl('/', { skipLocationChange: true }).then(
-      () => {
-        this.router.navigate(['budgetiz/labels/section']);
-      }
-    );
+    this.utilsService.redirectTo('budgetiz/labels/section');
   }
 
 
@@ -136,24 +132,7 @@ export class FormSectionsComponent implements OnInit {
     return section;
   }
 
-
-  redirectTo(uri: string): void {
-    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
-      this.router.navigate([uri]));
-  }
-
   public getErrorMessageRequired(): string {
-    if (this.required.hasError('required')) {
-      return 'Valeur obligatoire';
-    }
-    return '';
-  }
-
-  private handleError<T>(operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
-      console.error(error);
-      console.error(`${operation} failed: ${error.message}`);
-      return of(result as T);
-    }
+    return this.utilsService.getErrorMessageRequired(this.required);
   }
 }
