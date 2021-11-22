@@ -3,12 +3,11 @@
 <app-form-sections [section]="section"></app-form-sections>
 
 <!-- Tableau contenant les données de toutes les transactions -->
-<table class="dataTable" mat-table [dataSource]="datasource" matSort matSort
-    (matSortChange)="announceSortChange($event)">
+<table class="dataTable" mat-table [dataSource]="datasource" matSort>
 
-    <ng-container matColumnDef="id">
+    <ng-container matColumnDef="idBase">
         <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by number"> No. </th>
-        <td mat-cell class="cell-id" *matCellDef="let section"> {{ section.id}} </td>
+        <td mat-cell class="cell-id" *matCellDef="let section"> {{ section.idBase}} </td>
     </ng-container>
 
     <ng-container matColumnDef="name">

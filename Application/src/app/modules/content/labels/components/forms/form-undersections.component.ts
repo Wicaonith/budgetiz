@@ -1,10 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Observable, of } from 'rxjs';
 import { Section } from 'src/app/shared/models/section.model';
 import { Undersection } from 'src/app/shared/models/undersection.model';
 import { SectionService } from 'src/app/shared/services/sections/section.service';
 import { UndersectionService } from 'src/app/shared/services/undersections/undersection.service';
+import { UtilsService } from 'src/app/shared/services/utils.service';
 
 @Component({
   selector: 'app-form-undersections',
@@ -14,9 +16,11 @@ import { UndersectionService } from 'src/app/shared/services/undersections/under
 export class FormUndersectionsComponent implements OnInit {
 
   /** L'objet lié au Formulaire */
-  @Input() undersection: Undersection = new Undersection(0, "", new Section(0, "", "", ""), true, "");
+  @Input() undersection: Undersection = new Undersection("", 0, "", new Section("", 0, "", "", ""), true, "");
   /** Liste des Rubriques mères */
   sections: Array<Section> = new Array();
+  // Tableau de Undersection "Tampon"
+  undersections: Array<Undersection> = new Array();
   /** Dernier identifiant */
   lastId: number = 0;
   /** FormControl pour vérifier la validité des champs */
@@ -25,7 +29,11 @@ export class FormUndersectionsComponent implements OnInit {
   /** 
    * Constructeur du composant SectionFormComponent
    */
-  public constructor(private undersectionService: UndersectionService, private sectionService: SectionService, private router: Router) { }
+  public constructor(
+    private undersectionService: UndersectionService,
+    private sectionService: SectionService,
+    private utilsService: UtilsService,
+    private router: Router) { }
 
   /**
    * Initialise le composant
@@ -33,30 +41,64 @@ export class FormUndersectionsComponent implements OnInit {
   public ngOnInit(): void {
 
     //Appel du Service - Récupère toutes les Rubriques en base
-    this.undersectionService.readUndersections().subscribe(
-      //Récupère dans la base l'identifiant de la derniere Rubrique créé
-      (undersections: Undersection[]) => {
-
-        let isInit: boolean = this.lastId === 0;
-
-        // On parcourt toutes les Rubriques...
-        for (let undersection of undersections) {
-          // ... et si l'identifiant de la rubrique est supérieur à la variable lastId..
-          if (Number(undersection.id) > this.lastId) {
-            // ... on valorise lastId.
-            this.lastId = Number(undersection.id);
+    this.undersectionService.readUndersectionsByUserId().get().then(
+      (querySnapshot) => {
+        querySnapshot.forEach(
+          data => {
+            let undersection = data.data() as Undersection;
+            undersection.id = data.id;
+            this.undersections.push(undersection);
+          },
+          (err: any) => {
+            this.handleError(`[Erreur] FormSectionsComponent - ngOnInit()`, err);
           }
-        }
-        if (isInit) {
-          // Valorise lastId avec le prochain Identifiant à ajouter.
-          this.lastId += 1;
-        }
-        // Initialisation des valeurs dans les champs inputs
-        this.undersection = new Undersection(this.lastId, "", new Section(0, "", "", ""), true, "");
-      });
+        );
+      }
+    ).finally(
+      () => {
+        this.readLastId(this.undersections);
+      }
+    );
 
-    //Appel du Service - Récupère toutes les Rubriques en base
-    this.sectionService.readSections().subscribe((sections: Section[]) => this.sections = sections);
+    this.undersection.idUser = this.utilsService.getUserUID();
+
+    //Appel du Service - Récupère toutes les Rubriques en base pour le Select (Combobox)
+    this.sectionService.readSectionsByUserId().get().then(
+      (querySnapshot) => {
+        querySnapshot.forEach(
+          data => {
+            let section = data.data() as Section;
+            section.id = data.id;
+            this.sections.push(section);
+          }
+        );
+      }
+    )
+  }
+
+
+  /**
+   * 
+   * @param sections 
+   */
+  public readLastId(undersections: Undersection[]): void {
+
+    let isInit: boolean = this.lastId === 0;
+
+    // On parcourt toutes les Rubriques...
+    for (let undersection of undersections) {
+      // ... et si l'identifiant de la rubrique est supérieur à la variable lastId..
+      if (undersection.idBase > this.lastId) {
+        // ... on valorise lastId.
+        this.lastId = undersection.idBase;
+      }
+    }
+    if (isInit) {
+      // Valorise lastId avec le prochain Identifiant à ajouter.
+      this.lastId += 1;
+    }
+    // Initialisation des valeurs dans les champs inputs
+    this.undersection.idBase = this.lastId;
   }
 
   /** 
@@ -64,21 +106,20 @@ export class FormUndersectionsComponent implements OnInit {
    */
   public onSubmit(): void {
 
-    // Si on récupère une Rubrique via l'ID, alors c'est qu'il existe, donc on appel la méthode "update" sinon "create"
-    this.undersectionService.readUndersection(this.undersection.id).subscribe(
-      (undersect: Undersection) => {
-
-        // Si il n'existe pas de rubrique avec cet ID...
-        if (undersect === undefined) {
-          // ... Alors on le crée ...
-          this.undersectionService.createUndersection(this.undersection).subscribe(() => this.redirectTo('budgetiz/labels/undersection'));
-        } else {
-          // ... Sinon on modifie l'existant.
-          this.undersectionService.updateUndersection(this.undersection).subscribe(() => this.redirectTo('budgetiz/labels/undersection'));
-          console.log('update');
-        }
+    // Si il n'existe pas de rubrique avec cet ID...
+    if (this.undersection.id === "") {
+      // ... on le crée ...
+      this.undersectionService.createUndersection(this.undersection);
+    } else {
+      // ... sinon on modifie l'existant.
+      this.undersectionService.updateUndersection(this.undersection);
+    }
+    //Rechargement de la page
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(
+      () => {
+        this.router.navigate(['budgetiz/labels/undersection']);
       }
-    )
+    );
   }
 
   /**
@@ -87,8 +128,11 @@ export class FormUndersectionsComponent implements OnInit {
    * @param uri string - l'url de redirection
    */
   redirectTo(uri: string) {
-    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
-      this.router.navigate([uri]));
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(
+      () => {
+        this.router.navigate([uri]);
+      }
+    );
   }
 
   /** 
@@ -99,6 +143,15 @@ export class FormUndersectionsComponent implements OnInit {
       return 'Valeur obligatoire';
     }
     return '';
+  }
+
+
+  private handleError<T>(operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
+      console.error(error);
+      console.error(`${operation} failed: ${error.message}`);
+      return of(result as T);
+    }
   }
 
 }

@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestore, DocumentData, Query } from '@angular/fire/firestore';
 import { BankAccount } from '../../models/bankAccount.model';
 import { FirestoreCrudService } from '../firestoreCrud.service';
+import { UtilsService } from '../utils.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,14 +17,14 @@ export class BankAccountsService {
 
   crudService: FirestoreCrudService<BankAccount>;
 
-  constructor(afs: AngularFirestore) {
+  constructor(afs: AngularFirestore, private utils: UtilsService) {
     this.crudService = new FirestoreCrudService<BankAccount>(afs, this.dbPath);
   }
 
   public createBankAccount(bankAccount: BankAccount): any {
 
     // Insertion en base de la Rubrique
-    return this.crudService.add({ ...bankAccount }, bankAccount.id).then(() => {
+    return this.crudService.add({ ...bankAccount }).then(() => {
       this.log(`Création du compte n°${bankAccount.id}`); // Lorsque la création se passe bien
     });
   }
@@ -32,7 +33,11 @@ export class BankAccountsService {
     return this.crudService.list();
   }
 
-  public readBankAccount(id: number): any {
+  public readBankAccountsByUserId(): Query<DocumentData> {
+    return this.crudService.listByUser(this.utils.getUserUID());
+  }
+
+  public readBankAccount(id: string): any {
     return this.crudService.get(id);
   }
 
@@ -43,7 +48,7 @@ export class BankAccountsService {
     });
   }
 
-  public deleteBankAccount(id: number): any {
+  public deleteBankAccount(id: string): any {
 
     return this.crudService.delete(id).then(() => {
       console.log(`Suppression ddu compte n°${id}`); // Lorsque la suppression se passe bien

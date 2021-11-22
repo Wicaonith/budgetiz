@@ -1,4 +1,4 @@
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreCollection, DocumentData, Query } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -10,7 +10,7 @@ function firebaseSerialize<T>(object: T) {
 
 // We need a base Entity interface that our models will extend
 export interface Entity {
-    id?: number; // Optional for new entities
+    id?: string; // Optional for new entities
     idUser?: string;
 }
 
@@ -59,8 +59,8 @@ export class FirestoreCrudService<T extends Entity> {
     /**
      * Our get method will fetch a single Entity by it's ID
      */
-    get(id: number): any {
-        return this.collection.doc<T>(id.toString()).snapshotChanges().pipe(
+    get(id: string): any {
+        return this.collection.doc<T>(id).snapshotChanges().pipe(
             // We want to map the document into a Typed JS Object
             map(doc => {
                 // Only if the entity exists should we build an object out of it
@@ -84,11 +84,16 @@ export class FirestoreCrudService<T extends Entity> {
             map(changes => {
                 return changes.map(a => {
                     const data = a.payload.doc.data() as T;
-                    data.id = Number(a.payload.doc.id);
+                    data.id = a.payload.doc.id;
                     return data;
                 });
             })
         );
+    }
+
+
+    listByUser(idUser: string): Query<DocumentData> {
+        return this.collection.ref.where('idUser', '==', idUser);
     }
 
     /* Our Update method takes the full updated Entity
@@ -99,7 +104,7 @@ export class FirestoreCrudService<T extends Entity> {
         return this.collection.doc<T>(entity.id?.toString()).set(entity, { merge: true });
     }
 
-    delete(id: number): Promise<void> {
+    delete(id: string): Promise<void> {
         return this.collection.doc<T>(id?.toString()).delete();
     }
 }

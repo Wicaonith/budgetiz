@@ -2,13 +2,20 @@
 <form *ngIf="section" (ngSubmit)="onSubmit()" #sectionForm="ngForm">
     <div class="formAdd-form">
         <div>
+            <!-- Form id-->
+            <mat-form-field appearance="outline" class="invisible">
+                <!-- Input -->
+                <input matInput name="idSection" value="" [(ngModel)]="section.id" #idUser="ngModel">
+            </mat-form-field>
+        </div>
+        <div>
             <!-- Form input "ID" -->
             <mat-form-field class="idForm" appearance="outline">
                 <mat-label>ID</mat-label>
                 <!-- Input -->
-                <input matInput #idSection name="idSection" placeholder="" value=" {{this.lastId }}"
-                    [(ngModel)]="section.id" #id="ngModel" required disabled>
-                <mat-icon matSuffix (click)="idSection.value = lastId.toString();">autorenew</mat-icon>
+                <input matInput #idBaseSection name="idBaseSection" placeholder="" value=" {{this.lastId }}"
+                    [(ngModel)]="section.idBase" #idBase="ngModel" required disabled>
+                <mat-icon matSuffix (click)="idBaseSection.value = lastId.toString();">autorenew</mat-icon>
             </mat-form-field>
         </div>
         <div>

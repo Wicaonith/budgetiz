@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { BankAccount } from 'src/app/shared/models/bankAccount.model';
 import { EnumBankAccountType } from 'src/app/shared/enum/enumBankAccountType';
 import { BankAccountsService } from 'src/app/shared/services/bankAccounts/bankaccounts.service';
+import { Observable, of } from 'rxjs';
+import { UtilsService } from 'src/app/shared/services/utils.service';
 
 @Component({
   selector: 'app-form-bankaccount',
@@ -13,18 +15,23 @@ import { BankAccountsService } from 'src/app/shared/services/bankAccounts/bankac
 export class FormBankAccountComponent implements OnInit {
 
   /** L'objet lié au Formulaire */
-  @Input() bankAccount: BankAccount = new BankAccount(0, "", "", "");
+  @Input() bankAccount: BankAccount = new BankAccount("", 0, "", "", "");
   /** Enum des Types de Rubriques */
   enumTypeList = Object.values(EnumBankAccountType);
   /** Dernier identifiant */
   lastId: number = 0;
   /** FormControl pour vérifier la validité des champs */
   required = new FormControl('', [Validators.required]);
-
+  /** Permet de savoir si la Rubrique soumise par le formulaire est à créer ou modifier */
+  isModif: boolean = false;
+  bankAccounts: Array<BankAccount> = new Array();
   /** 
    * Constructeur du composant FormBankAccountComponent
    */
-  public constructor(private BankAccountsService: BankAccountsService, private router: Router) { }
+  public constructor(
+    private bankAccountsService: BankAccountsService,
+    private utilsService: UtilsService,
+    private router: Router) { }
 
   /**
    * Initialise le composant
@@ -32,15 +39,35 @@ export class FormBankAccountComponent implements OnInit {
   public ngOnInit(): void {
 
     //Appel du Service - Récupère toutes les Rubriques en base
-    this.BankAccountsService.readBankAccounts().subscribe(
-      (bankAccounts: BankAccount[]) => {
+    this.bankAccountsService.readBankAccountsByUserId().get().then(
+      (querySnapshot) => {
+        querySnapshot.forEach(
+          data => {
+            let bankAccount = data.data() as BankAccount;
+            bankAccount.id = data.id;
+            this.bankAccounts.push(bankAccount);
+          },
+          (err: any) => {
+            this.handleError(`[Erreur] LabelsSectionsComponent - ngOnInit()`, err);
+          }
+        );
+      }
+    );
+    // On valorise les Rubriques récupérées dans la dataSource de la Table 
+    this.readLastId();
+    this.bankAccount.idUser = this.utilsService.getUserUID();
+  }
 
+  public readLastId(): void {
+
+    this.bankAccountsService.readBankAccounts().subscribe(
+      (bankAccounts: BankAccount[]) => {
         let isInit: boolean = this.lastId === 0;
         for (let bankAccount of bankAccounts) {
           // ... et si l'identifiant de la rubrique est supérieur à la variable lastId..
-          if (bankAccount.id > this.lastId) {
+          if (bankAccount.idBase > this.lastId) {
             // ... on valorise lastId.
-            this.lastId = bankAccount.id;
+            this.lastId = bankAccount.idBase;
           }
         }
         if (isInit) {
@@ -49,7 +76,7 @@ export class FormBankAccountComponent implements OnInit {
         }
 
         // Initialisation des valeurs dans les champs inputs
-        this.bankAccount.id = this.lastId;
+        this.bankAccount.idBase = this.lastId;
       }
     );
   }
@@ -59,16 +86,14 @@ export class FormBankAccountComponent implements OnInit {
    */
   public onSubmit(): void {
 
-    // Si on récupère une Rubrique via l'ID, alors c'est qu'il existe, donc on appel la méthode "update" sinon "create"
-    let ba = this.BankAccountsService.readBankAccount(this.bankAccount.id);
     // Si il n'existe pas de rubrique avec cet ID...
-    if (ba === undefined) {
+    if (this.bankAccount.id === "") {
       // ... alors on le crée ...
-      this.BankAccountsService.createBankAccount(this.bankAccount);
+      this.bankAccountsService.createBankAccount(this.bankAccount);
     } else {
 
       // ... alors on modifie l'existant.
-      this.BankAccountsService.updateBankAccount(this.bankAccount);
+      this.bankAccountsService.updateBankAccount(this.bankAccount);
     }
     // On recharge la page
     this.redirectTo('budgetiz/labels/bankaccount')
@@ -94,4 +119,11 @@ export class FormBankAccountComponent implements OnInit {
     return '';
   }
 
+  private handleError<T>(operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
+      console.error(error);
+      console.error(`${operation} failed: ${error.message}`);
+      return of(result as T);
+    }
+  }
 }

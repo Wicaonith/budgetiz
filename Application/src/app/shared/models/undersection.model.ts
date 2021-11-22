@@ -10,9 +10,9 @@ import { Section } from "./section.model";
  * @attribut inTab - boolean - L'indicateur de la présence dans la tableau récapitulatif
  */
 export class Undersection implements Entity {
-
+    id: string;
     /** L'identifiant de la sous rubrique */
-    id: number;
+    idBase: number;
     /** Le nom de la sous rubrique */
     name: string;
     /** La rubrique mère */
@@ -22,16 +22,10 @@ export class Undersection implements Entity {
 
     idUser: string;
 
-    /**
-     * Constructeur de la classe Undersection
-     * 
-     * @param id - number - L'identifiant de la sous rubrique
-     * @param name - string - Le nom de la rubrique
-     * @param section - Undersection - La rubrique mère
-     * @param inTab - boolean - Determine l'affichage dans le tableau ou non
-     */
-    constructor(id: number, name: string, section: Section, inTab: boolean, idUser: string) {
+
+    constructor(id: string, idBase: number, name: string, section: Section, inTab: boolean, idUser: string) {
         this.id = id;
+        this.idBase = idBase;
         this.name = name;
         this.section = section;
         this.inTab = inTab;

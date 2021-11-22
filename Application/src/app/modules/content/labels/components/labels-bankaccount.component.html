@@ -3,11 +3,11 @@
 <app-form-bankaccount [bankAccount]="bankAccount"></app-form-bankaccount>
 
 <!-- Tableau contenant les données de toutes les transactions -->
-<table class="dataTable" mat-table [dataSource]="bankAccounts">
+<table class="dataTable" mat-table [dataSource]="datasource" matSort>
 
-    <ng-container matColumnDef="id">
+    <ng-container matColumnDef="idBase">
         <th mat-header-cell *matHeaderCellDef> No. </th>
-        <td mat-cell class="cell-id" *matCellDef="let bankAccount"> {{bankAccount.id}} </td>
+        <td mat-cell class="cell-id" *matCellDef="let bankAccount"> {{bankAccount.idBase}} </td>
     </ng-container>
 
     <ng-container matColumnDef="name">

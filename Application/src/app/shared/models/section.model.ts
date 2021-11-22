@@ -1,3 +1,4 @@
+import { Entity } from "../services/firestoreCrud.service";
 
 /**
  * L'objet modélisant les Rubriques dans l'application
@@ -6,10 +7,12 @@
  * @attribut name - string - Le nom de la rubrique
  * @attribut type - string - Le type de rubrique (Charge / Revenu)
  */
-export class Section {
+export class Section implements Entity {
+
+    id: string;
 
     /** L'identifiant de la rubrique */
-    id: number
+    idBase: number
 
     /** Le nom de la rubrique */
     name: string;
@@ -19,8 +22,9 @@ export class Section {
 
     idUser: string;
 
-    constructor(id: number, name: string, type: string, idUser: string) {
+    constructor(id: string, idBase: number, name: string, type: string, idUser: string) {
         this.id = id;
+        this.idBase = idBase;
         this.name = name;
         this.type = type;
         this.idUser = idUser;

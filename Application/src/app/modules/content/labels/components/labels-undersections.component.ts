@@ -1,5 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { Observable, of } from 'rxjs';
 import { EnumSectionType } from 'src/app/shared/enum/enumSectionType';
 import { Section } from 'src/app/shared/models/section.model';
 import { Undersection } from 'src/app/shared/models/undersection.model';
@@ -13,15 +16,21 @@ import { UndersectionService } from 'src/app/shared/services/undersections/under
 })
 export class LabelsUndersectionsComponent implements OnInit {
 
-  undersection: Undersection = new Undersection(0, "", new Section(0, "", "", ""), true, "");
+  undersection: Undersection = new Undersection("", 0, "", new Section("", 0, "", "", ""), true, "");
+
   /** Liste des Sous Rubriques (ID/NAME/SECTION/TYPE/INTAB)*/
+  datasource: MatTableDataSource<Undersection> = new MatTableDataSource();
+  @ViewChild(MatSort) sort: MatSort = new MatSort;
+
+  // Tableau de Undersection "Tampon"
   undersections: Array<Undersection> = new Array();
+  // Tableau de Section "Tampon"
+  sections: Array<Section> = new Array();
+
   /** Colonnes à afficher dans le tableau des Sous-Rubriques */
-  undersectionColumns: Array<string> = ['id', 'name', 'section', 'display', 'edit', 'remove'];
+  undersectionColumns: Array<string> = ['idBase', 'name', 'section', 'display', 'edit', 'remove'];
   /** Enum Type*/
   enumTypeList = Object.values(EnumSectionType);
-  /** Le dernier identifiant */
-  lastId: number = 0;
 
   public constructor(private undersectionService: UndersectionService, private sectionService: SectionService, private router: Router) { }
 
@@ -30,24 +39,43 @@ export class LabelsUndersectionsComponent implements OnInit {
    * Instancie le tableau des Sous-Rubriques
    */
   public ngOnInit(): void {
+
     // Appel du Service - Récupère toutes les Sous-Rubriques en base
-    this.undersectionService.readUndersections().subscribe(
-
-      (undersections: Undersection[]) => {
-
-        this.undersections = undersections;
-
+    this.undersectionService.readUndersectionsByUserId().get().then(
+      (querySnapshot) => {
+        querySnapshot.forEach(
+          data => {
+            let undersection = data.data() as Undersection;
+            undersection.id = data.id;
+            this.undersections.push(undersection);
+          },
+          (err: any) => {
+            this.handleError(`[Erreur] LabelsUndersectionsComponent - ngOnInit()`, err);
+          }
+        );
+      }
+    ).finally(
+      () => {
         // Appel du Service - Récupère toutes les Rubriques en base
-        this.sectionService.readSections().subscribe(
-          (sections: Section[]) => {
-
+        this.sectionService.readSectionsByUserId().get().then(
+          (querySnapshot) => {
+            querySnapshot.forEach(
+              data => {
+                let section = data.data() as Section;
+                section.id = data.id;
+                this.sections.push(section);
+              }
+            );
+          }
+        ).finally(
+          () => {
             // On parcourt toutes les Sous-Rubriques...
             for (let undersection of this.undersections) {
 
               // On parcourt toutes les Rubriques...
-              for (let section of sections) {
+              for (let section of this.sections) {
 
-                if (undersection.section.id === section.id) {
+                if (undersection.section.idBase === section.idBase) {
 
                   undersection.section = section;
                 }
@@ -56,8 +84,19 @@ export class LabelsUndersectionsComponent implements OnInit {
             }
           }
         );
+        // On valorise les Rubriques récupérées dans la dataSource de la Table 
+        this.reloadTable();
       }
     );
+  }
+
+
+  reloadTable() {
+    // Met à jour le tableau
+    this.datasource.data = this.undersections;
+    if (this.sort) { // Vérifier qu'il y a bien un tri
+      this.datasource.sort = this.sort;
+    }
   }
 
   /**
@@ -67,18 +106,7 @@ export class LabelsUndersectionsComponent implements OnInit {
    */
   public displayInTab(undersection: Undersection) {
     undersection.inTab = !undersection.inTab;
-    this.undersectionService.updateUndersection(undersection).subscribe(() => this.redirectTo('budgetiz/labels/undersection'));
-  }
-
-  /**
-   * Récupère dans la base les informations d'une Sous-Rubrique par rapport à son identifiant
-   * 
-   * @param id - number - L'identifiant de la Sous-Rubrique à lire
-   */
-  public readUndersection(id: number) {
-
-    //Appel du service - Récupère une Sous-Rubrique par rapport à son identifiant.
-    this.undersectionService.readUndersection(id);
+    this.undersectionService.updateUndersection(undersection);
   }
 
   /**
@@ -88,8 +116,9 @@ export class LabelsUndersectionsComponent implements OnInit {
    */
   public updateUndersection(undersection: Undersection) {
 
-    //Appel du service - Modifie la Sous-Rubrique.
-    this.undersection = new Undersection(undersection.id, undersection.name, undersection.section, undersection.inTab, undersection.idUser);
+
+    this.undersection = { ...undersection };
+    this.undersection.section = { ...undersection.section };
   }
 
   /**
@@ -102,7 +131,7 @@ export class LabelsUndersectionsComponent implements OnInit {
     // Controle si une données l'utilise pas !
     if (true) {
       //... alors Appel du service - Supprime la Rubrique.
-      this.undersectionService.deleteUndersection(undersection.id).subscribe(() => this.redirectTo('budgetiz/labels/undersection'));
+      this.undersectionService.deleteUndersection(undersection.id).then(() => this.redirectTo('budgetiz/labels/undersection'));
     } else {
       alert("Une donnée utilise la Rubrique. Veuillez la modifier");
     }
@@ -116,5 +145,13 @@ export class LabelsUndersectionsComponent implements OnInit {
   redirectTo(uri: string) {
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
       this.router.navigate([uri]));
+  }
+
+  private handleError<T>(operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
+      console.error(error);
+      console.error(`${operation} failed: ${error.message}`);
+      return of(result as T);
+    }
   }
 }

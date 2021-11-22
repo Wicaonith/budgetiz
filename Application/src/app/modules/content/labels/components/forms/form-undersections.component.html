@@ -2,13 +2,19 @@
 <form *ngIf="undersection" (ngSubmit)="onSubmit()" #undersectionForm="ngForm">
     <div class="formAdd-form">
         <div>
+            <!-- Form id-->
+            <mat-form-field appearance="outline" class="invisible">
+                <!-- Input -->
+                <input matInput name="idUndersection" value="" [(ngModel)]="undersection.id" #idUser="ngModel">
+            </mat-form-field>
+        </div>
+        <div>
             <!-- Form input "ID" -->
             <mat-form-field class="idForm" appearance="outline">
                 <mat-label>ID</mat-label>
                 <!-- Input -->
-                <input matInput #idUndersection name="idUndersection" placeholder="" value=" {{this.lastId }}"
-                    [(ngModel)]="undersection.id" #id="ngModel" required disabled>
-                <mat-icon matSuffix (click)="idUndersection.value = lastId.toString();">autorenew</mat-icon>
+                <input matInput #idBaseUndersection name="idBaseUndersection" placeholder="" value=" {{this.lastId }}" [(ngModel)]="undersection.idBase" #id="ngModel" required disabled>
+                <mat-icon matSuffix (click)="idBaseUndersection.value = lastId.toString();">autorenew</mat-icon>
             </mat-form-field>
         </div>
         <div>
@@ -16,8 +22,7 @@
             <mat-form-field appearance="outline">
                 <mat-label>Libellé</mat-label>
                 <!-- Input -->
-                <input matInput name="nameUndersection" placeholder="Ex. Facture EDF" value=""
-                    [(ngModel)]="undersection.name" #name="ngModel" required>
+                <input matInput name="nameUndersection" placeholder="Ex. Facture EDF" value="" [(ngModel)]="undersection.name" #name="ngModel" required>
                 <!-- Message d'erreur -->
                 <mat-error *ngIf="required.invalid">{{getErrorMessageRequired()}}</mat-error>
             </mat-form-field>

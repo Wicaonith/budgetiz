@@ -21,7 +21,7 @@ import { UtilsService } from 'src/app/shared/services/utils.service';
 export class FormSectionsComponent implements OnInit {
 
   /** L'objet lié au Formulaire */
-  @Input() section: Section = new Section(0, "", "", "");
+  @Input() section: Section = new Section("", 0, "", "", "");
 
   /** Enum des Types de Rubriques */
   enumTypeList = Object.values(EnumSectionType);
@@ -32,13 +32,16 @@ export class FormSectionsComponent implements OnInit {
   /** FormControl pour vérifier la validité des champs */
   required = new FormControl('', [Validators.required]);
 
-  /** Permet de savoir si la Rubrique soumise par le formulaire est à créer ou modifier */
-  isModif: boolean = false;
+  // Tableau de section "Tampon"
+  sections: Array<Section> = new Array();
 
   /** 
    * Constructeur du composant FormSectionsComponent
    */
-  public constructor(private sectionService: SectionService, private utilsService: UtilsService, private router: Router) { }
+  public constructor(
+    private sectionService: SectionService,
+    private utilsService: UtilsService,
+    private router: Router) { }
 
   /**
    * Initialise le composant
@@ -46,25 +49,39 @@ export class FormSectionsComponent implements OnInit {
   public ngOnInit(): void {
 
     //Appel du Service - Récupère toutes les Rubriques en base
-    this.sectionService.readSections().subscribe(
-      (sections: Section[]) => { // onNext
-        this.readLastId(sections);
-      },
-      (err: any) => { // onError
-        this.handleError(`[Erreur] FormSectionsComponent - ngOnInit()`, err);
+    this.sectionService.readSectionsByUserId().get().then(
+      (querySnapshot) => {
+        querySnapshot.forEach(
+          data => {
+            let section = data.data() as Section;
+            section.id = data.id;
+            this.sections.push(section);
+          },
+          (err: any) => {
+            this.handleError(`[Erreur] FormSectionsComponent - ngOnInit()`, err);
+          }
+        );
+      }
+    ).finally(
+      () => {
+        this.readLastId(this.sections);
       }
     );
     this.section.idUser = this.utilsService.getUserUID();
   }
 
+
+  /**
+   * 
+   */
   public readLastId(sections: Section[]): void {
 
     let isInit: boolean = this.lastId === 0;
     for (let section of sections) {
       // ... et si l'identifiant de la rubrique est supérieur à la variable lastId..
-      if (section.id > this.lastId) {
+      if (section.idBase > this.lastId) {
         // ... on valorise lastId.
-        this.lastId = section.id;
+        this.lastId = section.idBase;
       }
     }
     if (isInit) {
@@ -73,7 +90,7 @@ export class FormSectionsComponent implements OnInit {
     }
 
     // Initialisation des valeurs dans les champs inputs
-    this.section.id = this.lastId;
+    this.section.idBase = this.lastId;
   }
 
   /** 
@@ -81,18 +98,8 @@ export class FormSectionsComponent implements OnInit {
    */
   public onSubmit(): void {
 
-    // Si on récupère une Rubrique via l'ID, alors c'est qu'elle existe, donc on appelle la méthode "update" sinon "create"
-    this.sectionService.readSection(this.section.id).subscribe(
-      (sect: Section) => { // onNext
-        this.isModif = sect === undefined
-      },
-      (err: any) => { // onError
-        this.handleError(`[Erreur] FormSectionsComponent - ngOnInit()`, err);
-      }
-    );
-
     // Si il n'existe pas de rubrique avec cet ID...
-    if (!this.isModif) {
+    if (this.section.id === "") {
       //... alors on le formatte ...
       this.section = this.formatSectionName(this.section);
       // ... et on le crée ...

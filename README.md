@@ -26,7 +26,6 @@ Run `ng serve -o` pour lancer avec rafraichissement en temps réel
 # Roadmap
 
 ## V1.0.0
-/!\ Revoir le get() 
 
 Feature - Mettre en place la page Section
 
@@ -49,6 +48,8 @@ Feature - Deployer
 Fix - Vérification de la Documentation
 
 Fix - Vérification des imports, suppresion des inutilisés
+
+Fix - Mettre la gestion des Erreurs dans un composant
 
 
 ## V2.0.0

@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestore, DocumentData, Query } from '@angular/fire/firestore';
 import { Undersection } from '../../models/undersection.model';
 import { FirestoreCrudService } from '../firestoreCrud.service';
+import { UtilsService } from '../utils.service';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +14,7 @@ export class UndersectionService {
   crudService: FirestoreCrudService<Undersection>;
 
   // AngularFirestore should be found by Angular DI System
-  constructor(afs: AngularFirestore) {
+  constructor(afs: AngularFirestore, private utils: UtilsService) {
     // Let's create our CrusService and use the a Collection with the name 'sections'
     this.crudService = new FirestoreCrudService<Undersection>(afs, this.dbPath);
   }
@@ -27,9 +28,14 @@ export class UndersectionService {
   public createUndersection(undersection: Undersection): any {
 
     // Insertion en base de la Sous-Rubrique
-    return this.crudService.add({ ...undersection }, undersection.id).then(() => {
+    return this.crudService.add({ ...undersection }).then(() => {
       this.log(`Création de la Sous-Rubrique n°${undersection.id}`); // Lorsque la création se passe bien
     });
+  }
+
+  public readUndersections(): any {
+
+    return this.crudService.list();
   }
 
   /**
@@ -37,9 +43,9 @@ export class UndersectionService {
    * 
    * @returns Undersection[] - Liste des Sous-Rubriques
    */
-  public readUndersections(): any {
+  public readUndersectionsByUserId(): Query<DocumentData> {
 
-    return this.crudService.list();
+    return this.crudService.listByUser(this.utils.getUserUID());
   }
 
   /**
@@ -49,7 +55,7 @@ export class UndersectionService {
    * 
    * @returns Section - La Sous-Rubrique lié à l'ID
    */
-  public readUndersection(id: number): any {
+  public readUndersection(id: string): any {
 
     return this.crudService.get(id);
   }
@@ -71,7 +77,7 @@ export class UndersectionService {
    * 
    * @param undersection - Undersection - La Sous-Rubrique à supprimer
    */
-  public deleteUndersection(id: number): any {
+  public deleteUndersection(id: string): any {
 
     return this.crudService.delete(id).then(() => {
       console.log(`Suppression de la Rubrique n°${id}`); // Lorsque la suppression se passe bien

@@ -59,7 +59,11 @@ export class AuthService {
         this.afAuth.signOut().then(
             () => {
                 localStorage.removeItem('userUID');
-                this.router.navigate(['budgetiz/login'])
+                this.router.navigateByUrl('/', { skipLocationChange: true }).then(
+                    () => {
+                        this.router.navigate(['budgetiz/login']);
+                    }
+                );
             }
         );
     }

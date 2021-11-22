@@ -29,17 +29,11 @@ export class LoginComponent {
 
   googleLogin() {
     alert("Pas encore implémenté");
-    /*this.authService.signInWithGoogle().then(res => {
-      console.log('LoginComponent:: successful login');
-    });*/
+    /*this.authService.signInWithGoogle();*/
   }
 
   onSubmit() {
     this.emailPasswordLogin();
-    const user = this.authService.isLoggedIn()
-    if (user) {
-      console.log("CONNECTÉ OMG");
-    }
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(
       () => {
         this.router.navigate(['budgetiz/home']);

@@ -1,3 +1,4 @@
+import { Entity } from "../services/firestoreCrud.service";
 import { BankAccount } from "./bankAccount.model";
 import { Section } from "./section.model";
 import { Undersection } from "./undersection.model";
@@ -6,10 +7,11 @@ import { Undersection } from "./undersection.model";
 /**
  * L'objet modélisant les transactions dans l'application
  */
-export class DataTransaction {
+export class DataTransaction implements Entity {
 
+    id: string;
     /** L'identifiant de la transaction */
-    id: number;
+    idBase: number;
     /** Le mois de la transaction */
     month: string;
     /** Le montant de la transaction */
@@ -23,20 +25,9 @@ export class DataTransaction {
 
     idUser: string;
 
-    /**
-     * Contructeur de la classe DataTransaction
-     * 
-     * @param id - number - L'identifiant de la transaction
-     * @param month - string - Le mois de la transaction
-     * @param amount - number - Le montant de la transaction
-     * @param section - Section - La rubrique de la transaction
-     * @param undersection - Undersection - La sous rubrique de la transaction
-     * @param account - BankAccount - Le compte ayant la transaction
-     * @param idUser - string - L'identifiant de l'utilisateur
-     */
-    constructor(id: number, month: string, amount: number, section: Section, undersection: Undersection, account: BankAccount, idUser: string) {
-
+    constructor(id: string, idBase: number, month: string, amount: number, section: Section, undersection: Undersection, account: BankAccount, idUser: string) {
         this.id = id;
+        this.idBase = idBase;
         this.month = month;
         this.amount = amount;
         this.section = section;

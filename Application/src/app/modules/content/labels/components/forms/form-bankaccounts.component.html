@@ -2,13 +2,19 @@
 <form *ngIf="bankAccount" (ngSubmit)="onSubmit()" #bankAccountForm="ngForm">
     <div class="formAdd-form">
         <div>
+            <!-- Form id-->
+            <mat-form-field appearance="outline" class="invisible">
+                <!-- Input -->
+                <input matInput name="idBankAccount" value="" [(ngModel)]="bankAccount.id" #idUser="ngModel">
+            </mat-form-field>
+        </div>
+        <div>
             <!-- Form input "ID" -->
             <mat-form-field class="idForm" appearance="outline">
                 <mat-label>ID</mat-label>
                 <!-- Input -->
-                <input matInput #idBankAccount name="idBankAccount" placeholder="" value=" {{this.lastId }}"
-                    [(ngModel)]="bankAccount.id" #id="ngModel" required disabled>
-                <mat-icon matSuffix (click)="idBankAccount.value = lastId.toString();">autorenew</mat-icon>
+                <input matInput #idBaseBankAccount name="idBaseBankAccount" placeholder="" value=" {{this.lastId }}" [(ngModel)]="bankAccount.idBase" #id="ngModel" required disabled>
+                <mat-icon matSuffix (click)="idBaseBankAccount.value = lastId.toString();">autorenew</mat-icon>
             </mat-form-field>
         </div>
         <div>
@@ -16,8 +22,7 @@
             <mat-form-field appearance="outline">
                 <mat-label>Libellé</mat-label>
                 <!-- Input -->
-                <input matInput name="nameBankAccount" placeholder="Ex. Habitat" value="" [(ngModel)]="bankAccount.name"
-                    #name="ngModel" required>
+                <input matInput name="nameBankAccount" placeholder="Ex. Habitat" value="" [(ngModel)]="bankAccount.name" #name="ngModel" required>
                 <!-- Message d'erreur -->
                 <mat-error *ngIf="required.invalid">{{getErrorMessageRequired()}}</mat-error>
             </mat-form-field>

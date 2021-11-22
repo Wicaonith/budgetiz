@@ -2,19 +2,16 @@
 @import '~firebaseui/dist/firebaseui.css';
 
 /* Global */
-.main {
-    width:100%;
-    margin-left:auto;
-    margin-right:auto;
+body {
+    font-family: 'Roboto', sans-serif;
 }
 
 h1 {
     font-size: 25px;
     margin: 15px 15px 15px 0;
     padding: 0 0 0 10px;
-    border-bottom: #4da34d 3px solid;
-    border-left: #4da34d 20px solid;
-
+    border-bottom: #4d6ba3 1px solid;
+    border-left: #4da34d 5px solid;
 }
 
 h2 {
