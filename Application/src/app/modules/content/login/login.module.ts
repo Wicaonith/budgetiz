@@ -17,7 +17,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSortModule } from '@angular/material/sort';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
+
 
 
 @NgModule({
@@ -38,7 +38,6 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
         MatInputModule,
         MatButtonModule,
         MatSortModule,
-        MatSnackBarModule
     ]
 })
 export class LoginModule { }

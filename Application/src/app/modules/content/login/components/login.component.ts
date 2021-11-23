@@ -49,7 +49,7 @@ export class LoginComponent {
     if (this.login.userEmail && this.login.userPassword) {
       this.authService.signInWithEmail(this.login.userEmail, this.login.userPassword).then(
         (res: any) => {
-          console.log('LoginComponent:: emailPasswordLogin:: successful login', res);
+          this.utilsService.redirectTo('/');
         }
       ).catch(
         (err: any) => {
@@ -58,6 +58,12 @@ export class LoginComponent {
           }
           if (err.code === "auth/user-not-found") {
             this.utilsService.openSnackBar("Il n'y a aucun utilisateur en lien avec cette adresse mail.", "OK");
+          }
+          if (err.code === "auth/wrong-password") {
+            this.utilsService.openSnackBar("Le mot de passe est incorrect pour cette adresse mail.", "OK");
+          }
+          if (err.code === "auth/too-many-requests") {
+            this.utilsService.openSnackBar("L'accès à ce compte a été temporairement désactivé en raison de nombreuses tentatives de connexion infructueuses.", "OK");
           }
         }
       );

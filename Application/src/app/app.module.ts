@@ -31,6 +31,7 @@ import { environment } from 'src/environments/environment';
 import { ContentModule } from './modules/content/content.module';
 import { CategoryService } from './shared/services/categories/category.service';
 
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 
 const firebaseUiAuthConfig: firebaseui.auth.Config = {
@@ -51,7 +52,7 @@ const firebaseUiAuthConfig: firebaseui.auth.Config = {
     HttpClientModule,
     RouterModule,
     ContentModule,
-
+    MatSnackBarModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule, // for firestore
     AngularFireAuthModule,

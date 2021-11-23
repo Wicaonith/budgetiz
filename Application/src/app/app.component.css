@@ -3,7 +3,7 @@
 
 /* Global */
 body {
-    font-family: 'Roboto', sans-serif;
+    font-family: Roboto, Arial, sans-serif;
 }
 
 h1 {
@@ -63,6 +63,13 @@ h2 {
     width: 0;
 }
 
+::ng-deep .mat-simple-snackbar-action {
+    color: white;
+}
+
+::ng-deep .error-snackbar {
+    background: #F44336;
+}
 /* Page not found */
 .page-not-found {
     width:60%;

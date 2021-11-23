@@ -33,7 +33,12 @@ export class UtilsService {
 
 
   public openSnackBar(message: string, action: string) {
-    this._snackBar.open(message, action);
+    this._snackBar.open(message, action), {
+      duration: 2000,
+      horizontalPosition: 'right',
+      verticalPosition: 'top',
+      panelClass: ['error-snackbar']
+    };
   }
 
   public handleError<T>(operation = 'operation', result?: T) {
