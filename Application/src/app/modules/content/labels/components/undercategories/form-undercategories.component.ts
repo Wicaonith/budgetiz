@@ -5,7 +5,7 @@ import { Observable, of } from 'rxjs';
 import { Category } from 'src/app/shared/models/category.model';
 import { Undercategory } from 'src/app/shared/models/undercategory.model';
 import { CategoryService } from 'src/app/shared/services/categories/category.service';
-import { UndersectionService } from 'src/app/shared/services/undercategories/undercategory.service';
+import { UndercategoryService } from 'src/app/shared/services/undercategories/undercategory.service';
 import { UtilsService } from 'src/app/shared/services/utils/utils.service';
 
 @Component({
@@ -30,8 +30,8 @@ export class FormUndercategoriesComponent implements OnInit {
    * Constructeur du composant CategoryFormComponent
    */
   public constructor(
-    private undercategoryService: UndersectionService,
-    private sectionService: CategoryService,
+    private undercategoryService: UndercategoryService,
+    private categoryService: CategoryService,
     private utilsService: UtilsService,
     private router: Router) { }
 
@@ -41,7 +41,7 @@ export class FormUndercategoriesComponent implements OnInit {
   public ngOnInit(): void {
 
     //Appel du Service - Récupère toutes les Catégoriess en base
-    this.undercategoryService.readUndersectionsByUserId().get().then(
+    this.undercategoryService.readUndercategorysByUserId().get().then(
       (querySnapshot) => {
         querySnapshot.forEach(
           data => {
@@ -63,7 +63,7 @@ export class FormUndercategoriesComponent implements OnInit {
     this.undercategory.idUser = this.utilsService.getUserUID();
 
     //Appel du Service - Récupère toutes les Catégoriess en base pour le Select (Combobox)
-    this.sectionService.readCategoriesByUserId().get().then(
+    this.categoryService.readCategoriesByUserId().get().then(
       (querySnapshot) => {
         querySnapshot.forEach(
           data => {
@@ -109,10 +109,10 @@ export class FormUndercategoriesComponent implements OnInit {
     // Si il n'existe pas de catégories avec cet ID...
     if (this.undercategory.id === "") {
       // ... on le crée ...
-      this.undercategoryService.createUndersection(this.undercategory);
+      this.undercategoryService.createUndercategory(this.undercategory);
     } else {
       // ... sinon on modifie l'existant.
-      this.undercategoryService.updateUndersection(this.undercategory);
+      this.undercategoryService.updateUndercategory(this.undercategory);
     }
     //Rechargement de la page
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(

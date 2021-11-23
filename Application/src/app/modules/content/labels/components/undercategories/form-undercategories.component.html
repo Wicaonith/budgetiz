@@ -5,7 +5,7 @@
             <!-- Form id-->
             <mat-form-field appearance="outline" class="invisible">
                 <!-- Input -->
-                <input matInput name="idUndersection" value="" [(ngModel)]="undercategory.id" #idUser="ngModel">
+                <input matInput name="idUndercategory" value="" [(ngModel)]="undercategory.id" #idUser="ngModel">
             </mat-form-field>
         </div>
         <div>
@@ -13,8 +13,8 @@
             <mat-form-field class="idForm" appearance="outline">
                 <mat-label>ID</mat-label>
                 <!-- Input -->
-                <input matInput #idBaseUndersection name="idBaseUndersection" placeholder="" value=" {{this.lastId }}" [(ngModel)]="undercategory.idBase" #id="ngModel" required disabled>
-                <mat-icon matSuffix (click)="idBaseUndersection.value = lastId.toString();">autorenew</mat-icon>
+                <input matInput #idBaseUndercategory name="idBaseUndercategory" placeholder="" value=" {{this.lastId }}" [(ngModel)]="undercategory.idBase" #id="ngModel" required disabled>
+                <mat-icon matSuffix (click)="idBaseUndercategory.value = lastId.toString();">autorenew</mat-icon>
             </mat-form-field>
         </div>
         <div>
@@ -22,7 +22,7 @@
             <mat-form-field appearance="outline">
                 <mat-label>Libellé</mat-label>
                 <!-- Input -->
-                <input matInput name="nameUndersection" placeholder="Ex. Facture EDF" value="" [(ngModel)]="undercategory.name" #name="ngModel" required>
+                <input matInput name="nameUndercategory" placeholder="Ex. Facture EDF" value="" [(ngModel)]="undercategory.name" #name="ngModel" required>
                 <!-- Message d'erreur -->
                 <mat-error *ngIf="required.invalid">{{getErrorMessageRequired()}}</mat-error>
             </mat-form-field>
@@ -31,7 +31,7 @@
             <!-- Form combobox "Type de Catégories"-->
             <mat-form-field appearance="outline">
                 <mat-label>Catégories mère</mat-label>
-                <mat-select name="sectionUndersection" [(ngModel)]="undercategory.category" #category="ngModel" required>
+                <mat-select name="categoryUndercategory" [(ngModel)]="undercategory.category" #category="ngModel" required>
                     <mat-option *ngFor="let category of categories" [value]="category">
                         {{category.name}}
                     </mat-option>
@@ -44,7 +44,7 @@
             <!-- Form idUser-->
             <mat-form-field appearance="outline" class="invisible">
                 <!-- Input -->
-                <input matInput name="idUserUndersection" value="" [(ngModel)]="undercategory.idUser" #idUser="ngModel">
+                <input matInput name="idUserUndercategory" value="" [(ngModel)]="undercategory.idUser" #idUser="ngModel">
             </mat-form-field>
         </div>
         <div>

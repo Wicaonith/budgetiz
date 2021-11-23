@@ -7,7 +7,7 @@ import { UtilsService } from '../utils/utils.service';
 @Injectable({
   providedIn: 'root',
 })
-export class UndersectionService {
+export class UndercategoryService {
 
   private dbPath = '/undercategories';
 
@@ -25,7 +25,7 @@ export class UndersectionService {
    * 
    * @param undercategory - Undercategory - La sous-Catégories à creer
    */
-  public createUndersection(undercategory: Undercategory): any {
+  public createUndercategory(undercategory: Undercategory): any {
 
     // Insertion en base de la Sous-Catégories
     return this.crudService.add({ ...undercategory }).then(() => {
@@ -33,7 +33,7 @@ export class UndersectionService {
     });
   }
 
-  public readUndersections(): any {
+  public readUndercategorys(): any {
 
     return this.crudService.list();
   }
@@ -43,7 +43,7 @@ export class UndersectionService {
    * 
    * @returns Undercategory[] - Liste des Sous-Catégoriess
    */
-  public readUndersectionsByUserId(): Query<DocumentData> {
+  public readUndercategorysByUserId(): Query<DocumentData> {
 
     return this.crudService.listByUser(this.utils.getUserUID());
   }
@@ -55,7 +55,7 @@ export class UndersectionService {
    * 
    * @returns Category - La Sous-Catégories lié à l'ID
    */
-  public readUndersection(id: string): any {
+  public readUndercategory(id: string): any {
 
     return this.crudService.get(id);
   }
@@ -65,7 +65,7 @@ export class UndersectionService {
    * 
    * @param undercategory - Undercategory - La Sous-Catégories à modifier
    */
-  public updateUndersection(undercategory: Undercategory): any {
+  public updateUndercategory(undercategory: Undercategory): any {
 
     return this.crudService.update({ ...undercategory }).then(() => {
       console.log(`Modification de la Sous-Catégories n°${undercategory.id}`); // Lorsque la modification se passe bien
@@ -77,7 +77,7 @@ export class UndersectionService {
    * 
    * @param undercategory - Undercategory - La Sous-Catégories à supprimer
    */
-  public deleteUndersection(id: string): any {
+  public deleteUndercategory(id: string): any {
 
     return this.crudService.delete(id).then(() => {
       console.log(`Suppression de la Catégories n°${id}`); // Lorsque la suppression se passe bien

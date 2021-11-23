@@ -35,7 +35,7 @@
     <ng-container matColumnDef="edit">
         <th mat-header-cell class="cell-button" *matHeaderCellDef></th>
         <td mat-cell class="cell-button" *matCellDef="let category">
-            <button mat-flat-button color="basic" aria-label="Editer" (click)="updateUndersection(category)">
+            <button mat-flat-button color="basic" aria-label="Editer" (click)="updateUndercategory(category)">
                 <mat-icon>edit</mat-icon>
             </button>
         </td>
@@ -44,7 +44,7 @@
     <ng-container matColumnDef="remove">
         <th mat-header-cell class="cell-button" *matHeaderCellDef></th>
         <td mat-cell class="cell-button" *matCellDef="let undercategory">
-            <button mat-flat-button color="basic" aria-label="Supprimer" (click)="deleteUndersection(undercategory)">
+            <button mat-flat-button color="basic" aria-label="Supprimer" (click)="deleteUndercategory(undercategory)">
                 <mat-icon>delete</mat-icon>
             </button>
         </td>

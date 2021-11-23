@@ -37,7 +37,7 @@ export class FormCategoriesComponent implements OnInit {
    * Constructeur du composant FormCategoriesComponent
    */
   public constructor(
-    private sectionService: CategoryService,
+    private categoryService: CategoryService,
     private utilsService: UtilsService,
     private router: Router) { }
 
@@ -47,7 +47,7 @@ export class FormCategoriesComponent implements OnInit {
   public ngOnInit(): void {
 
     //Appel du Service - Récupère toutes les Catégoriess en base
-    this.sectionService.readCategoriesByUserId().get().then(
+    this.categoryService.readCategoriesByUserId().get().then(
       (querySnapshot) => {
         querySnapshot.forEach(
           data => {
@@ -101,7 +101,7 @@ export class FormCategoriesComponent implements OnInit {
       //... alors on le formatte ...
       this.category = this.formatCategoryName(this.category);
       // ... et on le crée ...
-      this.sectionService.createCategory(this.category);
+      this.categoryService.createCategory(this.category);
     } else {
 
       //... Sinon on le formatte ...
@@ -111,7 +111,7 @@ export class FormCategoriesComponent implements OnInit {
       this.category = this.formatCategoryName(this.category);
 
       // ... et on modifie l'existant.
-      this.sectionService.updateCategory(this.category);
+      this.categoryService.updateCategory(this.category);
     }
     this.utilsService.redirectTo('budgetiz/labels/category');
   }

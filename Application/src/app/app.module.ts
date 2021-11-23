@@ -17,7 +17,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 //Services
-import { UndersectionService } from './shared/services/undercategories/undercategory.service';
+import { UndercategoryService } from './shared/services/undercategories/undercategory.service';
 import { AuthGuard } from './shared/services/authGuard/auth-guard.service';
 import { AuthService } from './shared/services/authentication/auth.service';
 
@@ -66,7 +66,7 @@ const firebaseUiAuthConfig: firebaseui.auth.Config = {
   ],
   providers: [
     CategoryService,
-    UndersectionService,
+    UndercategoryService,
     AuthGuard,
     AuthService,
     AngularFireAuth,

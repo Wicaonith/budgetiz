@@ -7,7 +7,7 @@ import { EnumCategoryType } from 'src/app/shared/enum/enumCategoryType';
 import { Category } from 'src/app/shared/models/category.model';
 import { Undercategory } from 'src/app/shared/models/undercategory.model';
 import { CategoryService } from 'src/app/shared/services/categories/category.service';
-import { UndersectionService } from 'src/app/shared/services/undercategories/undercategory.service';
+import { UndercategoryService } from 'src/app/shared/services/undercategories/undercategory.service';
 
 @Component({
   selector: 'app-labels-undercategories',
@@ -18,7 +18,7 @@ export class LabelsUndercategoriesComponent implements OnInit {
 
   undercategory: Undercategory = new Undercategory("", 0, "", new Category("", 0, "", "", ""), true, "");
 
-  /** Liste des Sous Catégoriess (ID/NAME/SECTION/TYPE/INTAB)*/
+  /** Liste des Sous Catégoriess (ID/NAME/category/TYPE/INTAB)*/
   datasource: MatTableDataSource<Undercategory> = new MatTableDataSource();
   @ViewChild(MatSort) sort: MatSort = new MatSort;
 
@@ -32,7 +32,7 @@ export class LabelsUndercategoriesComponent implements OnInit {
   /** Enum Type*/
   enumTypeList = Object.values(EnumCategoryType);
 
-  public constructor(private undercategoryService: UndersectionService, private sectionService: CategoryService, private router: Router) { }
+  public constructor(private undercategoryService: UndercategoryService, private categoryService: CategoryService, private router: Router) { }
 
   /**
    * Appel a l'initialisation
@@ -41,7 +41,7 @@ export class LabelsUndercategoriesComponent implements OnInit {
   public ngOnInit(): void {
 
     // Appel du Service - Récupère toutes les Sous-Catégoriess en base
-    this.undercategoryService.readUndersectionsByUserId().get().then(
+    this.undercategoryService.readUndercategorysByUserId().get().then(
       (querySnapshot) => {
         querySnapshot.forEach(
           data => {
@@ -57,7 +57,7 @@ export class LabelsUndercategoriesComponent implements OnInit {
     ).finally(
       () => {
         // Appel du Service - Récupère toutes les Catégoriess en base
-        this.sectionService.readCategoriesByUserId().get().then(
+        this.categoryService.readCategoriesByUserId().get().then(
           (querySnapshot) => {
             querySnapshot.forEach(
               data => {
@@ -106,7 +106,7 @@ export class LabelsUndercategoriesComponent implements OnInit {
    */
   public displayInTab(undercategory: Undercategory) {
     undercategory.inTab = !undercategory.inTab;
-    this.undercategoryService.updateUndersection(undercategory);
+    this.undercategoryService.updateUndercategory(undercategory);
   }
 
   /**
@@ -114,7 +114,7 @@ export class LabelsUndercategoriesComponent implements OnInit {
    * 
    * @param Undercategory - Undercategory - L'objet à modifier en base
    */
-  public updateUndersection(undercategory: Undercategory) {
+  public updateUndercategory(undercategory: Undercategory) {
 
 
     this.undercategory = { ...undercategory };
@@ -126,12 +126,12 @@ export class LabelsUndercategoriesComponent implements OnInit {
    * 
    * @param category - Category - La Sous-Catégories à supprimer
    */
-  public deleteUndersection(undercategory: Undercategory) {
+  public deleteUndercategory(undercategory: Undercategory) {
 
     // Controle si une données l'utilise pas !
     if (true) {
       //... alors Appel du service - Supprime la Catégories.
-      this.undercategoryService.deleteUndersection(undercategory.id).then(() => this.redirectTo('budgetiz/labels/undercategory'));
+      this.undercategoryService.deleteUndercategory(undercategory.id).then(() => this.redirectTo('budgetiz/labels/undercategory'));
     } else {
       alert("Une donnée utilise la Catégories. Veuillez la modifier");
     }

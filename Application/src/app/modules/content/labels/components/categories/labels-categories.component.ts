@@ -17,7 +17,7 @@ export class LabelsCategoriesComponent implements OnInit {
   category: Category = new Category("", 0, "", "", "");
 
   /** Colonnes à afficher dans le tableau des Catégoriess */
-  sectionColumns: Array<string> = ['idBase', 'name', 'type', 'edit', 'remove'];
+  categoryColumns: Array<string> = ['idBase', 'name', 'type', 'edit', 'remove'];
 
   /** Données du tableau : Liste des Catégoriess */
   datasource: MatTableDataSource<Category> = new MatTableDataSource();
@@ -30,9 +30,9 @@ export class LabelsCategoriesComponent implements OnInit {
   /**
    * Constructeur du composant CategoryComponent 
    * 
-   * @param sectionService - CategoryService - Injection du service CategoryService
+   * @param categoryService - CategoryService - Injection du service CategoryService
    */
-  constructor(private router: Router, private sectionService: CategoryService) { }
+  constructor(private router: Router, private categoryService: CategoryService) { }
 
   /**
    * Appel a l'initialisation
@@ -40,7 +40,7 @@ export class LabelsCategoriesComponent implements OnInit {
    */
   public ngOnInit(): void {
 
-    this.sectionService.readCategoriesByUserId().get().then(
+    this.categoryService.readCategoriesByUserId().get().then(
       (querySnapshot) => {
         querySnapshot.forEach(
           data => {
@@ -79,7 +79,7 @@ export class LabelsCategoriesComponent implements OnInit {
     // Controle si une données l'utilise pas !
     if (true) {
       //... alors Appel du service - Supprime la Catégories.
-      this.sectionService.deleteCategory(id).then(() => this.redirectTo('budgetiz/labels/category'));
+      this.categoryService.deleteCategory(id).then(() => this.redirectTo('budgetiz/labels/category'));
     } else {
       alert("Une donnée utilise la Catégories. Veuillez la modifier");
     }
