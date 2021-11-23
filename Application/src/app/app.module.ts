@@ -17,8 +17,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 //Services
-import { SectionService } from './shared/services/sections/section.service';
-import { UndersectionService } from './shared/services/undersections/undersection.service';
+import { UndersectionService } from './shared/services/undercategories/undercategory.service';
 import { AuthGuard } from './shared/services/authGuard/auth-guard.service';
 import { AuthService } from './shared/services/authentication/auth.service';
 
@@ -30,6 +29,7 @@ import { ContentComponent } from './modules/content/content.component';
 
 import { environment } from 'src/environments/environment';
 import { ContentModule } from './modules/content/content.module';
+import { CategoryService } from './shared/services/categories/category.service';
 
 
 
@@ -64,7 +64,8 @@ const firebaseUiAuthConfig: firebaseui.auth.Config = {
     FooterComponent,
     ContentComponent,
   ],
-  providers: [SectionService,
+  providers: [
+    CategoryService,
     UndersectionService,
     AuthGuard,
     AuthService,

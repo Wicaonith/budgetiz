@@ -1,11 +1,11 @@
-<!-- Formulaire d'ajout de nouvelles Sous-Rubriques -->
-<form *ngIf="undersection" (ngSubmit)="onSubmit()" #undersectionForm="ngForm">
+<!-- Formulaire d'ajout de nouvelles Sous-Catégoriess -->
+<form *ngIf="undercategory" (ngSubmit)="onSubmit()" #undercategoryForm="ngForm">
     <div class="formAdd-form">
         <div>
             <!-- Form id-->
             <mat-form-field appearance="outline" class="invisible">
                 <!-- Input -->
-                <input matInput name="idUndersection" value="" [(ngModel)]="undersection.id" #idUser="ngModel">
+                <input matInput name="idUndersection" value="" [(ngModel)]="undercategory.id" #idUser="ngModel">
             </mat-form-field>
         </div>
         <div>
@@ -13,7 +13,7 @@
             <mat-form-field class="idForm" appearance="outline">
                 <mat-label>ID</mat-label>
                 <!-- Input -->
-                <input matInput #idBaseUndersection name="idBaseUndersection" placeholder="" value=" {{this.lastId }}" [(ngModel)]="undersection.idBase" #id="ngModel" required disabled>
+                <input matInput #idBaseUndersection name="idBaseUndersection" placeholder="" value=" {{this.lastId }}" [(ngModel)]="undercategory.idBase" #id="ngModel" required disabled>
                 <mat-icon matSuffix (click)="idBaseUndersection.value = lastId.toString();">autorenew</mat-icon>
             </mat-form-field>
         </div>
@@ -22,18 +22,18 @@
             <mat-form-field appearance="outline">
                 <mat-label>Libellé</mat-label>
                 <!-- Input -->
-                <input matInput name="nameUndersection" placeholder="Ex. Facture EDF" value="" [(ngModel)]="undersection.name" #name="ngModel" required>
+                <input matInput name="nameUndersection" placeholder="Ex. Facture EDF" value="" [(ngModel)]="undercategory.name" #name="ngModel" required>
                 <!-- Message d'erreur -->
                 <mat-error *ngIf="required.invalid">{{getErrorMessageRequired()}}</mat-error>
             </mat-form-field>
         </div>
         <div>
-            <!-- Form combobox "Type de Rubrique"-->
+            <!-- Form combobox "Type de Catégories"-->
             <mat-form-field appearance="outline">
-                <mat-label>Rubrique mère</mat-label>
-                <mat-select name="sectionUndersection" [(ngModel)]="undersection.section" #section="ngModel" required>
-                    <mat-option *ngFor="let section of sections" [value]="section">
-                        {{section.name}}
+                <mat-label>Catégories mère</mat-label>
+                <mat-select name="sectionUndersection" [(ngModel)]="undercategory.category" #category="ngModel" required>
+                    <mat-option *ngFor="let category of categories" [value]="category">
+                        {{category.name}}
                     </mat-option>
                 </mat-select>
                 <!-- Message d'erreur -->
@@ -44,12 +44,12 @@
             <!-- Form idUser-->
             <mat-form-field appearance="outline" class="invisible">
                 <!-- Input -->
-                <input matInput name="idUserUndersection" value="" [(ngModel)]="undersection.idUser" #idUser="ngModel">
+                <input matInput name="idUserUndersection" value="" [(ngModel)]="undercategory.idUser" #idUser="ngModel">
             </mat-form-field>
         </div>
         <div>
             <!-- Bouton "Enregistrer" -->
-            <button mat-raised-button type="submit" [disabled]="!undersectionForm.form.valid">Enregistrer</button>
+            <button mat-raised-button type="submit" [disabled]="!undercategoryForm.form.valid">Enregistrer</button>
         </div>
     </div>
 </form>

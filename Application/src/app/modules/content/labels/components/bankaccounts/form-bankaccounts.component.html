@@ -1,4 +1,4 @@
-<!-- Formulaire d'ajout de nouvelles Rubriques -->
+<!-- Formulaire d'ajout de nouvelles Catégoriess -->
 <form *ngIf="bankAccount" (ngSubmit)="onSubmit()" #bankAccountForm="ngForm">
     <div class="formAdd-form">
         <div>
@@ -28,9 +28,9 @@
             </mat-form-field>
         </div>
         <div>
-            <!-- Form combobox "Type de Rubrique"-->
+            <!-- Form combobox "Type de Catégories"-->
             <mat-form-field appearance="outline">
-                <mat-label>Type de rubrique</mat-label>
+                <mat-label>Type de catégories</mat-label>
                 <!-- Combobox -->
                 <mat-select name="typeBankAccount" [(ngModel)]="bankAccount.type" #type="ngModel" required>
                     <mat-option *ngFor="let type of enumTypeList" [value]="type">

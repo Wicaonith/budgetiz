@@ -4,13 +4,13 @@ import { LabelsRoutingModule } from './labels-routing.module';
 import { FormsModule } from '@angular/forms';
 
 //Component
-import { LabelsSectionsComponent } from './components/sections/labels-sections.component';
-import { LabelsUndersectionsComponent } from './components/undersections/labels-undersections.component';
+import { LabelsCategoriesComponent } from './components/categories/labels-categories.component';
 import { LabelsBankAccountComponent } from './components/bankaccounts/labels-bankaccount.component';
 import { LabelsTabsComponent } from './components/labels-tabs.component';
-import { FormSectionsComponent } from './components/sections/form-sections.component';
-import { FormUndersectionsComponent } from './components/undersections/form-undersections.component';
 import { FormBankAccountComponent } from './components/bankaccounts/form-bankaccounts.component';
+import { FormCategoriesComponent } from './components/categories/form-categories.component';
+import { LabelsUndercategoriesComponent } from './components/undercategories/labels-undercategories.component';
+import { FormUndercategoriesComponent } from './components/undercategories/form-undercategories.component';
 
 // Material Module
 import { MatTabsModule } from '@angular/material/tabs';
@@ -24,12 +24,12 @@ import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
   declarations: [
-    LabelsSectionsComponent,
-    LabelsUndersectionsComponent,
+    LabelsCategoriesComponent,
+    LabelsUndercategoriesComponent,
     LabelsBankAccountComponent,
     LabelsTabsComponent,
-    FormSectionsComponent,
-    FormUndersectionsComponent,
+    FormCategoriesComponent,
+    FormUndercategoriesComponent,
     FormBankAccountComponent
   ],
   imports: [

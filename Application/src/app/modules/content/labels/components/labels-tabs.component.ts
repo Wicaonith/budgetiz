@@ -10,8 +10,8 @@ export class LabelsTabsComponent implements OnInit {
 
   /** La tableau contenant les urls et les libellés des onglets */
   navLinks = [
-    { path: '/budgetiz/labels/section', label: 'Rubrique' },
-    { path: '/budgetiz/labels/undersection', label: 'Sous-Rubrique' },
+    { path: '/budgetiz/labels/category', label: 'Catégories' },
+    { path: '/budgetiz/labels/undercategory', label: 'Sous-Catégories' },
     { path: '/budgetiz/labels/bankaccount', label: 'Compte' },
   ];
   /** Determine le lien actif */

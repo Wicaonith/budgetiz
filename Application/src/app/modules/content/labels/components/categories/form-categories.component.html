@@ -1,11 +1,11 @@
-<!-- Formulaire d'ajout de nouvelles Rubriques -->
-<form *ngIf="section" (ngSubmit)="onSubmit()" #sectionForm="ngForm">
+<!-- Formulaire d'ajout de nouvelles Catégoriess -->
+<form *ngIf="category" (ngSubmit)="onSubmit()" #categoryForm="ngForm">
     <div class="formAdd-form">
         <div>
             <!-- Form id-->
             <mat-form-field appearance="outline" class="invisible">
                 <!-- Input -->
-                <input matInput name="idSection" value="" [(ngModel)]="section.id" #id="ngModel">
+                <input matInput name="idCategory" value="" [(ngModel)]="category.id" #id="ngModel">
             </mat-form-field>
         </div>
         <div>
@@ -13,8 +13,8 @@
             <mat-form-field class="idForm" appearance="outline">
                 <mat-label>ID</mat-label>
                 <!-- Input -->
-                <input matInput #idBaseSection name="idBaseSection" placeholder="" value=" {{this.lastId }}" [(ngModel)]="section.idBase" #idBase="ngModel" required disabled>
-                <mat-icon matSuffix (click)="idBaseSection.value = lastId.toString();">autorenew</mat-icon>
+                <input matInput #idBaseCategory name="idBaseCategory" placeholder="" value=" {{this.lastId }}" [(ngModel)]="category.idBase" #idBase="ngModel" required disabled>
+                <mat-icon matSuffix (click)="idBaseCategory.value = lastId.toString();">autorenew</mat-icon>
             </mat-form-field>
         </div>
         <div>
@@ -22,17 +22,17 @@
             <mat-form-field class="example-full-width" appearance="outline">
                 <mat-label>Libellé</mat-label>
                 <!-- Input -->
-                <input matInput name="nameSection" placeholder="Ex. Habitat" value="" [(ngModel)]="section.name" #name="ngModel" required>
+                <input matInput name="nameCategory" placeholder="Ex. Habitat" value="" [(ngModel)]="category.name" #name="ngModel" required>
                 <!-- Message d'erreur -->
                 <mat-error *ngIf="required.invalid">{{getErrorMessageRequired()}}</mat-error>
             </mat-form-field>
         </div>
         <div>
-            <!-- Form combobox "Type de Rubrique"-->
+            <!-- Form combobox "Type de Catégories"-->
             <mat-form-field appearance="outline">
-                <mat-label>Type de rubrique</mat-label>
+                <mat-label>Type de catégories</mat-label>
                 <!-- Combobox -->
-                <mat-select name="typeSection" [(ngModel)]="section.type" #type="ngModel" required>
+                <mat-select name="typeCategory" [(ngModel)]="category.type" #type="ngModel" required>
                     <mat-option *ngFor="let type of enumTypeList" [value]="type">
                         {{type}}
                     </mat-option>
@@ -45,12 +45,12 @@
             <!-- Form idUser-->
             <mat-form-field appearance="outline" class="invisible">
                 <!-- Input -->
-                <input matInput name="idUserSection" value="" [(ngModel)]="section.idUser" #idUser="ngModel">
+                <input matInput name="idUserCategory" value="" [(ngModel)]="category.idUser" #idUser="ngModel">
             </mat-form-field>
         </div>
         <div>
             <!-- Bouton "Enregistrer" -->
-            <button mat-raised-button type="submit" [disabled]="!sectionForm.form.valid">Enregistrer</button>
+            <button mat-raised-button type="submit" [disabled]="!categoryForm.form.valid">Enregistrer</button>
         </div>
     </div>
 </form>

@@ -16,13 +16,13 @@ export class FormBankAccountComponent implements OnInit {
 
   /** L'objet lié au Formulaire */
   @Input() bankAccount: BankAccount = new BankAccount("", 0, "", "", "");
-  /** Enum des Types de Rubriques */
+  /** Enum des Types de Catégoriess */
   enumTypeList = Object.values(EnumBankAccountType);
   /** Dernier identifiant */
   lastId: number = 0;
   /** FormControl pour vérifier la validité des champs */
   required = new FormControl('', [Validators.required]);
-  /** Permet de savoir si la Rubrique soumise par le formulaire est à créer ou modifier */
+  /** Permet de savoir si la Catégories soumise par le formulaire est à créer ou modifier */
   isModif: boolean = false;
   bankAccounts: Array<BankAccount> = new Array();
 
@@ -39,7 +39,7 @@ export class FormBankAccountComponent implements OnInit {
    */
   public ngOnInit(): void {
 
-    //Appel du Service - Récupère toutes les Rubriques en base
+    //Appel du Service - Récupère toutes les Catégoriess en base
     this.bankAccountsService.readBankAccountsByUserId().get().then(
       (querySnapshot) => {
         querySnapshot.forEach(
@@ -49,12 +49,12 @@ export class FormBankAccountComponent implements OnInit {
             this.bankAccounts.push(bankAccount);
           },
           (err: any) => {
-            this.utilsService.handleError(`[Erreur] LabelsSectionsComponent - ngOnInit()`, err);
+            this.utilsService.handleError(`[Erreur] LabelsCategoriesComponent - ngOnInit()`, err);
           }
         );
       }
     );
-    // On valorise les Rubriques récupérées dans la dataSource de la Table 
+    // On valorise les Catégoriess récupérées dans la dataSource de la Table 
     this.readLastId();
     this.bankAccount.idUser = this.utilsService.getUserUID();
   }
@@ -65,7 +65,7 @@ export class FormBankAccountComponent implements OnInit {
       (bankAccounts: BankAccount[]) => {
         let isInit: boolean = this.lastId === 0;
         for (let bankAccount of bankAccounts) {
-          // ... et si l'identifiant de la rubrique est supérieur à la variable lastId..
+          // ... et si l'identifiant de la catégories est supérieur à la variable lastId..
           if (bankAccount.idBase > this.lastId) {
             // ... on valorise lastId.
             this.lastId = bankAccount.idBase;
@@ -87,7 +87,7 @@ export class FormBankAccountComponent implements OnInit {
    */
   public onSubmit(): void {
 
-    // Si il n'existe pas de rubrique avec cet ID...
+    // Si il n'existe pas de catégories avec cet ID...
     if (this.bankAccount.id === "") {
       // ... alors on le crée ...
       this.bankAccountsService.createBankAccount(this.bankAccount);

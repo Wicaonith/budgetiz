@@ -1,0 +1,55 @@
+<app-labels-tabs></app-labels-tabs>
+
+<app-form-undercategories [undercategory]="undercategory"></app-form-undercategories>
+
+<!-- Tableau contenant les données de toutes les transactions -->
+<table class="dataTable" mat-table [dataSource]="datasource" matSort>
+
+    <!-- TODO Faire que le clic sur une ligne amène vers un résumé de toutes les transactions faite sur cette catégories -->
+    <ng-container matColumnDef="idBase">
+        <th mat-header-cell *matHeaderCellDef> No. </th>
+        <td mat-cell *matCellDef="let undercategory"> {{undercategory.idBase}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Libellé </th>
+        <td mat-cell *matCellDef="let undercategory"> {{undercategory.name}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="category">
+        <th mat-header-cell *matHeaderCellDef> Catégories Mère </th>
+        <td mat-cell *matCellDef="let undercategory"> {{undercategory.category.name}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="display">
+        <th mat-header-cell class="cell-button" *matHeaderCellDef></th>
+        <td mat-cell class="cell-button" *matCellDef="let undercategory">
+            <img *ngIf="undercategory.inTab == true" (click)="displayInTab(undercategory)" width="20" height="20" title="Affiché dans le tableau" alt="Affiché dans le tableau"
+                src="assets/img/eye_icon.png" />
+            <img *ngIf="undercategory.inTab == false" (click)="displayInTab(undercategory)" width="20" height="20" title="Caché dans le tableau" alt="Caché dans le tableau"
+                src="assets/img/eye_close_icon.png" />
+        </td>
+    </ng-container>
+
+    <!-- Bouton modifier qui ajout les données dans le form au dessus-->
+    <ng-container matColumnDef="edit">
+        <th mat-header-cell class="cell-button" *matHeaderCellDef></th>
+        <td mat-cell class="cell-button" *matCellDef="let category">
+            <button mat-flat-button color="basic" aria-label="Editer" (click)="updateUndersection(category)">
+                <mat-icon>edit</mat-icon>
+            </button>
+        </td>
+    </ng-container>
+
+    <ng-container matColumnDef="remove">
+        <th mat-header-cell class="cell-button" *matHeaderCellDef></th>
+        <td mat-cell class="cell-button" *matCellDef="let undercategory">
+            <button mat-flat-button color="basic" aria-label="Supprimer" (click)="deleteUndersection(undercategory)">
+                <mat-icon>delete</mat-icon>
+            </button>
+        </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef=" undercategoryColumns"></tr>
+    <tr mat-row *matRowDef="let rowCategory; columns: undercategoryColumns"></tr>
+</table>

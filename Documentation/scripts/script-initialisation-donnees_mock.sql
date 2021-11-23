@@ -6,18 +6,18 @@ values
 ('3', '[R] Autre','Revenu'),
 ('4', '[C] Habitat','Charge'),
 ('5', '[C] Services','Charge'),
-('6', '[C] Impôts','Charge'),
-('7', '[C] Santé','Charge'),
+('6', '[C] Impï¿½ts','Charge'),
+('7', '[C] Santï¿½','Charge'),
 ('8', '[C] Vie Courante','Charge'),
 ('9', '[C] Transport','Charge'),
-('10', '[P] Imprévu','Provision'),
+('10', '[P] Imprï¿½vu','Provision'),
 ('11', '[P] Autres','Provision');
 
 
-insert into budgetiz.bud_undersections (id, name, section ,inTab)
+insert into budgetiz.bud_undercategories (id, name, category ,inTab)
 values 
 ('1', 'Salaire','1', '1'),
 ('2', 'Remboursement','1', '1'),
 ('3', 'Loyer','1', '1'),
 ('4', 'Loyer','2', '1'),
-('5', 'Electricité','2', '1');
+('5', 'Electricitï¿½','2', '1');

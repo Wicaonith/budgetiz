@@ -7,9 +7,9 @@ import { SavingComponent } from './modules/content/saving/components/saving.comp
 import { TaxesComponent } from './modules/content/taxes/components/taxes.component';
 import { PageNotFoundComponent } from './page-not-found.component';
 import { SingupComponent } from './modules/content/login/components/singup.component';
-import { LabelsSectionsComponent } from './modules/content/labels/components/sections/labels-sections.component';
+import { LabelsCategoriesComponent } from './modules/content/labels/components/categories/labels-categories.component';
 import { LabelsBankAccountComponent } from './modules/content/labels/components/bankaccounts/labels-bankaccount.component';
-import { LabelsUndersectionsComponent } from './modules/content/labels/components/undersections/labels-undersections.component';
+import { LabelsUndercategoriesComponent } from './modules/content/labels/components/undercategories/labels-undercategories.component';
 import { ResetPwdComponent } from './modules/content/login/components/reset-pwd.component';
 import { TransactionsComponent } from './modules/content/transactions/components/transactions.component';
 
@@ -26,8 +26,8 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     children: [
       { path: 'home', component: HomeComponent },
-      { path: 'labels/section', component: LabelsSectionsComponent },
-      { path: 'labels/undersection', component: LabelsUndersectionsComponent },
+      { path: 'labels/category', component: LabelsCategoriesComponent },
+      { path: 'labels/undercategory', component: LabelsUndercategoriesComponent },
       { path: 'labels/bankaccount', component: LabelsBankAccountComponent },
       { path: 'transactions', component: TransactionsComponent },
       { path: 'saving', component: SavingComponent },

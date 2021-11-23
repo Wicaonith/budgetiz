@@ -23,7 +23,7 @@ export class BankAccountsService {
 
   public createBankAccount(bankAccount: BankAccount): any {
 
-    // Insertion en base de la Rubrique
+    // Insertion en base de la Catégories
     return this.crudService.add({ ...bankAccount }).then(() => {
       this.log(`Création du compte n°${bankAccount.id}`); // Lorsque la création se passe bien
     });

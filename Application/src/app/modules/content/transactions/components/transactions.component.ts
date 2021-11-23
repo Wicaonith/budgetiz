@@ -3,9 +3,9 @@ import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { EnumMonth } from 'src/app/shared/enum/enumMonth';
 import { BankAccount } from 'src/app/shared/models/bankAccount.model';
-import { Section } from 'src/app/shared/models/section.model';
+import { Category } from 'src/app/shared/models/category.model';
 import { Transaction } from 'src/app/shared/models/transaction.model';
-import { Undersection } from 'src/app/shared/models/undersection.model';
+import { Undercategory } from 'src/app/shared/models/undercategory.model';
 import { TransactionsService } from 'src/app/shared/services/transactions/transactions.service';
 import { UtilsService } from 'src/app/shared/services/utils/utils.service';
 
@@ -21,14 +21,14 @@ export class TransactionsComponent implements OnInit {
   required = new FormControl('', [Validators.required]);
 
   // Liste pour les Selects
-  sections: Array<Section> = new Array();
+  categories: Array<Category> = new Array();
   bankAccounts: Array<BankAccount> = new Array();
-  undersections: Array<Undersection> = new Array();
+  undercategories: Array<Undercategory> = new Array();
 
-  // Filtre sur les Undersection en fonction du nom de la Section
-  filtreSection: string = "";
+  // Filtre sur les Undercategory en fonction du nom de la Category
+  filtreCategory: string = "";
 
-  /** Enum des Types de Rubriques */
+  /** Enum des Types de Catégoriess */
   enumMonth = Object.values(EnumMonth);
   /** Prochain identifiant à ajouter pour l'utilisateur en cours */
   lastId: number = 0;
@@ -46,11 +46,11 @@ export class TransactionsComponent implements OnInit {
 
   public initializeInputTransaction(): Transaction {
     let date: Date = new Date();
-    let section: Section = new Section("", 0, "", "", "");
-    let undersection: Undersection = new Undersection("", 0, "", section, true, "");
+    let category: Category = new Category("", 0, "", "", "");
+    let undercategory: Undercategory = new Undercategory("", 0, "", category, true, "");
     let bankAccount: BankAccount = new BankAccount("", 0, "", "", "")
 
-    return new Transaction("", 0, 0, "", date, 0, undersection, bankAccount, "");
+    return new Transaction("", 0, 0, "", date, 0, undercategory, bankAccount, "");
   }
 
 

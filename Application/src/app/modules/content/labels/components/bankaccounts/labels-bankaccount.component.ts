@@ -13,11 +13,11 @@ import { BankAccountsService } from 'src/app/shared/services/bankAccounts/bankac
 })
 export class LabelsBankAccountComponent implements OnInit {
 
-  /** Objet section du formulaire */
+  /** Objet category du formulaire */
   bankAccount: BankAccount = new BankAccount("", 0, "", "", "");
-  /** Liste des Rubriques (ID/NAME/TYPE)*/
+  /** Liste des Catégoriess (ID/NAME/TYPE)*/
   bankAccounts: Array<BankAccount> = new Array();
-  /** Colonnes à afficher dans le tableau des Rubriques */
+  /** Colonnes à afficher dans le tableau des Catégoriess */
   bankAccountColumns: Array<string> = ['idBase', 'name', 'type', 'edit', 'remove'];
   /** Données du tableau : Liste des Comptes Bancaires */
   datasource: MatTableDataSource<BankAccount> = new MatTableDataSource();
@@ -38,13 +38,13 @@ export class LabelsBankAccountComponent implements OnInit {
             this.bankAccounts.push(bankAccount);
           },
           (err: any) => {
-            this.handleError(`[Erreur] LabelsSectionsComponent - ngOnInit()`, err);
+            this.handleError(`[Erreur] LabelsCategoriesComponent - ngOnInit()`, err);
           }
         );
       }
     ).finally(
       () => {
-        // On valorise les Rubriques récupérées dans la dataSource de la Table 
+        // On valorise les Catégoriess récupérées dans la dataSource de la Table 
         this.reloadTable();
       }
     );
@@ -58,20 +58,20 @@ export class LabelsBankAccountComponent implements OnInit {
     }
   }
 
-  public updateSection(bankAccount: BankAccount): void {
+  public updateCategory(bankAccount: BankAccount): void {
 
     this.bankAccount = { ...bankAccount };
   }
 
 
-  public deleteSection(id: string): void {
+  public deleteCategory(id: string): void {
 
     // Controle si une données l'utilise pas !
     if (true) {
-      //... alors Appel du service - Supprime la Rubrique.
+      //... alors Appel du service - Supprime la Catégories.
       this.bankAccountsService.deleteBankAccount(id).then(() => this.redirectTo('budgetiz/labels/bankaccount'));
     } else {
-      alert("Une donnée utilise la Rubrique. Veuillez la modifier");
+      alert("Une donnée utilise la Catégories. Veuillez la modifier");
     }
   }
 

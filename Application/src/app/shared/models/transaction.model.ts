@@ -1,7 +1,6 @@
 import { Entity } from "../services/firestoreCrud.service";
 import { BankAccount } from "./bankAccount.model";
-import { Section } from "./section.model";
-import { Undersection } from "./undersection.model";
+import { Undercategory } from "./undercategory.model";
 
 
 /**
@@ -21,21 +20,21 @@ export class Transaction implements Entity {
     date: Date;
     /** Le montant de la transaction */
     amount: number;
-    /** La sous rubrique de la transaction */
-    undersection: Undersection;
+    /** La sous catégories de la transaction */
+    undercategory: Undercategory;
     /** Le compte ayant la transaction */
     account: BankAccount;
 
     idUser: string;
 
-    constructor(id: string, idBase: number, year: number, month: string, date: Date, amount: number, undersection: Undersection, account: BankAccount, idUser: string) {
+    constructor(id: string, idBase: number, year: number, month: string, date: Date, amount: number, undercategory: Undercategory, account: BankAccount, idUser: string) {
         this.id = id;
         this.idBase = idBase;
         this.year = year;
         this.month = month;
         this.date = date;
         this.amount = amount;
-        this.undersection = undersection;
+        this.undercategory = undercategory;
         this.account = account;
         this.idUser = idUser;
     }

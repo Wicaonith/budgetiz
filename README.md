@@ -35,11 +35,11 @@ Run `ng serve -o` pour lancer avec rafraichissement en temps réel
 
 ## V1.0.0
 
-Feature - Mettre en place la page Section
+Feature - Mettre en place la page Category
 
-    |- Contrôle sur le deleteSection() - LabelsSectionsComponent
+    |- Contrôle sur le deleteCategory() - LabelsCategoriesComponent
     
-Feature - Mettre en place la page Undersection
+Feature - Mettre en place la page Undercategory
 
     |- Contrôle sur le deleteUndersection() - LabelsUndersectionComponent
     

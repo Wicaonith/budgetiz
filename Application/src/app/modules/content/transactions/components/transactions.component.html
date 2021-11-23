@@ -57,13 +57,13 @@
             </mat-form-field>
         </div>
 
-        <!-- Select for section -->
+        <!-- Select for category -->
         <div>
             <mat-form-field appearance="outline">
                 <mat-label>Catégorie</mat-label>
-                <mat-select name="sTransaction" [(ngModel)]="filtreSection" #section="ngModel" required>
-                    <mat-option *ngFor="let section of sections" [value]="section">
-                        {{section.name}}
+                <mat-select name="sTransaction" [(ngModel)]="filtreCategory" #category="ngModel" required>
+                    <mat-option *ngFor="let category of categories" [value]="category">
+                        {{category.name}}
                     </mat-option>
                 </mat-select>
                 <!-- Message d'erreur -->
@@ -71,13 +71,13 @@
             </mat-form-field>
         </div>
 
-        <!-- Select for undersection -->
+        <!-- Select for undercategory -->
         <div>
             <mat-form-field appearance="outline">
                 <mat-label>Sous-Catégorie</mat-label>
-                <mat-select name="usTransaction" [(ngModel)]="transaction.undersection" #undersection="ngModel" required>
-                    <mat-option *ngFor="let undersection of undersections" [value]="undersection">
-                        {{undersection.name}}
+                <mat-select name="usTransaction" [(ngModel)]="transaction.undercategory" #undercategory="ngModel" required>
+                    <mat-option *ngFor="let undercategory of undercategories" [value]="undercategory">
+                        {{undercategory.name}}
                     </mat-option>
                 </mat-select>
                 <!-- Message d'erreur -->
@@ -113,7 +113,7 @@
 
 <!-- Columns amount -->
 
-<!-- Columns undersection -->
+<!-- Columns undercategory -->
 
 <!-- Columns account -->
 
