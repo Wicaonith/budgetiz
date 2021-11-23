@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/shared/services/authentication/auth.service';
+import { UtilsService } from 'src/app/shared/services/utils/utils.service';
 
 export class SignUp {
   userEmail: string = "";
@@ -27,7 +28,9 @@ export class SingupComponent implements OnInit {
   required = new FormControl('', [Validators.required]);
   errorMsg: string = "";
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(
+    private authService: AuthService,
+    private utilsService: UtilsService) { }
 
   ngOnInit(): void {
   }
@@ -42,10 +45,10 @@ export class SingupComponent implements OnInit {
         (err: any) => {
           console.log('LoginComponent:: emailPasswordSignUp:: sign up failed:', err);
           if (err.code === "auth/email-already-in-use") {
-            this.manageError("Un compte existe déjà pour cette adresse email.");
+            this.utilsService.openSnackBar("Un compte existe déjà pour cette adresse email.", "OK");
           }
           if (err.code === "auth/weak-password") {
-            this.manageError("Le mot de passe doit contenir au moins 6 caractères");
+            this.utilsService.openSnackBar("Le mot de passe doit contenir au moins 6 caractères", "OK");
           }
         }
       );
@@ -54,27 +57,14 @@ export class SingupComponent implements OnInit {
 
   controlPassword() {
     if (this.signUp.userPassword !== this.signUp.userConfirmedPassword) {
-      this.manageError("Les mots de passe sont différents.")
+      this.utilsService.openSnackBar("Les mots de passe sont différents.", "OK");
       return false;
     }
     return true;
 
   }
 
-
-  /** 
-   * Gère les erreurs si requis
-   */
   public getErrorMessageRequired(): string {
-    if (this.required.hasError('required')) {
-      return 'Valeur obligatoire';
-    }
-    return '';
+    return this.utilsService.getErrorMessageRequired(this.required);
   }
-
-  manageError(message: string) {
-    this.errorMsg = message;
-  }
-
-
 }

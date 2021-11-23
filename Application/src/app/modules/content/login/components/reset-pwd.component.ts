@@ -3,6 +3,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { delay } from 'rxjs/operators';
 import { AuthService } from 'src/app/shared/services/authentication/auth.service';
+import { UtilsService } from 'src/app/shared/services/utils/utils.service';
 
 export class ResetPassword {
   email: string;
@@ -26,7 +27,9 @@ export class ResetPwdComponent implements OnInit {
   errorMsg: string = "";
   hintMsg: string = "";
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(
+    private authService: AuthService,
+    private utilsService: UtilsService) { }
 
   ngOnInit(): void {
   }
@@ -34,28 +37,14 @@ export class ResetPwdComponent implements OnInit {
   onSubmit() {
     this.authService.sendPasswordResetEmail(this.resetPwdEmail.email).then(
       () => {
-        this.manageMessage("Email envoyé", false);
+        this.utilsService.openSnackBar("Email envoyé à " + this.resetPwdEmail.email, "OK");
         delay(2000);
         console.log("Réinitialisation du mot de passe via l'email " + this.resetPwdEmail.email);
       }
     )
   }
 
-  /** 
-   * Gère les erreurs si requis
-   */
   public getErrorMessageRequired(): string {
-    if (this.required.hasError('required')) {
-      return 'Valeur obligatoire';
-    }
-    return '';
+    return this.utilsService.getErrorMessageRequired(this.required);
   }
-  manageMessage(message: string, isError: boolean) {
-    if (isError) {
-      this.errorMsg = message;
-    } else {
-      this.hintMsg = message;
-    }
-  }
-
 }

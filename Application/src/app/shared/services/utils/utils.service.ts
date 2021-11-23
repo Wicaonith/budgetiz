@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 
@@ -8,7 +9,9 @@ import { Observable, of } from 'rxjs';
 })
 export class UtilsService {
 
-  constructor(private router: Router) { }
+  constructor(
+    private router: Router,
+    private _snackBar: MatSnackBar) { }
 
 
   public getUserUID(): string {
@@ -26,6 +29,11 @@ export class UtilsService {
         this.router.navigate([uri]);
       }
     );
+  }
+
+
+  public openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action);
   }
 
   public handleError<T>(operation = 'operation', result?: T) {

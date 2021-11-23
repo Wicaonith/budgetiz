@@ -1,8 +1,7 @@
 <div class="login-page">
     <div class="content-login">
         <button mat-raised-button (click)="googleLogin()">
-            <img src="assets/img/google_icon.png" width="20" height="20" title="Google-Signin" alt="Google-Signin"
-                style="margin-right:5px">
+            <img src="assets/img/google_icon.png" width="20" height="20" title="Google-Signin" alt="Google-Signin" style="margin-right:5px">
             Connexion avec Google
         </button>
         <br /><br />
@@ -12,23 +11,19 @@
             <!-- Form input "ID" -->
             <mat-form-field appearance="outline">
                 <mat-label>Email</mat-label>
-                <input matInput type="email" name="email" placeholder="Email" value="" [(ngModel)]="login.userEmail"
-                    #userEmail="ngModel" required>
+                <input matInput type="email" name="email" placeholder="Email" value="" [(ngModel)]="login.userEmail" #userEmail="ngModel" required>
                 <!-- Message d'erreur -->
                 <mat-error *ngIf="required.invalid">{{getErrorMessageRequired()}}</mat-error>
             </mat-form-field>
             <br />
             <mat-form-field appearance="outline">
                 <mat-label>Mot de passe</mat-label>
-                <input matInput type="password" name="email" placeholder="Mot de passe" value=""
-                    [(ngModel)]="login.userPassword" #userPassword="ngModel" required>
+                <input matInput type="password" name="email" placeholder="Mot de passe" value="" [(ngModel)]="login.userPassword" #userPassword="ngModel" required>
                 <!-- Message d'erreur -->
                 <mat-error *ngIf="required.invalid">{{getErrorMessageRequired()}}</mat-error>
             </mat-form-field>
-            <mat-error *ngIf="errorMsg !== ''">{{ errorMsg }}</mat-error>
             <div class="login-button">
-                <button mat-raised-button class="login-button" type="submit"
-                    [disabled]="!loginForm.form.valid">Connexion</button>
+                <button mat-raised-button class="login-button" type="submit" [disabled]="!loginForm.form.valid">Connexion</button>
             </div>
             <p class="login-create-link">
                 Pas encore de compte ? <br />

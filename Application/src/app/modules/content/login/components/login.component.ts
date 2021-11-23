@@ -1,7 +1,9 @@
 import { Component, Input } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/shared/services/authentication/auth.service';
+import { UtilsService } from 'src/app/shared/services/utils/utils.service';
 
 export class Login {
   userEmail: string = "";
@@ -23,9 +25,11 @@ export class LoginComponent {
   @Input() login: Login = new Login("", "");
   /** FormControl pour vérifier la validité des champs */
   required = new FormControl('', [Validators.required]);
-  errorMsg: string = "";
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private utilsService: UtilsService) { }
 
   googleLogin() {
     alert("Pas encore implémenté");
@@ -39,7 +43,6 @@ export class LoginComponent {
         this.router.navigate(['budgetiz/home']);
       }
     );
-
   }
 
   emailPasswordLogin() {
@@ -50,30 +53,18 @@ export class LoginComponent {
         }
       ).catch(
         (err: any) => {
-          console.log('LoginComponent:: emailPasswordLogin:: login failed:', err);
           if (err.code === "auth/invalid-email") {
-            this.manageError("L'adresse email n'est pas au bon format");
+            this.utilsService.openSnackBar("L'adresse email n'est pas au bon format.", "OK");
           }
           if (err.code === "auth/user-not-found") {
-            this.manageError("L'utilisateur n'existe pas");
+            this.utilsService.openSnackBar("Il n'y a aucun utilisateur en lien avec cette adresse mail.", "OK");
           }
         }
       );
     }
   }
 
-  /** 
-   * Gère les erreurs si requis
-   */
   public getErrorMessageRequired(): string {
-    if (this.required.hasError('required')) {
-      return 'Valeur obligatoire';
-    }
-    return '';
+    return this.utilsService.getErrorMessageRequired(this.required);
   }
-
-  manageError(message: string) {
-    this.errorMsg = message;
-  }
-
 }
