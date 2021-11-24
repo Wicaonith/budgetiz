@@ -2,109 +2,133 @@
 
 <!-- Toggle button Display 'ALL' or 'MONTH' -->
 
-<!-- ==================================== FORMS -->
-<form *ngIf="transaction" (ngSubmit)="onSubmit()" #transactionForm="ngForm">
-    <div class="formAdd-form">
-        <!-- Input HIDDEN for id -->
-        <div>
-            <mat-form-field appearance="outline" class="invisible">
-                <input matInput name="idTransaction" value="" [(ngModel)]="transaction.id" #id="ngModel">
-            </mat-form-field>
-        </div>
-        <!-- Input HIDDEN for idUser -->
-        <div>
-            <mat-form-field appearance="outline" class="invisible">
-                <input matInput name="idUserTransaction" value="" [(ngModel)]="transaction.idUser" #idUser="ngModel">
-            </mat-form-field>
-        </div>
+<div *ngIf="!addTransaction; else addTransactionForm">
+    <button mat-flat-button class="plus-button" (click)="addTransaction = true;">
+        <mat-icon matPrefix>add_circle</mat-icon> Ajouter une catégorie
+    </button>
+</div>
+<ng-template #addTransactionForm>
+    <!--====================================FORMS -->
+    <form *ngIf="transaction" (ngSubmit)="onSubmit()" #transactionForm="ngForm">
+        <div class="formAdd-form">
+            <button mat-flat-button class="minus-button" (click)="addTransaction = false;">
+                <mat-icon matPrefix>remove_circle</mat-icon>
+            </button>
 
-        <!-- Input for idBase -->
-        <div>
-            <mat-form-field class="idForm" appearance="outline">
-                <mat-label>ID</mat-label>
-                <input matInput #idBaseTransaction name="idBaseTransaction" value=" {{this.lastId}}" [(ngModel)]="transaction.idBase" #idBase="ngModel" required disabled>
-                <mat-icon matSuffix (click)="idBaseTransaction.value = lastId.toString();">autorenew</mat-icon>
-            </mat-form-field>
-        </div>
+            <!-- Input for idBase -->
+            <div>
+                <mat-form-field class="idForm" appearance="outline">
+                    <mat-label>ID</mat-label>
+                    <input matInput #idBaseTransaction name="idBaseTransaction" value=" {{this.lastId}}" [(ngModel)]="transaction.idBase" #idBase="ngModel" required disabled>
+                    <mat-icon matSuffix (click)="idBaseTransaction.value = lastId.toString();">autorenew</mat-icon>
+                </mat-form-field>
+            </div>
 
 
-        <!-- Input for year https://material.angular.io/components/datepicker/overview#watching-the-views-for-changes-on-selected-years-and-months -->
+            <!-- Input for year -->
+            <div>
+                <mat-form-field appearance="outline" class="input-150">
+                    <mat-label>Année</mat-label>
+                    <input matInput #yearTransaction name="yearTransaction" value="" [(ngModel)]="transaction.year" #year="ngModel" required>
+                </mat-form-field>
+            </div>
 
-
-        <!-- Select for month -->
-        <div>
-            <mat-form-field appearance="outline">
-                <mat-label>Mois</mat-label>
-                <mat-select name="monthTransaction" [(ngModel)]="transaction.month" #month="ngModel" required>
-                    <mat-option *ngFor="let month of enumMonth" [value]="month">
-                        {{month}}
-                    </mat-option>
-                </mat-select>
-                <!-- Message d'erreur -->
-                <mat-error *ngIf="required.invalid">{{getErrorMessageRequired()}}</mat-error>
-            </mat-form-field>
-        </div>
-        <!-- Datepicker for date -->
-
-        <!-- Input for amount -->
-        <div>
-            <mat-form-field appearance="outline" floatLabel="always">
-                <mat-label>Montant</mat-label>
-                <input matInput type="number" name="amountTransaction" [(ngModel)]="transaction.amount" #amount="ngModel" style="text-align: right;" required>
-                <span matPrefix>€</span>
-                <!-- Message d'erreur -->
+            <!-- Select for month -->
+            <div>
+                <mat-form-field appearance="outline" class="input-150">
+                    <mat-label>Mois</mat-label>
+                    <mat-select name="monthTransaction" [(ngModel)]="transaction.month" #month="ngModel" required>
+                        <mat-option *ngFor="let month of enumMonth" [value]="month">
+                            {{month}}
+                        </mat-option>
+                    </mat-select>
+                    <!-- Message d'erreur -->
+                    <mat-error *ngIf="required.invalid">{{getErrorMessageRequired()}}</mat-error>
+                </mat-form-field>
+            </div>
+            <!-- Datepicker for date -->
+            <mat-form-field appearance="outline" class="input-150">
+                <mat-label>Date</mat-label>
+                <input matInput [matDatepicker]="picker">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
                 <mat-error *ngIf=" required.invalid">{{getErrorMessageRequired()}}</mat-error>
             </mat-form-field>
-        </div>
 
-        <!-- Select for category -->
-        <div>
-            <mat-form-field appearance="outline">
-                <mat-label>Catégorie</mat-label>
-                <mat-select name="sTransaction" [(ngModel)]="filtreCategory" #category="ngModel" required>
-                    <mat-option *ngFor="let category of categories" [value]="category">
-                        {{category.name}}
-                    </mat-option>
-                </mat-select>
-                <!-- Message d'erreur -->
-                <mat-error *ngIf="required.invalid">{{getErrorMessageRequired()}}</mat-error>
-            </mat-form-field>
-        </div>
+            <!-- Input for amount -->
+            <div>
+                <mat-form-field appearance="outline" floatLabel="always" class="input-150">
+                    <mat-label>Montant</mat-label>
+                    <input matInput type="number" name="amountTransaction" [(ngModel)]="transaction.amount" #amount="ngModel" style="text-align: right;" required>
+                    <span matPrefix>€</span>
+                    <!-- Message d'erreur -->
+                    <mat-error *ngIf=" required.invalid">{{getErrorMessageRequired()}}</mat-error>
+                </mat-form-field>
+            </div>
 
-        <!-- Select for undercategory -->
-        <div>
-            <mat-form-field appearance="outline">
-                <mat-label>Sous-Catégorie</mat-label>
-                <mat-select name="usTransaction" [(ngModel)]="transaction.undercategory" #undercategory="ngModel" required>
-                    <mat-option *ngFor="let undercategory of undercategories" [value]="undercategory">
-                        {{undercategory.name}}
-                    </mat-option>
-                </mat-select>
-                <!-- Message d'erreur -->
-                <mat-error *ngIf="required.invalid">{{getErrorMessageRequired()}}</mat-error>
-            </mat-form-field>
-        </div>
-        <!-- Select for account -->
-        <div>
-            <mat-form-field appearance="outline">
-                <mat-label>Compte</mat-label>
-                <mat-select name="baTransaction" [(ngModel)]="transaction.account" #account="ngModel" required>
-                    <mat-option *ngFor="let ba of bankAccounts" [value]="ba">
-                        {{ba.name}}
-                    </mat-option>
-                </mat-select>
-                <!-- Message d'erreur -->
-                <mat-error *ngIf="required.invalid">{{getErrorMessageRequired()}}</mat-error>
-            </mat-form-field>
-        </div>
+            <!-- Select for category -->
+            <div>
+                <mat-form-field appearance="outline" class="input-150">
+                    <mat-label>Catégorie</mat-label>
+                    <mat-select name="sTransaction" [(ngModel)]="filterCategory" #category="ngModel" required>
+                        <mat-option *ngFor="let category of categories" [value]="category">
+                            {{category.name}}
+                        </mat-option>
+                    </mat-select>
+                    <!-- Message d'erreur -->
+                    <mat-error *ngIf="required.invalid">{{getErrorMessageRequired()}}</mat-error>
+                </mat-form-field>
+            </div>
 
-        <!-- Button for Sumbit-->
-        <div>
-            <!-- Bouton "Enregistrer" -->
-            <button mat-raised-button type="submit" [disabled]="!transactionForm.form.valid">Enregistrer</button>
+            <!-- Select for undercategory -->
+            <div>
+                <mat-form-field appearance="outline" class="input-150">
+                    <mat-label>Sous-Catégorie</mat-label>
+                    <mat-select name="usTransaction" (click)="controlFillCategory()" [(ngModel)]="transaction.undercategory" #undercategory="ngModel" required>
+                        <mat-option *ngFor="let undercategory of undercategories" [value]="undercategory">
+                            {{undercategory.name}}
+                        </mat-option>
+                    </mat-select>
+                    <!-- Message d'erreur -->
+                    <mat-error *ngIf="required.invalid">{{getErrorMessageRequired()}}</mat-error>
+                </mat-form-field>
+            </div>
+
+            <!-- Select for account -->
+            <div>
+                <mat-form-field appearance="outline" class="input-150">
+                    <mat-label>Compte</mat-label>
+                    <mat-select name="baTransaction" [(ngModel)]="transaction.account" #account="ngModel" required>
+                        <mat-option *ngFor="let ba of bankAccounts" [value]="ba">
+                            {{ba.name}}
+                        </mat-option>
+                    </mat-select>
+                    <!-- Message d'erreur -->
+                    <mat-error *ngIf="required.invalid">{{getErrorMessageRequired()}}</mat-error>
+                </mat-form-field>
+            </div>
+
+            <!-- Button for Sumbit-->
+            <div>
+                <!-- Bouton "Enregistrer" -->
+                <button mat-raised-button type="submit" [disabled]="!transactionForm.form.valid">Enregistrer</button>
+            </div>
+
+            <!-- Input HIDDEN for id -->
+            <div>
+                <mat-form-field appearance="outline" class="invisible">
+                    <input matInput name="idTransaction" value="" [(ngModel)]="transaction.id" #id="ngModel">
+                </mat-form-field>
+            </div>
+            <!-- Input HIDDEN for idUser -->
+            <div>
+                <mat-form-field appearance="outline" class="invisible">
+                    <input matInput name="idUserTransaction" value="" [(ngModel)]="transaction.idUser" #idUser="ngModel">
+                </mat-form-field>
+            </div>
         </div>
-    </div>
-</form>
+    </form>
+</ng-template>
 <!-- ==================================== TABLE -->
 
 <!-- Columns idBase -->

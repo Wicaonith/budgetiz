@@ -72,3 +72,13 @@ Feature - Mettre en place la page de Settings (à spécifier).
 Feature - Mettre en place la page de Profil Utilisateur (à spécifier). (Même que Settings ?)
 
 Fix - Header (refaire)
+
+Fix - Refaire les tabs de Label, avec juste une recharge du tableau a l'ajout et non une redirection
+
+Fix - Caché le formulaire d'ajout, a remplacer par un bouton "Ajouter"
+
+Fix - Faire en sorte que l'apparition du formulaire d'avoir mette a jour l'input de l'idBase
+
+TODO DatePicker for Year https://material.angular.io/components/datepicker/overview#watching-the-views-for-changes-on-selected-years-and-months 
+
+TODO Faire que dans labels le clic sur une ligne amène vers un résumé de toutes les transactions faite sur cette catégorie

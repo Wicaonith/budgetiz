@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { EnumCategoryType } from 'src/app/shared/enum/enumCategoryType';
@@ -33,20 +33,22 @@ export class FormCategoriesComponent implements OnInit {
   // Tableau de category "Tampon"
   categories: Array<Category> = new Array();
 
+  addCategory: boolean = false;
+
   /** 
    * Constructeur du composant FormCategoriesComponent
    */
   public constructor(
     private categoryService: CategoryService,
     private utilsService: UtilsService,
-    private router: Router) { }
+    private elRef: ElementRef) { }
 
   /**
    * Initialise le composant
    */
   public ngOnInit(): void {
 
-    //Appel du Service - Récupère toutes les Catégoriess en base
+    //Appel du Service - Récupère toutes les Catégories en base
     this.categoryService.readCategoriesByUserId().get().then(
       (querySnapshot) => {
         querySnapshot.forEach(
@@ -62,34 +64,12 @@ export class FormCategoriesComponent implements OnInit {
       }
     ).finally(
       () => {
-        this.readLastId(this.categories);
+        this.lastId = this.utilsService.readLastId(this.lastId, this.categories);
       }
     );
     this.category.idUser = this.utilsService.getUserUID();
   }
 
-
-  /**
-   * 
-   */
-  public readLastId(categories: Category[]): void {
-
-    let isInit: boolean = this.lastId === 0;
-    for (let category of categories) {
-      // ... et si l'identifiant de la catégories est supérieur à la variable lastId..
-      if (category.idBase > this.lastId) {
-        // ... on valorise lastId.
-        this.lastId = category.idBase;
-      }
-    }
-    if (isInit) {
-      // Valorise lastId avec le prochain Identifiant à ajouter.
-      this.lastId += 1;
-    }
-
-    // Initialisation des valeurs dans les champs inputs
-    this.category.idBase = this.lastId;
-  }
 
   /** 
    * Lance la modification ou la création après l'enregistrement du formulaire
@@ -116,7 +96,6 @@ export class FormCategoriesComponent implements OnInit {
     this.utilsService.redirectTo('budgetiz/labels/category');
   }
 
-
   /**
    * Formatte le nom de la Catégories sous la forme "[R] Salaire"
    * [1ere lettre du type] + Nom 
@@ -130,6 +109,7 @@ export class FormCategoriesComponent implements OnInit {
     category.name = "[" + category.type.substr(0, 1) + "] " + category.name;
     return category;
   }
+
 
   public getErrorMessageRequired(): string {
     return this.utilsService.getErrorMessageRequired(this.required);

@@ -1,55 +1,65 @@
-<!-- Formulaire d'ajout de nouvelles Sous-Catégoriess -->
-<form *ngIf="undercategory" (ngSubmit)="onSubmit()" #undercategoryForm="ngForm">
-    <div class="formAdd-form">
-        <div>
-            <!-- Form id-->
-            <mat-form-field appearance="outline" class="invisible">
-                <!-- Input -->
-                <input matInput name="idUndercategory" value="" [(ngModel)]="undercategory.id" #idUser="ngModel">
-            </mat-form-field>
+<div *ngIf="!addUndercategory; else addUndercategoryForm">
+    <button mat-flat-button class="plus-button" (click)="addUndercategory = true;">
+        <mat-icon matPrefix>add_circle</mat-icon> Ajouter une catégorie
+    </button>
+</div>
+<ng-template #addUndercategoryForm>
+    <!-- Formulaire d'ajout de nouvelles Sous-Catégoriess -->
+    <form *ngIf="undercategory" (ngSubmit)="onSubmit()" #undercategoryForm="ngForm">
+        <div class="formAdd-form">
+            <button mat-flat-button class="minus-button" (click)="addUndercategory = false;">
+                <mat-icon matPrefix>remove_circle</mat-icon>
+            </button>
+            <div>
+                <!-- Form id-->
+                <mat-form-field appearance="outline" class="invisible">
+                    <!-- Input -->
+                    <input matInput name="idUndercategory" value="" [(ngModel)]="undercategory.id" #idUser="ngModel">
+                </mat-form-field>
+            </div>
+            <div>
+                <!-- Form input "ID" -->
+                <mat-form-field class="idForm" appearance="outline">
+                    <mat-label>ID</mat-label>
+                    <!-- Input -->
+                    <input matInput #idBaseUndercategory name="idBaseUndercategory" placeholder="" value=" {{this.lastId }}" [(ngModel)]="undercategory.idBase" #id="ngModel" required disabled>
+                    <mat-icon matSuffix (click)="idBaseUndercategory.value = lastId.toString();">autorenew</mat-icon>
+                </mat-form-field>
+            </div>
+            <div>
+                <!-- Form input "Libelle" -->
+                <mat-form-field appearance="outline">
+                    <mat-label>Libellé</mat-label>
+                    <!-- Input -->
+                    <input matInput name="nameUndercategory" placeholder="Ex. Facture EDF" value="" [(ngModel)]="undercategory.name" #name="ngModel" required>
+                    <!-- Message d'erreur -->
+                    <mat-error *ngIf="required.invalid">{{getErrorMessageRequired()}}</mat-error>
+                </mat-form-field>
+            </div>
+            <div>
+                <!-- Form combobox "Type de Catégories"-->
+                <mat-form-field appearance="outline">
+                    <mat-label>Catégories mère</mat-label>
+                    <mat-select name="categoryUndercategory" [(ngModel)]="undercategory.category" #category="ngModel" required>
+                        <mat-option *ngFor="let category of categories" [value]="category">
+                            {{category.name}}
+                        </mat-option>
+                    </mat-select>
+                    <!-- Message d'erreur -->
+                    <mat-error *ngIf="required.invalid">{{getErrorMessageRequired()}}</mat-error>
+                </mat-form-field>
+            </div>
+            <div>
+                <!-- Form idUser-->
+                <mat-form-field appearance="outline" class="invisible">
+                    <!-- Input -->
+                    <input matInput name="idUserUndercategory" value="" [(ngModel)]="undercategory.idUser" #idUser="ngModel">
+                </mat-form-field>
+            </div>
+            <div>
+                <!-- Bouton "Enregistrer" -->
+                <button mat-raised-button type="submit" [disabled]="!undercategoryForm.form.valid">Enregistrer</button>
+            </div>
         </div>
-        <div>
-            <!-- Form input "ID" -->
-            <mat-form-field class="idForm" appearance="outline">
-                <mat-label>ID</mat-label>
-                <!-- Input -->
-                <input matInput #idBaseUndercategory name="idBaseUndercategory" placeholder="" value=" {{this.lastId }}" [(ngModel)]="undercategory.idBase" #id="ngModel" required disabled>
-                <mat-icon matSuffix (click)="idBaseUndercategory.value = lastId.toString();">autorenew</mat-icon>
-            </mat-form-field>
-        </div>
-        <div>
-            <!-- Form input "Libelle" -->
-            <mat-form-field appearance="outline">
-                <mat-label>Libellé</mat-label>
-                <!-- Input -->
-                <input matInput name="nameUndercategory" placeholder="Ex. Facture EDF" value="" [(ngModel)]="undercategory.name" #name="ngModel" required>
-                <!-- Message d'erreur -->
-                <mat-error *ngIf="required.invalid">{{getErrorMessageRequired()}}</mat-error>
-            </mat-form-field>
-        </div>
-        <div>
-            <!-- Form combobox "Type de Catégories"-->
-            <mat-form-field appearance="outline">
-                <mat-label>Catégories mère</mat-label>
-                <mat-select name="categoryUndercategory" [(ngModel)]="undercategory.category" #category="ngModel" required>
-                    <mat-option *ngFor="let category of categories" [value]="category">
-                        {{category.name}}
-                    </mat-option>
-                </mat-select>
-                <!-- Message d'erreur -->
-                <mat-error *ngIf="required.invalid">{{getErrorMessageRequired()}}</mat-error>
-            </mat-form-field>
-        </div>
-        <div>
-            <!-- Form idUser-->
-            <mat-form-field appearance="outline" class="invisible">
-                <!-- Input -->
-                <input matInput name="idUserUndercategory" value="" [(ngModel)]="undercategory.idUser" #idUser="ngModel">
-            </mat-form-field>
-        </div>
-        <div>
-            <!-- Bouton "Enregistrer" -->
-            <button mat-raised-button type="submit" [disabled]="!undercategoryForm.form.valid">Enregistrer</button>
-        </div>
-    </div>
-</form>
+    </form>
+</ng-template>

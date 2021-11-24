@@ -1,56 +1,66 @@
-<!-- Formulaire d'ajout de nouvelles Catégoriess -->
-<form *ngIf="bankAccount" (ngSubmit)="onSubmit()" #bankAccountForm="ngForm">
-    <div class="formAdd-form">
-        <div>
-            <!-- Form id-->
-            <mat-form-field appearance="outline" class="invisible">
-                <!-- Input -->
-                <input matInput name="idBankAccount" value="" [(ngModel)]="bankAccount.id" #idUser="ngModel">
-            </mat-form-field>
+<div *ngIf="!addBankAccount; else addBankAccountForm">
+    <button mat-flat-button class="plus-button" (click)="addBankAccount = true;">
+        <mat-icon matPrefix>add_circle</mat-icon> Ajouter une catégorie
+    </button>
+</div>
+<ng-template #addBankAccountForm>
+    <!-- Formulaire d'ajout de nouvelles Catégoriess -->
+    <form *ngIf="bankAccount" (ngSubmit)="onSubmit()" #bankAccountForm="ngForm">
+        <div class="formAdd-form">
+            <button mat-flat-button class="minus-button" (click)="addBankAccount = false;">
+                <mat-icon matPrefix>remove_circle</mat-icon>
+            </button>
+            <div>
+                <!-- Form id-->
+                <mat-form-field appearance="outline" class="invisible">
+                    <!-- Input -->
+                    <input matInput name="idBankAccount" value="" [(ngModel)]="bankAccount.id" #idUser="ngModel">
+                </mat-form-field>
+            </div>
+            <div>
+                <!-- Form input "ID" -->
+                <mat-form-field class="idForm" appearance="outline">
+                    <mat-label>ID</mat-label>
+                    <!-- Input -->
+                    <input matInput #idBaseBankAccount name="idBaseBankAccount" placeholder="" value=" {{this.lastId }}" [(ngModel)]="bankAccount.idBase" #id="ngModel" required disabled>
+                    <mat-icon matSuffix (click)="idBaseBankAccount.value = lastId.toString();">autorenew</mat-icon>
+                </mat-form-field>
+            </div>
+            <div>
+                <!-- Form input "Libelle" -->
+                <mat-form-field appearance="outline">
+                    <mat-label>Libellé</mat-label>
+                    <!-- Input -->
+                    <input matInput name="nameBankAccount" placeholder="Ex. Habitat" value="" [(ngModel)]="bankAccount.name" #name="ngModel" required>
+                    <!-- Message d'erreur -->
+                    <mat-error *ngIf="required.invalid">{{getErrorMessageRequired()}}</mat-error>
+                </mat-form-field>
+            </div>
+            <div>
+                <!-- Form combobox "Type de Catégories"-->
+                <mat-form-field appearance="outline">
+                    <mat-label>Type de catégories</mat-label>
+                    <!-- Combobox -->
+                    <mat-select name="typeBankAccount" [(ngModel)]="bankAccount.type" #type="ngModel" required>
+                        <mat-option *ngFor="let type of enumTypeList" [value]="type">
+                            {{type}}
+                        </mat-option>
+                    </mat-select>
+                    <!-- Message d'erreur -->
+                    <mat-error *ngIf="required.invalid">{{getErrorMessageRequired()}}</mat-error>
+                </mat-form-field>
+            </div>
+            <div>
+                <!-- Form idUser-->
+                <mat-form-field appearance="outline" class="invisible">
+                    <!-- Input -->
+                    <input matInput name="idUserBankAccount" value="" [(ngModel)]="bankAccount.idUser" #idUser="ngModel">
+                </mat-form-field>
+            </div>
+            <div>
+                <!-- BUTTON-->
+                <button mat-raised-button type="submit" [disabled]="!bankAccountForm.form.valid">Enregistrer</button>
+            </div>
         </div>
-        <div>
-            <!-- Form input "ID" -->
-            <mat-form-field class="idForm" appearance="outline">
-                <mat-label>ID</mat-label>
-                <!-- Input -->
-                <input matInput #idBaseBankAccount name="idBaseBankAccount" placeholder="" value=" {{this.lastId }}" [(ngModel)]="bankAccount.idBase" #id="ngModel" required disabled>
-                <mat-icon matSuffix (click)="idBaseBankAccount.value = lastId.toString();">autorenew</mat-icon>
-            </mat-form-field>
-        </div>
-        <div>
-            <!-- Form input "Libelle" -->
-            <mat-form-field appearance="outline">
-                <mat-label>Libellé</mat-label>
-                <!-- Input -->
-                <input matInput name="nameBankAccount" placeholder="Ex. Habitat" value="" [(ngModel)]="bankAccount.name" #name="ngModel" required>
-                <!-- Message d'erreur -->
-                <mat-error *ngIf="required.invalid">{{getErrorMessageRequired()}}</mat-error>
-            </mat-form-field>
-        </div>
-        <div>
-            <!-- Form combobox "Type de Catégories"-->
-            <mat-form-field appearance="outline">
-                <mat-label>Type de catégories</mat-label>
-                <!-- Combobox -->
-                <mat-select name="typeBankAccount" [(ngModel)]="bankAccount.type" #type="ngModel" required>
-                    <mat-option *ngFor="let type of enumTypeList" [value]="type">
-                        {{type}}
-                    </mat-option>
-                </mat-select>
-                <!-- Message d'erreur -->
-                <mat-error *ngIf="required.invalid">{{getErrorMessageRequired()}}</mat-error>
-            </mat-form-field>
-        </div>
-        <div>
-            <!-- Form idUser-->
-            <mat-form-field appearance="outline" class="invisible">
-                <!-- Input -->
-                <input matInput name="idUserBankAccount" value="" [(ngModel)]="bankAccount.idUser" #idUser="ngModel">
-            </mat-form-field>
-        </div>
-        <div>
-            <!-- BUTTON-->
-            <button mat-raised-button type="submit" [disabled]="!bankAccountForm.form.valid">Enregistrer</button>
-        </div>
-    </div>
-</form>
+    </form>
+</ng-template>

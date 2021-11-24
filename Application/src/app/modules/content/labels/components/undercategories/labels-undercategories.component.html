@@ -3,12 +3,12 @@
 <app-form-undercategories [undercategory]="undercategory"></app-form-undercategories>
 
 <!-- Tableau contenant les données de toutes les transactions -->
-<table class="dataTable" mat-table [dataSource]="datasource" matSort>
+<table mat-table matSort class="dataTable" [dataSource]="datasource" matSortActive="idBase" matSortDirection="asc">
 
-    <!-- TODO Faire que le clic sur une ligne amène vers un résumé de toutes les transactions faite sur cette catégories -->
+    <!--  -->
     <ng-container matColumnDef="idBase">
         <th mat-header-cell *matHeaderCellDef> No. </th>
-        <td mat-cell *matCellDef="let undercategory"> {{undercategory.idBase}} </td>
+        <td mat-cell class="cell-id" *matCellDef="let undercategory"> {{undercategory.idBase}} </td>
     </ng-container>
 
     <ng-container matColumnDef="name">

@@ -4,5 +4,6 @@
 export enum EnumCategoryType {
     Charge = "Charge",
     Revenu = "Revenu",
-    Provision = "Provision"
+    Provision = "Provision",
+    Epargne = "Epargne"
 }

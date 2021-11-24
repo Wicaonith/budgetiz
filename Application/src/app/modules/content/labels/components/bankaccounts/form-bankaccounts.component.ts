@@ -26,6 +26,9 @@ export class FormBankAccountComponent implements OnInit {
   isModif: boolean = false;
   bankAccounts: Array<BankAccount> = new Array();
 
+
+  addBankAccount: boolean = false;
+
   /** 
    * Constructeur du composant FormBankAccountComponent
    */
@@ -39,7 +42,6 @@ export class FormBankAccountComponent implements OnInit {
    */
   public ngOnInit(): void {
 
-    //Appel du Service - Récupère toutes les Catégoriess en base
     this.bankAccountsService.readBankAccountsByUserId().get().then(
       (querySnapshot) => {
         querySnapshot.forEach(
@@ -53,33 +55,12 @@ export class FormBankAccountComponent implements OnInit {
           }
         );
       }
-    );
-    // On valorise les Catégoriess récupérées dans la dataSource de la Table 
-    this.readLastId();
-    this.bankAccount.idUser = this.utilsService.getUserUID();
-  }
-
-  public readLastId(): void {
-
-    this.bankAccountsService.readBankAccounts().subscribe(
-      (bankAccounts: BankAccount[]) => {
-        let isInit: boolean = this.lastId === 0;
-        for (let bankAccount of bankAccounts) {
-          // ... et si l'identifiant de la catégories est supérieur à la variable lastId..
-          if (bankAccount.idBase > this.lastId) {
-            // ... on valorise lastId.
-            this.lastId = bankAccount.idBase;
-          }
-        }
-        if (isInit) {
-          // Valorise lastId avec le prochain Identifiant à ajouter.
-          this.lastId += 1;
-        }
-
-        // Initialisation des valeurs dans les champs inputs
-        this.bankAccount.idBase = this.lastId;
+    ).finally(
+      () => {
+        this.lastId = this.utilsService.readLastId(this.lastId, this.bankAccounts);
       }
     );
+    this.bankAccount.idUser = this.utilsService.getUserUID();
   }
 
   /** 

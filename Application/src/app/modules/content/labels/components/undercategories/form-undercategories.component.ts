@@ -26,6 +26,8 @@ export class FormUndercategoriesComponent implements OnInit {
   /** FormControl pour vérifier la validité des champs */
   required = new FormControl('', [Validators.required]);
 
+  addUndercategory: boolean = false;
+
   /** 
    * Constructeur du composant CategoryFormComponent
    */
@@ -56,7 +58,7 @@ export class FormUndercategoriesComponent implements OnInit {
       }
     ).finally(
       () => {
-        this.readLastId(this.undercategories);
+        this.lastId = this.utilsService.readLastId(this.lastId, this.undercategories);
       }
     );
 
@@ -76,30 +78,6 @@ export class FormUndercategoriesComponent implements OnInit {
     )
   }
 
-
-  /**
-   * 
-   * @param categories 
-   */
-  public readLastId(undercategories: Undercategory[]): void {
-
-    let isInit: boolean = this.lastId === 0;
-
-    // On parcourt toutes les Catégoriess...
-    for (let undercategory of undercategories) {
-      // ... et si l'identifiant de la catégories est supérieur à la variable lastId..
-      if (undercategory.idBase > this.lastId) {
-        // ... on valorise lastId.
-        this.lastId = undercategory.idBase;
-      }
-    }
-    if (isInit) {
-      // Valorise lastId avec le prochain Identifiant à ajouter.
-      this.lastId += 1;
-    }
-    // Initialisation des valeurs dans les champs inputs
-    this.undercategory.idBase = this.lastId;
-  }
 
   /** 
    * Lance la modification ou la création après l'enregistrement du formulaire

@@ -55,7 +55,7 @@ export class LabelsCategoriesComponent implements OnInit {
       }
     ).finally(
       () => {
-        // On valorise les Catégoriess récupérées dans la dataSource de la Table 
+        // On valorise les Catégories récupérées dans la dataSource de la Table 
         this.reloadTable();
       }
     );
