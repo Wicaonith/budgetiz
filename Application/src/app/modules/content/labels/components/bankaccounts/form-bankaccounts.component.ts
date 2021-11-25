@@ -15,7 +15,7 @@ import { UtilsService } from 'src/app/shared/services/utils/utils.service';
 export class FormBankAccountComponent implements OnInit {
 
   /** L'objet lié au Formulaire */
-  @Input() bankAccount: BankAccount = new BankAccount("", 0, "", "", "");
+  @Input() bankAccount: BankAccount = new BankAccount("", 0, "", "", 0, "");
   /** Enum des Types de Catégoriess */
   enumTypeList = Object.values(EnumBankAccountType);
   /** Dernier identifiant */

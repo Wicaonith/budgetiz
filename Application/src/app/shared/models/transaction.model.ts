@@ -25,9 +25,11 @@ export class Transaction implements Entity {
     /** Le compte ayant la transaction */
     account: BankAccount;
 
+    description: string;
+
     idUser: string;
 
-    constructor(id: string, idBase: number, year: number, month: string, date: Date, amount: number, undercategory: Undercategory, account: BankAccount, idUser: string) {
+    constructor(id: string, idBase: number, year: number, month: string, date: Date, amount: number, undercategory: Undercategory, account: BankAccount, description: string, idUser: string) {
         this.id = id;
         this.idBase = idBase;
         this.year = year;
@@ -36,6 +38,7 @@ export class Transaction implements Entity {
         this.amount = amount;
         this.undercategory = undercategory;
         this.account = account;
+        this.description = description;
         this.idUser = idUser;
     }
 }

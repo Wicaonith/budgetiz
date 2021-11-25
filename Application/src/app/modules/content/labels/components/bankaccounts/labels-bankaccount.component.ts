@@ -14,7 +14,7 @@ import { BankAccountsService } from 'src/app/shared/services/bankAccounts/bankac
 export class LabelsBankAccountComponent implements OnInit {
 
   /** Objet category du formulaire */
-  bankAccount: BankAccount = new BankAccount("", 0, "", "", "");
+  bankAccount: BankAccount = new BankAccount("", 0, "", "", 0, "");
   /** Liste des Catégoriess (ID/NAME/TYPE)*/
   bankAccounts: Array<BankAccount> = new Array();
   /** Colonnes à afficher dans le tableau des Catégoriess */

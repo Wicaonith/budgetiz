@@ -68,6 +68,20 @@ h2 {
 .input-50 {
     width:50px;
 }
+
+.input-filter{
+    width:50px;
+    height:15px;
+    font-size:0.7em;
+    padding:0;
+    margin-left:10px;
+    float:center;
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-flex {
+    height:100%;
+}
+
 .invisible {
     visibility: hidden;
     height: 0;

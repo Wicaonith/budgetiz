@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { Category } from 'src/app/shared/models/category.model';
 import { CategoryService } from 'src/app/shared/services/categories/category.service';
+import { UtilsService } from 'src/app/shared/services/utils/utils.service';
 
 @Component({
   selector: 'app-labels-categories',
@@ -32,7 +33,9 @@ export class LabelsCategoriesComponent implements OnInit {
    * 
    * @param categoryService - CategoryService - Injection du service CategoryService
    */
-  constructor(private router: Router, private categoryService: CategoryService) { }
+  constructor(
+    private categoryService: CategoryService,
+    private utilsService: UtilsService) { }
 
   /**
    * Appel a l'initialisation
@@ -49,7 +52,7 @@ export class LabelsCategoriesComponent implements OnInit {
             this.categories.push(category);
           },
           (err: any) => {
-            this.handleError(`[Erreur] LabelsCategoriesComponent - ngOnInit()`, err);
+            this.utilsService.handleError(`[Erreur] LabelsCategoriesComponent - ngOnInit()`, err);
           }
         );
       }
@@ -79,23 +82,9 @@ export class LabelsCategoriesComponent implements OnInit {
     // Controle si une données l'utilise pas !
     if (true) {
       //... alors Appel du service - Supprime la Catégories.
-      this.categoryService.deleteCategory(id).then(() => this.redirectTo('budgetiz/labels/category'));
+      this.categoryService.deleteCategory(id).then(() => this.utilsService.redirectTo('budgetiz/labels/category'));
     } else {
       alert("Une donnée utilise la Catégories. Veuillez la modifier");
-    }
-  }
-
-  redirectTo(uri: string) {
-    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
-      this.router.navigate([uri]));
-  }
-
-
-  private handleError<T>(operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
-      console.error(error);
-      console.error(`${operation} failed: ${error.message}`);
-      return of(result as T);
     }
   }
 }

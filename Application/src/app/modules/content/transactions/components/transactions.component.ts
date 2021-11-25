@@ -1,5 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { EnumMonth } from 'src/app/shared/enum/enumMonth';
 import { BankAccount } from 'src/app/shared/models/bankAccount.model';
@@ -18,6 +20,7 @@ import { UtilsService } from 'src/app/shared/services/utils/utils.service';
 })
 export class TransactionsComponent implements OnInit {
 
+  // Formulaire
   @Input() transaction?: Transaction;
 
   required = new FormControl('', [Validators.required]);
@@ -37,6 +40,18 @@ export class TransactionsComponent implements OnInit {
 
   addTransaction: boolean = true;
 
+  // Table
+  /** Colonnes à afficher dans le tableau des Catégories */
+  transactionsColumns: Array<string> = ['idBase', 'year', 'month', 'date', 'amount', 'category', 'undercategory', 'account', 'edit', 'remove'];
+  filterColumns: Array<string> = ['filterId', 'filterYear', 'filterMonth', 'filterDate', 'filterAmount', 'filterCategory', 'filterUndercategory', 'filterAccount', 'filterEdit', 'filterRemove'];
+
+  transactions: Array<Transaction> = new Array();
+
+  dataSource: MatTableDataSource<Transaction> = new MatTableDataSource();
+
+  @ViewChild(MatSort) sort: MatSort = new MatSort;
+
+  filterIdBase: string = "";
 
   constructor(
     private ts: TransactionsService,
@@ -54,9 +69,26 @@ export class TransactionsComponent implements OnInit {
     // Récupération de la liste des comptes
     this.initializeBankAccounts();
 
+    // Mise à jour de la MatTableDataSource
 
+  }
 
+  public initializeInputTransaction(): Transaction {
 
+    let lastId = this.utilsService.readLastId(this.lastId, new Array<Transaction>());// TODO Récupérer le lastId
+    let year: number = new Date().getFullYear();
+    let date: Date = new Date();
+    let category: Category = new Category("", 0, "", "", "");
+    let undercategory: Undercategory = new Undercategory("", 0, "", category, true, "");
+    let bankAccount: BankAccount = new BankAccount("", 0, "", "", 0, "");
+    let description: string = "";
+    let idUser = this.utilsService.getUserUID();
+
+    this.transactions.push(new Transaction("", lastId, year, "", date, 0, undercategory, bankAccount, description, idUser));
+
+    this.dataSource = new MatTableDataSource(this.transactions);
+
+    return new Transaction("", lastId, year, "", date, 0, undercategory, bankAccount, description, idUser);
   }
 
 
@@ -78,19 +110,7 @@ export class TransactionsComponent implements OnInit {
     );
   }
 
-  public initializeInputTransaction(): Transaction {
 
-    let date: Date = new Date();
-    let year: number = new Date().getFullYear();
-    let category: Category = new Category("", 0, "", "", "");
-    let undercategory: Undercategory = new Undercategory("", 0, "", category, true, "");
-    let bankAccount: BankAccount = new BankAccount("", 0, "", "", "")
-    let idUser = this.utilsService.getUserUID();
-    // Récupérer le lastId
-    let lastId = this.utilsService.readLastId(this.lastId, new Array<Transaction>());
-
-    return new Transaction("", lastId, year, "", date, 0, undercategory, bankAccount, idUser);
-  }
 
   public initializeBankAccounts(): void {
 
@@ -112,6 +132,22 @@ export class TransactionsComponent implements OnInit {
 
   public onSubmit(): void {
 
+  }
+
+  public updateTransaction(transaction: Transaction) {
+
+    this.transaction = { ...transaction };
+  }
+
+  public deleteTransaction(id: string): void {
+
+    // Controle si une données l'utilise pas !
+    if (true) {
+      //... alors Appel du service - Supprime la Catégories.
+
+    } else {
+      alert("Une donnée utilise la Catégories. Veuillez la modifier");
+    }
   }
 
   public controlFillCategory(): void {
