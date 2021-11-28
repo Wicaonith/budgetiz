@@ -1,0 +1,89 @@
+Pages transaction:
+
+    <!-- TODO Header de filtre     -->
+
+      filterColumns: Array<string> = ['filterId', 'filterYear', 'filterMonth', 'filterDate', 'filterAmount', 'filterCategory', 'filterUndercategory', 'filterAccount', 'filterEdit', 'filterRemove'];
+      
+    <ng-container matColumnDef="filterId">
+        <th mat-header-cell *matHeaderCellDef>
+            <mat-form-field appearance="outline" class="input-filter">
+                <input matInput name="filterIdBase" value="" [(ngModel)]="filterIdBase" #filter="ngModel">
+            </mat-form-field>
+        </th>
+    </ng-container>
+
+
+    <ng-container matColumnDef="filterYear">
+        <th mat-header-cell *matHeaderCellDef>
+            <mat-form-field appearance="outline" class="input-filter">
+                <input matInput name="filterIdBase" value="" [(ngModel)]="filterIdBase" #filter="ngModel">
+            </mat-form-field>
+        </th>
+    </ng-container>
+
+
+    <ng-container matColumnDef="filterMonth">
+        <th mat-header-cell *matHeaderCellDef>
+            <mat-form-field appearance="outline" class="input-filter">
+                <input matInput name="filterIdBase" value="" [(ngModel)]="filterIdBase" #filter="ngModel">
+            </mat-form-field>
+        </th>
+    </ng-container>
+
+
+    <ng-container matColumnDef="filterDate">
+        <th mat-header-cell *matHeaderCellDef>
+            <mat-form-field appearance="outline" class="input-filter">
+                <input matInput name="filterIdBase" value="" [(ngModel)]="filterIdBase" #filter="ngModel">
+            </mat-form-field>
+        </th>
+    </ng-container>
+
+
+    <ng-container matColumnDef="filterAmount">
+        <th mat-header-cell *matHeaderCellDef>
+            <mat-form-field appearance="outline" class="input-filter">
+                <input matInput name="filterIdBase" value="" [(ngModel)]="filterIdBase" #filter="ngModel">
+            </mat-form-field>
+        </th>
+    </ng-container>
+
+
+    <ng-container matColumnDef="filterCategory">
+        <th mat-header-cell *matHeaderCellDef>
+            <mat-form-field appearance="outline" class="input-filter">
+                <input matInput name="filterIdBase" value="" [(ngModel)]="filterIdBase" #filter="ngModel">
+            </mat-form-field>
+        </th>
+    </ng-container>
+
+
+    <ng-container matColumnDef="filterUndercategory">
+        <th mat-header-cell *matHeaderCellDef>
+            <mat-form-field appearance="outline" class="input-filter">
+                <input matInput name="filterIdBase" value="" [(ngModel)]="filterIdBase" #filter="ngModel">
+            </mat-form-field>
+        </th>
+    </ng-container>
+
+
+    <ng-container matColumnDef="filterAccount">
+        <th mat-header-cell *matHeaderCellDef>
+            <mat-form-field appearance="outline" class="input-filter">
+                <input matInput name="filterIdBase" value="" [(ngModel)]="filterIdBase" #filter="ngModel">
+            </mat-form-field>
+        </th>
+    </ng-container>
+
+    <ng-container matColumnDef="filterEdit">
+        <th mat-header-cell *matHeaderCellDef></th>
+    </ng-container>
+
+    <ng-container matColumnDef="filterRemove">
+        <th mat-header-cell *matHeaderCellDef></th>
+    </ng-container>
+
+
+
+    <!-- TODO paginations -->
+    <mat-paginator #paginator [pageSizeOptions]="[10, 20]" showFirstLastButtons aria-label="Page des Transactions"> </mat-paginator>

@@ -15,6 +15,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSortModule } from '@angular/material/sort';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 
 @NgModule({
@@ -35,6 +36,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatSortModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatPaginatorModule
   ]
 })
 export class TransactionsModule { }

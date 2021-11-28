@@ -201,6 +201,7 @@ h2 {
 /* Pages Label */
 .dataTable{
     width: 100%;
+    margin-top: 20px;
 }
 
 .formAdd-form {
@@ -244,12 +245,13 @@ h2 {
     padding-left: 0px;
 }
 
-.cell-button {
+.mat-column-edit .mat-column-remove {
     max-width:45px;
     text-align: center;
 }
 
-.cell-id {
+
+.mat-column-idBase {
     width:60px;
     text-align: center;
 }

@@ -1,8 +1,8 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Router } from '@angular/router';
 import { EnumMonth } from 'src/app/shared/enum/enumMonth';
 import { BankAccount } from 'src/app/shared/models/bankAccount.model';
 import { Category } from 'src/app/shared/models/category.model';
@@ -43,7 +43,6 @@ export class TransactionsComponent implements OnInit {
   // Table
   /** Colonnes à afficher dans le tableau des Catégories */
   transactionsColumns: Array<string> = ['idBase', 'year', 'month', 'date', 'amount', 'category', 'undercategory', 'account', 'edit', 'remove'];
-  filterColumns: Array<string> = ['filterId', 'filterYear', 'filterMonth', 'filterDate', 'filterAmount', 'filterCategory', 'filterUndercategory', 'filterAccount', 'filterEdit', 'filterRemove'];
 
   transactions: Array<Transaction> = new Array();
 
@@ -70,7 +69,7 @@ export class TransactionsComponent implements OnInit {
     this.initializeBankAccounts();
 
     // Mise à jour de la MatTableDataSource
-
+    this.loadTable();
   }
 
   public initializeInputTransaction(): Transaction {
@@ -130,8 +129,16 @@ export class TransactionsComponent implements OnInit {
     );
   }
 
-  public onSubmit(): void {
+  public loadTable(): void {
 
+    if (this.sort) {
+      this.dataSource.sort = this.sort;
+    }
+    this.dataSource.data = []; // TODO
+  }
+
+  public onSubmit(): void {
+    //Oui ça arrive
   }
 
   public updateTransaction(transaction: Transaction) {

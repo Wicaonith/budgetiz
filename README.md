@@ -37,15 +37,9 @@ Run `ng serve -o` pour lancer avec rafraichissement en temps réel
 
 Feature - Mettre en place la page Category
 
-    |- Contrôle sur le deleteCategory() - LabelsCategoriesComponent
-    
 Feature - Mettre en place la page Undercategory
-
-    |- Contrôle sur le deleteUndersection() - LabelsUndersectionComponent
     
 Feature - Mettre en place la page BankAccount
-
-    |- Contrôle sur le deleteBankAccount() - LabelsBankAccountComponent
     
 Feature - Mettre en place la page Datas
 
@@ -57,10 +51,11 @@ Fix - Vérification de la Documentation
 
 Fix - Vérification des imports, suppresion des inutilisés
 
-Fix - Mettre la gestion des Erreurs dans un composant
+Fix - Mettre la gestion des Erreurs dans un service Utils
 
 
 ## V2.0.0
+
 Feature - Mettre en place la page Principale (Home) (à spécifier)
 
 Feature - Mettre en place la page des Provisions (à spécifier).
@@ -73,12 +68,22 @@ Feature - Mettre en place la page de Profil Utilisateur (à spécifier). (Même 
 
 Fix - Header (refaire)
 
-Fix - Refaire les tabs de Label, avec juste une recharge du tableau a l'ajout et non une redirection
 
-Fix - Caché le formulaire d'ajout, a remplacer par un bouton "Ajouter"
 
-Fix - Faire en sorte que l'apparition du formulaire d'avoir mette a jour l'input de l'idBase
 
-TODO DatePicker for Year https://material.angular.io/components/datepicker/overview#watching-the-views-for-changes-on-selected-years-and-months 
+TODO Page Labels:
+- Faire que dans labels le clic sur une ligne amène vers un résumé de toutes les transactions faite sur cette catégorie
+- Refaire les tabs de Label, avec juste une recharge du tableau a l'ajout et non une redirection
+- Faire en sorte que l'apparition du formulaire d'ajout mette a jour l'input de l'idBase
+- Contrôle sur le deleteCategory() - LabelsCategoriesComponent
+- Contrôle sur le deleteUndersection() - LabelsUndercategoriesComponent
+- Contrôle sur le deleteBankAccount() - LabelsBankAccountComponent
 
-TODO Faire que dans labels le clic sur une ligne amène vers un résumé de toutes les transactions faite sur cette catégorie
+TODO Page Transactions:
+
+- Rajout des filtres sur les header
+- Pagination sur le tableau
+- Trier Transaction par ordre inverse de l'idBase (la plus récente en haut)
+- DatePicker for Year https://material.angular.io/components/datepicker/overview#watching-the-views-for-changes-on-selected-years-and-months 
+- Faire en sorte que l'apparition du formulaire d'ajout mette a jour l'input de l'idBase
+- Ajout de la zone de description au clic sur une ligne
