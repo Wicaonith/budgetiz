@@ -31,45 +31,30 @@ Run `ng serve -o` pour lancer avec rafraichissement en temps réel
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
 
-# Roadmap
+# Version
 
 ## V1.0.0
 
-Feature - Mettre en place la page Category
-
-Feature - Mettre en place la page Undercategory
-    
-Feature - Mettre en place la page BankAccount
-    
-Feature - Mettre en place la page Datas
-
-Feature - Mettre en place la page du tableau
-
-Feature - Deployer
-
-Fix - Vérification de la Documentation
-
-Fix - Vérification des imports, suppresion des inutilisés
-
-Fix - Mettre la gestion des Erreurs dans un service Utils
+1. Feature - Mettre en place la page Category
+2. Feature - Mettre en place la page Undercategory
+3. Feature - Mettre en place la page BankAccount
+4. Feature - Mettre en place la page Transaction
+5. Feature - Mettre en place la page du Tableau
+6. Feature - Deployer
+7. Fix 
+    - Vérification de la Documentation
+    - Vérification des imports, suppresion des inutilisés
+    - Mettre la gestion des Erreurs dans un service Utils
 
 
-## V2.0.0
+# Évolutions a prévoir
 
-Feature - Mettre en place la page Principale (Home) (à spécifier)
-
-Feature - Mettre en place la page des Provisions (à spécifier).
-
-Feature - Mettre en place la page de l'Epargne (à spécifier).
-
-Feature - Mettre en place la page de Settings (à spécifier).
-
-Feature - Mettre en place la page de Profil Utilisateur (à spécifier). (Même que Settings ?)
-
-Fix - Header (refaire)
-
-
-
+1. Feature - Mettre en place la page Principale (Home) (à spécifier)
+2. Feature - Mettre en place la page des Provisions (à spécifier).
+3. Feature - Mettre en place la page de l'Epargne (à spécifier).
+4. Feature - Mettre en place la page de Settings (à spécifier).
+5. Feature - Mettre en place la page de Profil Utilisateur (à spécifier). (Même que Settings ?)
+6. Fix - Header (refaire)
 
 TODO Page Labels:
 - Faire que dans labels le clic sur une ligne amène vers un résumé de toutes les transactions faite sur cette catégorie
