@@ -163,6 +163,7 @@ export class TransactionsComponent implements OnInit {
 
   public fillUndercategoryByCategory() {
 
+    this.undercategories = [];
     this.undercatService.readUndercategorysByUserIdAndCategory(this.filterCategory.name).get().then(
       (querySnapshot) => {
         querySnapshot.forEach(
