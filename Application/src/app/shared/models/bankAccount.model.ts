@@ -19,12 +19,15 @@ export class BankAccount implements Entity {
 
     totalAmount: number;
 
-    constructor(id: string, idBase: number, name: string, type: string, totalAmount: number, idUser: string) {
+    isDeleted: boolean
+
+    constructor(id: string, idBase: number, name: string, type: string, totalAmount: number, idUser: string, isDeleted: boolean) {
         this.id = id;
         this.idBase = idBase;
         this.name = name;
         this.type = type;
         this.idUser = idUser;
         this.totalAmount = totalAmount;
+        this.isDeleted = isDeleted;
     }
 }

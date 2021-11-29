@@ -22,11 +22,14 @@ export class Category implements Entity {
 
     idUser: string;
 
-    constructor(id: string, idBase: number, name: string, type: string, idUser: string) {
+    isDeleted: boolean
+
+    constructor(id: string, idBase: number, name: string, type: string, idUser: string, isDeleted: boolean) {
         this.id = id;
         this.idBase = idBase;
         this.name = name;
         this.type = type;
         this.idUser = idUser;
+        this.isDeleted = isDeleted;
     }
 }

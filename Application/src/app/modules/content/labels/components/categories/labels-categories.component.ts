@@ -15,7 +15,7 @@ import { UtilsService } from 'src/app/shared/services/utils/utils.service';
 export class LabelsCategoriesComponent implements OnInit {
 
   /** Objet category du formulaire */
-  category: Category = new Category("", 0, "", "", "");
+  category: Category = new Category("", 0, "", "", "", false);
 
   /** Colonnes à afficher dans le tableau des Catégoriess */
   categoryColumns: Array<string> = ['idBase', 'name', 'type', 'edit', 'remove'];

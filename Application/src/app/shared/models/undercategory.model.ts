@@ -22,13 +22,16 @@ export class Undercategory implements Entity {
 
     idUser: string;
 
+    isDeleted: boolean
 
-    constructor(id: string, idBase: number, name: string, category: Category, inTab: boolean, idUser: string) {
+
+    constructor(id: string, idBase: number, name: string, category: Category, inTab: boolean, idUser: string, isDeleted: boolean) {
         this.id = id;
         this.idBase = idBase;
         this.name = name;
         this.category = category;
         this.inTab = inTab;
         this.idUser = idUser;
+        this.isDeleted = isDeleted;
     }
 }

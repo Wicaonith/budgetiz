@@ -45,26 +45,30 @@ Run `ng serve -o` pour lancer avec rafraichissement en temps réel
     - Vérification de la Documentation
     - Vérification des imports, suppresion des inutilisés
     - Mettre la gestion des Erreurs dans un service Utils
-
+    - Ranger les attributs dans les models
 
 # Évolutions a prévoir
 
+## Général 
 1. Feature - Mettre en place la page Principale (Home) (à spécifier)
 2. Feature - Mettre en place la page des Provisions (à spécifier).
 3. Feature - Mettre en place la page de l'Epargne (à spécifier).
 4. Feature - Mettre en place la page de Settings (à spécifier).
 5. Feature - Mettre en place la page de Profil Utilisateur (à spécifier). (Même que Settings ?)
 6. Fix - Header (refaire)
+7. Sortir la méthode "log()" des services
+8. Sortir le model Entity
 
-TODO Page Labels:
+
+## TODO Page Labels:
 - Faire que dans labels le clic sur une ligne amène vers un résumé de toutes les transactions faite sur cette catégorie
 - Refaire les tabs de Label, avec juste une recharge du tableau a l'ajout et non une redirection
 - Faire en sorte que l'apparition du formulaire d'ajout mette a jour l'input de l'idBase
-- Contrôle sur le deleteCategory() - LabelsCategoriesComponent
-- Contrôle sur le deleteUndersection() - LabelsUndercategoriesComponent
-- Contrôle sur le deleteBankAccount() - LabelsBankAccountComponent
+- Contrôle sur le deleteCategory() - LabelsCategoriesComponent --> utiliser l'attribut "isDeleted" qui filtre si la catégorie est remonté à l'écran ou non
+- Contrôle sur le deleteUndersection() - LabelsUndercategoriesComponent --> utiliser l'attribut "isDeleted" qui filtre si la sous-catégorie est remonté à l'écran ou non
+- Contrôle sur le deleteBankAccount() - LabelsBankAccountComponent --> utiliser l'attribut "isDeleted" qui filtre si le compte bancaire est remonté à l'écran ou non
 
-TODO Page Transactions:
+## TODO Page Transactions:
 
 - Rajout des filtres sur les header
 - Pagination sur le tableau
@@ -72,3 +76,6 @@ TODO Page Transactions:
 - DatePicker for Year https://material.angular.io/components/datepicker/overview#watching-the-views-for-changes-on-selected-years-and-months 
 - Faire en sorte que l'apparition du formulaire d'ajout mette a jour l'input de l'idBase
 - Ajout de la zone de description au clic sur une ligne
+- Gérer le cas où une Catégorie n'a pas de Sous-catégorie associé
+- Changer le format de la date dans le formulaire d'ajout (MM/DD/YYYY => DD/MM/YYYY)
+- Lors de la modification, les Select ne se mettent pas à jour

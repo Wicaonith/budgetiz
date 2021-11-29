@@ -15,7 +15,7 @@ import { UtilsService } from 'src/app/shared/services/utils/utils.service';
 export class FormBankAccountComponent implements OnInit {
 
   /** L'objet lié au Formulaire */
-  @Input() bankAccount: BankAccount = new BankAccount("", 0, "", "", 0, "");
+  @Input() bankAccount: BankAccount = new BankAccount("", 0, "", "", 0, "", false);
   /** Enum des Types de Catégoriess */
   enumTypeList = Object.values(EnumBankAccountType);
   /** Dernier identifiant */
@@ -24,10 +24,10 @@ export class FormBankAccountComponent implements OnInit {
   required = new FormControl('', [Validators.required]);
   /** Permet de savoir si la Catégories soumise par le formulaire est à créer ou modifier */
   isModif: boolean = false;
+
   bankAccounts: Array<BankAccount> = new Array();
 
-
-  addBankAccount: boolean = false;
+  addBankAccount: boolean = true;
 
   /** 
    * Constructeur du composant FormBankAccountComponent
@@ -58,6 +58,7 @@ export class FormBankAccountComponent implements OnInit {
     ).finally(
       () => {
         this.lastId = this.utilsService.readLastId(this.lastId, this.bankAccounts);
+        this.bankAccount.idBase = this.lastId;
       }
     );
     this.bankAccount.idUser = this.utilsService.getUserUID();

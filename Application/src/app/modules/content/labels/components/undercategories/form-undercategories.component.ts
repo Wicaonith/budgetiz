@@ -16,7 +16,7 @@ import { UtilsService } from 'src/app/shared/services/utils/utils.service';
 export class FormUndercategoriesComponent implements OnInit {
 
   /** L'objet lié au Formulaire */
-  @Input() undercategory: Undercategory = new Undercategory("", 0, "", new Category("", 0, "", "", ""), true, "");
+  @Input() undercategory: Undercategory = new Undercategory("", 0, "", new Category("", 0, "", "", "", false), true, "", false);
   /** Liste des Catégoriess mères */
   categories: Array<Category> = new Array();
   // Tableau de Undercategory "Tampon"
@@ -26,7 +26,7 @@ export class FormUndercategoriesComponent implements OnInit {
   /** FormControl pour vérifier la validité des champs */
   required = new FormControl('', [Validators.required]);
 
-  addUndercategory: boolean = false;
+  addUndercategory: boolean = true;
 
   /** 
    * Constructeur du composant CategoryFormComponent
@@ -43,7 +43,7 @@ export class FormUndercategoriesComponent implements OnInit {
   public ngOnInit(): void {
 
     //Appel du Service - Récupère toutes les Catégoriess en base
-    this.undercategoryService.readUndercategorysByUserId().get().then(
+    this.undercategoryService.readUndercategoriesByUserId().get().then(
       (querySnapshot) => {
         querySnapshot.forEach(
           data => {
@@ -59,6 +59,7 @@ export class FormUndercategoriesComponent implements OnInit {
     ).finally(
       () => {
         this.lastId = this.utilsService.readLastId(this.lastId, this.undercategories);
+        this.undercategory.idBase = this.lastId;
       }
     );
 
@@ -93,11 +94,7 @@ export class FormUndercategoriesComponent implements OnInit {
       this.undercategoryService.updateUndercategory(this.undercategory);
     }
     //Rechargement de la page
-    this.router.navigateByUrl('/', { skipLocationChange: true }).then(
-      () => {
-        this.router.navigate(['budgetiz/labels/undercategory']);
-      }
-    );
+    this.utilsService.redirectTo('budgetiz/labels/undercategory');
   }
 
   public getErrorMessageRequired(): string {

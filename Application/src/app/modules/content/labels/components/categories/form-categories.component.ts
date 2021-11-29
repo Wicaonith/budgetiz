@@ -19,7 +19,7 @@ import { UtilsService } from 'src/app/shared/services/utils/utils.service';
 export class FormCategoriesComponent implements OnInit {
 
   /** L'objet lié au Formulaire */
-  @Input() category: Category = new Category("", 0, "", "", "");
+  @Input() category: Category = new Category("", 0, "", "", "", false);
 
   /** Enum des Types de Catégoriess */
   enumTypeList = Object.values(EnumCategoryType);
@@ -33,15 +33,14 @@ export class FormCategoriesComponent implements OnInit {
   // Tableau de category "Tampon"
   categories: Array<Category> = new Array();
 
-  addCategory: boolean = false;
+  addCategory: boolean = true;
 
   /** 
    * Constructeur du composant FormCategoriesComponent
    */
   public constructor(
     private categoryService: CategoryService,
-    private utilsService: UtilsService,
-    private elRef: ElementRef) { }
+    private utilsService: UtilsService) { }
 
   /**
    * Initialise le composant
@@ -65,6 +64,7 @@ export class FormCategoriesComponent implements OnInit {
     ).finally(
       () => {
         this.lastId = this.utilsService.readLastId(this.lastId, this.categories);
+        this.category.idBase = this.lastId;
       }
     );
     this.category.idUser = this.utilsService.getUserUID();

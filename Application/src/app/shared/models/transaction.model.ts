@@ -29,7 +29,9 @@ export class Transaction implements Entity {
 
     idUser: string;
 
-    constructor(id: string, idBase: number, year: number, month: string, date: Date, amount: number, undercategory: Undercategory, account: BankAccount, description: string, idUser: string) {
+    isDeleted: boolean
+
+    constructor(id: string, idBase: number, year: number, month: string, date: Date, amount: number, undercategory: Undercategory, account: BankAccount, description: string, idUser: string, isDeleted: boolean) {
         this.id = id;
         this.idBase = idBase;
         this.year = year;
@@ -40,5 +42,6 @@ export class Transaction implements Entity {
         this.account = account;
         this.description = description;
         this.idUser = idUser;
+        this.isDeleted = isDeleted;
     }
 }

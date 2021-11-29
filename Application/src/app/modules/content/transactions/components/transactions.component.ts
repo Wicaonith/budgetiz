@@ -11,6 +11,7 @@ import { Undercategory } from 'src/app/shared/models/undercategory.model';
 import { BankAccountsService } from 'src/app/shared/services/bankAccounts/bankaccounts.service';
 import { CategoryService } from 'src/app/shared/services/categories/category.service';
 import { TransactionsService } from 'src/app/shared/services/transactions/transactions.service';
+import { UndercategoryService } from 'src/app/shared/services/undercategories/undercategory.service';
 import { UtilsService } from 'src/app/shared/services/utils/utils.service';
 
 @Component({
@@ -21,7 +22,7 @@ import { UtilsService } from 'src/app/shared/services/utils/utils.service';
 export class TransactionsComponent implements OnInit {
 
   // Formulaire
-  @Input() transaction?: Transaction;
+  @Input() transaction: Transaction = this.initializeInputTransaction();
 
   required = new FormControl('', [Validators.required]);
 
@@ -31,7 +32,7 @@ export class TransactionsComponent implements OnInit {
   undercategories: Array<Undercategory> = new Array();
 
   // Filtre sur les Undercategory en fonction du nom de la Category
-  filterCategory: string = "";
+  filterCategory: Category = new Category("", 0, "", "", "", false);
 
   /** Enum des Types de Catégoriess */
   enumMonth = Object.values(EnumMonth);
@@ -56,11 +57,13 @@ export class TransactionsComponent implements OnInit {
     private ts: TransactionsService,
     private utilsService: UtilsService,
     private catService: CategoryService,
+    private undercatService: UndercategoryService,
     private baService: BankAccountsService) { }
 
   public ngOnInit(): void {
 
-    this.transaction = this.initializeInputTransaction();
+    //Récupération de la liste des Transactions
+    this.initializeTransactions();
 
     // Récupération de la liste des Catégories
     this.initializeCategories();
@@ -68,28 +71,33 @@ export class TransactionsComponent implements OnInit {
     // Récupération de la liste des comptes
     this.initializeBankAccounts();
 
+    // Initialisation de l'objet servant pour le formulaire
+    //this.transaction = this.initializeInputTransaction();
+
     // Mise à jour de la MatTableDataSource
     this.loadTable();
   }
 
-  public initializeInputTransaction(): Transaction {
-
-    let lastId = this.utilsService.readLastId(this.lastId, new Array<Transaction>());// TODO Récupérer le lastId
-    let year: number = new Date().getFullYear();
-    let date: Date = new Date();
-    let category: Category = new Category("", 0, "", "", "");
-    let undercategory: Undercategory = new Undercategory("", 0, "", category, true, "");
-    let bankAccount: BankAccount = new BankAccount("", 0, "", "", 0, "");
-    let description: string = "";
-    let idUser = this.utilsService.getUserUID();
-
-    this.transactions.push(new Transaction("", lastId, year, "", date, 0, undercategory, bankAccount, description, idUser));
-
-    this.dataSource = new MatTableDataSource(this.transactions);
-
-    return new Transaction("", lastId, year, "", date, 0, undercategory, bankAccount, description, idUser);
+  public initializeTransactions(): void {
+    this.ts.readTransactionsByUserId().get().then(
+      (querySnapshot) => {
+        querySnapshot.forEach(
+          (data) => {
+            let transaction = data.data() as Transaction;
+            transaction.id = data.id;
+            this.transactions.push(transaction);
+          }
+        )
+      }
+    ).finally(
+      () => {
+        // On valorise les Catégories récupérées dans la dataSource de la Table 
+        this.loadTable();
+        this.transaction.idBase = this.utilsService.readLastId(this.lastId, this.transactions);
+        this.lastId = this.utilsService.readLastId(this.lastId, this.transactions);
+      }
+    );
   }
-
 
   private initializeCategories(): void {
 
@@ -109,8 +117,6 @@ export class TransactionsComponent implements OnInit {
     );
   }
 
-
-
   public initializeBankAccounts(): void {
 
     this.baService.readBankAccountsByUserId().get().then(
@@ -129,21 +135,72 @@ export class TransactionsComponent implements OnInit {
     );
   }
 
+  public initializeInputTransaction(): Transaction {
+
+    let lastId = 0;
+    let year: number = new Date().getFullYear();
+    let date: Date = new Date();
+    let category: Category = new Category("", 0, "", "", "", false);
+    let undercategory: Undercategory = new Undercategory("", 0, "", category, true, "", false);
+    let bankAccount: BankAccount = new BankAccount("", 0, "", "", 0, "", false);
+    let description: string = "";
+    let idUser = this.utilsService.getUserUID();
+    let isDeleted = false;
+
+    this.dataSource = new MatTableDataSource(this.transactions);
+
+    return new Transaction("", lastId, year, "", date, 0, undercategory, bankAccount, description, idUser, isDeleted);
+  }
+
   public loadTable(): void {
 
     if (this.sort) {
       this.dataSource.sort = this.sort;
     }
-    this.dataSource.data = []; // TODO
+    this.dataSource.data = this.transactions;
+  }
+
+  public fillUndercategoryByCategory() {
+
+    this.undercatService.readUndercategorysByUserIdAndCategory(this.filterCategory.name).get().then(
+      (querySnapshot) => {
+        querySnapshot.forEach(
+          data => {
+            let undercategory = data.data() as Undercategory;
+            undercategory.id = data.id;
+            this.undercategories.push(undercategory);
+          },
+          (err: any) => {
+            this.utilsService.handleError(`[Erreur] TransactionsComponent - fillUndercategoryByCategory()`, err);
+          }
+        );
+      }
+    );
   }
 
   public onSubmit(): void {
-    //Oui ça arrive
+
+    //Contrôle sur l'objet Transaction valorisé
+
+    // Enregistrement de la transaction
+    // Si il n'existe pas de transaction avec cet ID...
+    if (this.transaction.id === "") {
+      // ... on le crée ...
+      this.ts.createTransaction(this.transaction);
+    } else {
+      // ... sinon on modifie l'existant.
+      this.ts.updateTransaction(this.transaction);
+    }
+    this.utilsService.redirectTo('budgetiz/transactions');
   }
 
   public updateTransaction(transaction: Transaction) {
 
+    this.addTransaction = true;
+
     this.transaction = { ...transaction };
+    this.transaction.account = { ...transaction.account };
+    this.transaction.undercategory = { ...transaction.undercategory };
   }
 
   public deleteTransaction(id: string): void {
@@ -151,14 +208,14 @@ export class TransactionsComponent implements OnInit {
     // Controle si une données l'utilise pas !
     if (true) {
       //... alors Appel du service - Supprime la Catégories.
-
+      this.ts.deleteTransaction(id).then(() => this.utilsService.redirectTo('budgetiz/transactions'));
     } else {
       alert("Une donnée utilise la Catégories. Veuillez la modifier");
     }
   }
 
   public controlFillCategory(): void {
-    if (this.filterCategory === "") {
+    if (this.filterCategory.name === "") {
       this.utilsService.openSnackBar("Selectionnez une catégorie avant une sous-catégorie", "OK");
     }
   }

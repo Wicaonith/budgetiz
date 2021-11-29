@@ -43,9 +43,13 @@ export class UndercategoryService {
    * 
    * @returns Undercategory[] - Liste des Sous-Catégoriess
    */
-  public readUndercategorysByUserId(): Query<DocumentData> {
+  public readUndercategoriesByUserId(): Query<DocumentData> {
 
     return this.crudService.listByUser(this.utils.getUserUID());
+  }
+
+  public readUndercategorysByUserIdAndCategory(nameCategory: string): Query<DocumentData> {
+    return this.crudService.listByUserAndCategory(this.utils.getUserUID(), nameCategory);
   }
 
   /**

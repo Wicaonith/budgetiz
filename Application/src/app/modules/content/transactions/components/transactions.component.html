@@ -70,7 +70,7 @@
             <div>
                 <mat-form-field appearance="outline" class="input-150">
                     <mat-label>Catégorie</mat-label>
-                    <mat-select name="sTransaction" [(ngModel)]="filterCategory" #category="ngModel" required>
+                    <mat-select name="sTransaction" (selectionChange)="fillUndercategoryByCategory()" [(ngModel)]="filterCategory" #category="ngModel" required>
                         <mat-option *ngFor="let category of categories" [value]="category">
                             {{category.name}}
                         </mat-option>
@@ -132,7 +132,7 @@
 
 <!-- ==================================== TABLE -->
 
-<table mat-table matSort class="mat-elevation-z8 dataTable" [dataSource]="dataSource" matSortActive="idBase" matSortDirection="asc">
+<table mat-table matSort class="mat-elevation-z8 dataTable" [dataSource]="dataSource" matSortActive="idBase" matSortDirection="desc">
 
     <!-- Columns idBase -->
     <ng-container matColumnDef="idBase">
@@ -155,13 +155,13 @@
     <!-- Columns date -->
     <ng-container matColumnDef="date">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
-        <td mat-cell *matCellDef="let transaction"> {{ transaction.date.getDate()}} / {{ transaction.date.getMonth()+1}} / {{ transaction.date.getFullYear()}} </td>
+        <td mat-cell *matCellDef="let transaction"> {{ transaction.date | date:'dd/MM/yyyy'}}</td>
     </ng-container>
 
     <!-- Columns amount -->
     <ng-container matColumnDef="amount">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Montant </th>
-        <td mat-cell *matCellDef="let transaction"> {{ transaction.amount}} </td>
+        <td mat-cell *matCellDef="let transaction"> {{ transaction.amount | number: '0.2'}} €</td>
     </ng-container>
 
     <!-- Columns category -->

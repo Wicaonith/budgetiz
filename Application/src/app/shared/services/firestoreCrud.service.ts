@@ -12,6 +12,7 @@ function firebaseSerialize<T>(object: T) {
 export interface Entity {
     id?: string; // Optional for new entities
     idUser?: string;
+    isDeleted?: boolean
 }
 
 export class FirestoreCrudService<T extends Entity> {
@@ -94,6 +95,10 @@ export class FirestoreCrudService<T extends Entity> {
 
     listByUser(idUser: string): Query<DocumentData> {
         return this.collection.ref.where('idUser', '==', idUser);
+    }
+
+    listByUserAndCategory(idUser: string, nameCategory: string): Query<DocumentData> {
+        return this.collection.ref.where('idUser', '==', idUser).where('category.name', '==', nameCategory);
     }
 
     /* Our Update method takes the full updated Entity

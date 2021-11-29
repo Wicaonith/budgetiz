@@ -8,6 +8,8 @@ import { Category } from 'src/app/shared/models/category.model';
 import { Undercategory } from 'src/app/shared/models/undercategory.model';
 import { CategoryService } from 'src/app/shared/services/categories/category.service';
 import { UndercategoryService } from 'src/app/shared/services/undercategories/undercategory.service';
+import { UtilsService } from 'src/app/shared/services/utils/utils.service';
+import { FormUndercategoriesComponent } from './form-undercategories.component';
 
 @Component({
   selector: 'app-labels-undercategories',
@@ -16,7 +18,7 @@ import { UndercategoryService } from 'src/app/shared/services/undercategories/un
 })
 export class LabelsUndercategoriesComponent implements OnInit {
 
-  undercategory: Undercategory = new Undercategory("", 0, "", new Category("", 0, "", "", ""), true, "");
+  undercategory: Undercategory = new Undercategory("", 0, "", new Category("", 0, "", "", "", false), true, "", false);
 
   /** Liste des Sous Catégoriess (ID/NAME/category/TYPE/INTAB)*/
   datasource: MatTableDataSource<Undercategory> = new MatTableDataSource();
@@ -41,7 +43,7 @@ export class LabelsUndercategoriesComponent implements OnInit {
   public ngOnInit(): void {
 
     // Appel du Service - Récupère toutes les Sous-Catégoriess en base
-    this.undercategoryService.readUndercategorysByUserId().get().then(
+    this.undercategoryService.readUndercategoriesByUserId().get().then(
       (querySnapshot) => {
         querySnapshot.forEach(
           data => {
@@ -116,7 +118,6 @@ export class LabelsUndercategoriesComponent implements OnInit {
    */
   public updateUndercategory(undercategory: Undercategory) {
 
-
     this.undercategory = { ...undercategory };
     this.undercategory.category = { ...undercategory.category };
   }
@@ -130,7 +131,7 @@ export class LabelsUndercategoriesComponent implements OnInit {
 
     // Controle si une données l'utilise pas !
     if (true) {
-      //... alors Appel du service - Supprime la Catégories.
+      //... alors Appel du service - Supprime la Catégories. // TODO ne supprime pas réellement la sous catégorie mais met isDeleted a true.
       this.undercategoryService.deleteUndercategory(undercategory.id).then(() => this.redirectTo('budgetiz/labels/undercategory'));
     } else {
       alert("Une donnée utilise la Catégories. Veuillez la modifier");
