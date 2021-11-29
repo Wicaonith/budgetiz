@@ -1,6 +1,5 @@
-import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { EnumMonth } from 'src/app/shared/enum/enumMonth';
@@ -26,6 +25,9 @@ export class TransactionsComponent implements OnInit {
 
   required = new FormControl('', [Validators.required]);
 
+  /** Prochain identifiant à ajouter pour l'utilisateur en cours */
+  lastId: number = 0;
+
   // Liste pour les Selects
   categories: Array<Category> = new Array();
   bankAccounts: Array<BankAccount> = new Array();
@@ -36,8 +38,7 @@ export class TransactionsComponent implements OnInit {
 
   /** Enum des Types de Catégoriess */
   enumMonth = Object.values(EnumMonth);
-  /** Prochain identifiant à ajouter pour l'utilisateur en cours */
-  lastId: number = 0;
+
 
   addTransaction: boolean = true;
 

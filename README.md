@@ -39,7 +39,7 @@ Run `ng serve -o` pour lancer avec rafraichissement en temps réel
 2. Feature - Mettre en place la page Undercategory
 3. Feature - Mettre en place la page BankAccount
 4. Feature - Mettre en place la page Transaction
-5. Feature - Mettre en place la page du Tableau
+5. Feature - Mettre en place la page du Tableau (Résumé)
 6. Feature - Deployer
 7. Fix 
     - Vérification de la Documentation
@@ -50,14 +50,14 @@ Run `ng serve -o` pour lancer avec rafraichissement en temps réel
 # Évolutions a prévoir
 
 ## Général 
-1. Feature - Mettre en place la page Principale (Home) (à spécifier)
-2. Feature - Mettre en place la page des Provisions (à spécifier).
-3. Feature - Mettre en place la page de l'Epargne (à spécifier).
-4. Feature - Mettre en place la page de Settings (à spécifier).
-5. Feature - Mettre en place la page de Profil Utilisateur (à spécifier). (Même que Settings ?)
-6. Fix - Header (refaire)
-7. Sortir la méthode "log()" des services
-8. Sortir le model Entity
+- Feature - Mettre en place la page Principale (Home) (à spécifier)
+- Feature - Mettre en place la page des Provisions (à spécifier).
+- Feature - Mettre en place la page de l'Epargne (à spécifier).
+- Feature - Mettre en place la page de Settings (à spécifier).
+- Feature - Mettre en place la page de Profil Utilisateur (à spécifier). (Même que Settings ?)
+- Fix - Header (refaire)
+- Sortir la méthode "log()" des services
+- Sortir le model Entity
 
 
 ## TODO Page Labels:

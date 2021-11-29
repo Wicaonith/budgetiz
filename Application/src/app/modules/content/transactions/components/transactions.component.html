@@ -49,9 +49,9 @@
             <!-- Datepicker for date -->
             <mat-form-field appearance="outline" class="input-150">
                 <mat-label>Date</mat-label>
-                <input matInput [matDatepicker]="picker">
+                <input matInput name="dateTransaction" [matDatepicker]="picker" [(ngModel)]="transaction.date" #date="ngModel" disabled required>
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
+                <mat-datepicker #picker disabled="false"></mat-datepicker>
                 <mat-error *ngIf=" required.invalid">{{getErrorMessageRequired()}}</mat-error>
             </mat-form-field>
 
