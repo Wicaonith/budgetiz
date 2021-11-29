@@ -9,6 +9,7 @@ import { SavingModule } from './saving/saving.module';
 import { HomeModule } from './home/home.module';
 import { LoginModule } from './login/login.module';
 import { TransactionsModule } from './transactions/transactions.module';
+import { OverviewModule } from './overview/overview.module';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { TransactionsModule } from './transactions/transactions.module';
     SavingModule,
     HomeModule,
     LoginModule,
-    TransactionsModule
+    TransactionsModule,
+    OverviewModule
   ]
 })
 export class ContentModule { }

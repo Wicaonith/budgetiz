@@ -50,7 +50,7 @@ Run `ng serve -o` pour lancer avec rafraichissement en temps réel
 # Évolutions a prévoir
 
 ## Général 
-- Feature - Mettre en place la page Principale (Home) (à spécifier)
+- Feature - Mettre en place la page d'accueil (Home) (à spécifier)
 - Feature - Mettre en place la page des Provisions (à spécifier).
 - Feature - Mettre en place la page de l'Epargne (à spécifier).
 - Feature - Mettre en place la page de Settings (à spécifier).
@@ -79,3 +79,7 @@ Run `ng serve -o` pour lancer avec rafraichissement en temps réel
 - Gérer le cas où une Catégorie n'a pas de Sous-catégorie associé
 - Changer le format de la date dans le formulaire d'ajout (MM/DD/YYYY => DD/MM/YYYY)
 - Lors de la modification, les Select ne se mettent pas à jour
+
+
+## TODO Pages Overview:
+- Pour la saisie de l'année, faire un select contenant les années présentes dans les transactions de l'utilisateur

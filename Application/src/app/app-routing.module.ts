@@ -12,6 +12,7 @@ import { LabelsBankAccountComponent } from './modules/content/labels/components/
 import { LabelsUndercategoriesComponent } from './modules/content/labels/components/undercategories/labels-undercategories.component';
 import { ResetPwdComponent } from './modules/content/login/components/reset-pwd.component';
 import { TransactionsComponent } from './modules/content/transactions/components/transactions.component';
+import { OverviewComponent } from './modules/content/overview/components/overview.component';
 
 import { AuthGuard } from './shared/services/authGuard/auth-guard.service';
 import { AuthService } from './shared/services/authentication/auth.service';
@@ -31,6 +32,7 @@ const routes: Routes = [
       { path: 'labels/bankaccount', component: LabelsBankAccountComponent },
       { path: 'transactions', component: TransactionsComponent },
       { path: 'saving', component: SavingComponent },
+      { path: 'overview', component: OverviewComponent },
       { path: 'taxes', component: TaxesComponent },
     ]
   },
