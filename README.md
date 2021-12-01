@@ -75,6 +75,7 @@ Run `ng serve -o` pour lancer avec rafraichissement en temps réel
 
 ## TODO Page Transactions:
 
+- Si l'idBase === 0, alors rajouter un message conseillant de commencer par mettre les montant de leur compte
 - Rajout des filtres sur les header
 - Pagination sur le tableau
 - Trier Transaction par ordre inverse de l'idBase (la plus récente en haut)
