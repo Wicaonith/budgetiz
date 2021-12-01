@@ -55,9 +55,14 @@ Run `ng serve -o` pour lancer avec rafraichissement en temps réel
 - Feature - Mettre en place la page de l'Epargne (à spécifier).
 - Feature - Mettre en place la page de Settings (à spécifier).
 - Feature - Mettre en place la page de Profil Utilisateur (à spécifier). (Même que Settings ?)
+- Feature - Ajout d'une pop-up de confirmation lors de la suppression dans un tableau
+
+
 - Fix - Header (refaire)
-- Sortir la méthode "log()" des services
-- Sortir le model Entity
+
+
+- Refacto - Sortir la méthode "log()" des services
+- Refacto - Sortir le model Entity
 
 
 ## TODO Page Labels:
@@ -70,6 +75,7 @@ Run `ng serve -o` pour lancer avec rafraichissement en temps réel
 
 ## TODO Page Transactions:
 
+- Si l'idBase === 0, alors rajouter un message conseillant de commencer par mettre les montant de leur compte
 - Rajout des filtres sur les header
 - Pagination sur le tableau
 - Trier Transaction par ordre inverse de l'idBase (la plus récente en haut)
