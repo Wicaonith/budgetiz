@@ -13,18 +13,19 @@ export interface Family {
   name: string;
   choosenAmount: number;
   annualAmount: number;
-  category?: OverviewCategory[] | MatTableDataSource<OverviewCategory>;
+  category?: OverviewCategory[];
 }
 
 export interface OverviewCategory {
   name: string;
   choosenAmount: number;
   annualAmount: number;
-  undercategory?: OverviewUndercategory[] | MatTableDataSource<OverviewUndercategory>;
+  undercategory?: OverviewUndercategory[];
 }
 
 export interface OverviewUndercategory {
   name: string;
+  type: string;
   choosenAmount: number;
   annualAmount: number;
 }
@@ -39,10 +40,11 @@ export class OverviewComponent implements OnInit {
 
   table: Array<Family> = new Array();
 
-  typeColumns = ['name', 'choice', 'annual'];
+  familyColumns = ['name', 'choosenAmount', 'annualAmount'];
   categoryColumns = ['name', 'choice', 'annual'];
   underCategoryColumns = ['name', 'choice', 'annual'];
 
+  dataSource: MatTableDataSource<Family> = new MatTableDataSource();
 
   /** Enum des Types de Catégoriess */
   enumTypeList = Object.values(EnumCategoryType);
@@ -116,6 +118,7 @@ export class OverviewComponent implements OnInit {
       () => {
         //Initilisation du tableau imbriqué
         this.initializeTable();
+
       }
     );
   }
@@ -123,109 +126,81 @@ export class OverviewComponent implements OnInit {
 
   public initializeTable(): void {
 
-    let lstCat: string[] = [];
-
+    let lstFam: Family[] = [];
     let lstOC: OverviewCategory[] = [];
+    let lstOU: OverviewUndercategory[] = [];
 
-
-    // On parcours une premiere fois toutes les transactions pour 
-    for (let transaction of this.transactions) {
-
-      if (lstCat.indexOf(transaction.undercategory.category.name) < 0) { // On vérifie qu'il n'y ai pas 2 fois la même catégorie
-        lstCat.push(transaction.undercategory.category.name);
-      }
-    }
-
-    for (let cat of lstCat) {
-
-      // Et on crée une liste de OverviewCategory
-      let currentOC: OverviewCategory = {
-        name: cat,
+    // On initialise la liste des Familles 
+    for (let type of this.enumTypeList) {
+      let family: Family = {
+        name: type,
         choosenAmount: 0,
         annualAmount: 0,
-        undercategory: []
+        category: []
       };
-      lstOC.push(currentOC);
+      lstFam.push(family);
     }
 
+    //n°2
+    for (let family of lstFam) {
 
-    // Pour chaque OverviewCategory
-    for (let oc of lstOC) {
-
-      let lstOU: OverviewUndercategory[] = [];
-
+      lstOC = [];
       for (let transaction of this.transactions) {
 
-        if (oc.name === transaction.undercategory.category.name) {
+        if (transaction.undercategory.category.type === family.name) {
 
-          // On crée la sous categ overview
-          let currentOU: OverviewUndercategory = {
-            name: transaction.undercategory.name,
+          let currentOC: OverviewCategory = {
+            name: transaction.undercategory.category.name,
             choosenAmount: 0,
-            annualAmount: transaction.amount
+            annualAmount: 0,
+            undercategory: []
           };
-          lstOU.push(currentOU);
-
-          // Et on calcul le total de la categ overview 
-          oc.annualAmount += transaction.amount;
+          if (lstOC.length === 0 || lstOC.some(el => el.name !== currentOC.name)) {
+            lstOC.push(currentOC);
+          }
         }
       }
-      oc.undercategory = lstOU;
+      family.category = lstOC;
     }
 
-    /*// Pour chaque type de catégorie
-    for (let type of this.enumTypeList) {
-
-      // Initialisation de la famille en cours
-      let currentFamily: Family = { name: type, choosenAmount: 0, annualAmount: 0, category: [] };
-
-      let category = [];
-
-            let currentOC: OverviewCategory = {
-        name: transaction.undercategory.category.name,
-        choosenAmount: 0,
-        annualAmount: 0,
-        undercategory: []
-      };
-
-      let currentFamily: Family = {
-        name: '',
-        choosenAmount= 0,
-        annualAmount = 0,
-        category = []
-      };
-      currentFamily.category = lstOC;
-
-      lstOC.push(currentOC);
+    console.log(lstFam);
 
 
-      let currentOU: OverviewUndercategory = {
-        name: transaction.undercategory.name,
-        choosenAmount: 0,
-        annualAmount: transaction.amount
-      };
-      lstOU.push(currentOU);
+    for (let family of lstFam) {
 
-      // On parcours une premiere fois toutes les transactions pour 
-      for (let transaction of this.transactions) {
+      if (family.category !== undefined) {
+        for (let cat of family.category) {
+          lstOU = [];
+          for (let transaction of this.transactions) {
 
-        let currentOU: OverviewUndercategory = {
-          name: transaction.undercategory.name,
-          choosenAmount: 0,
-          annualAmount: transaction.amount
-        };
-        lstOU.push(currentOU);
+            if (cat.name === transaction.undercategory.category.name) {
 
+              // On crée la sous categ overview
+              let currentOU: OverviewUndercategory = {
+                name: transaction.undercategory.name,
+                type: transaction.undercategory.category.type,
+                choosenAmount: 0,
+                annualAmount: transaction.amount
+              };
+              lstOU.push(currentOU);
 
+              // Et on calcul le total de la categ overview 
+              cat.annualAmount += transaction.amount;
+            }
+          }
+          cat.undercategory = lstOU;
+          family.annualAmount += cat.annualAmount;
+        }
       }
-    }*/
-
-    if (this.transactions && Array.isArray(this.transactions) && this.transactions.length) {
     }
+
+    this.dataSource = new MatTableDataSource(lstFam);
   }
 
 
+  toggleRow(element: Family) {
 
+  }
 
   public getErrorMessageRequired(): string {
     return this.utilsService.getErrorMessageRequired(this.required);

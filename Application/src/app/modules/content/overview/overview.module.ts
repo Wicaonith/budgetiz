@@ -7,6 +7,7 @@ import { OverviewComponent } from './components/overview.component';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatTableModule } from '@angular/material/table';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { MatRadioModule } from '@angular/material/radio';
     FormsModule,
     MatSelectModule,
     MatInputModule,
-    MatRadioModule
+    MatRadioModule,
+    MatTableModule
   ]
 })
 export class OverviewModule { }
