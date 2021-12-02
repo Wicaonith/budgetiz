@@ -34,3 +34,9 @@ Run `ng serve -o` pour lancer avec rafraichissement en temps réel
 # Idée en vrac
 
 - Ajout de pictogramme devant une catégorie
+- Valorisation du montant du compte lors de l'ajout d'une transaction
+- Lors d'une "suppression" de compte bancaire passer isDeleted de toutes les transactions en lien avec ce compte à "true"
+- Authentification avec Google
+- Hash le mot de passe 
+- Gestion des erreurs dans les services
+- Mettre en place un cookie de session 15 min ?)
