@@ -237,6 +237,8 @@ h2 {
 .dataTable{
     width: 100%;
     margin-top: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .formAdd-form {

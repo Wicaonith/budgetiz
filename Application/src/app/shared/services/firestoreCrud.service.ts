@@ -1,42 +1,51 @@
 import { AngularFirestore, AngularFirestoreCollection, DocumentData, Query } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { Entity } from '../interfaces/entity.interface';
 
-// We need a function that will turn our JS Objects into an Object
-// that Firestore can work with
+/**
+ * Fonction qui permet de transformer nos objets JS en objet que Firestore peut lire
+ *
+ * @param {T} object - Objet a transformer en JSON
+ *
+ * @returns {any} Objet transformer en JSON
+ */
 function firebaseSerialize<T>(object: T) {
     return JSON.parse(JSON.stringify(object));
 }
 
-// We need a base Entity interface that our models will extend
-export interface Entity {
-    id?: string; // Optional for new entities
-    idUser?: string;
-    isDeleted?: boolean
-}
-
+/**
+ * Class Service d'appel aux collections dans Firestore
+ */
 export class FirestoreCrudService<T extends Entity> {
-    // Reference to the Collection in Firestore
+
+    /** Référence la Collection du type T dans Firestore */
     private collection: AngularFirestoreCollection<T>;
 
-    /* We need to ask for the AngularFirestore Injectable
-     * and a Collection Name to use in Firestore
+    /**
+     * Constructeur de la classe service FirestoreCrudService
+     *
+     * @param {AngularFirestore} afs - Le service d'accès a Firestore
+     * @param {string} collectionName - Nom de la "table"
      */
     constructor(private afs: AngularFirestore, collectionName: string) {
-        // We then create the reference to this Collection
+        // Création d'un accès à firestore et de la table "collectionName"
         this.collection = this.afs.collection(collectionName);
     }
 
     /**
-     * We look for the Entity we want to add as well
-     * as an Optional Id, which will allow us to set
-     * the Entity into a specific Document in the Collection
+     * Ajout un Objet de type T en base.
+     *
+     * @param {T} entity - Objet à ajouter en base
+     * @param {number} id - Facultatif - Identifiant qu'on veut donner en base
+     *
+     * @returns {Promise<T>} - Promesse
      */
     add(entity: T, id?: number): Promise<T> {
-        // We want to create a Typed Return of the added Entity
+        // On crée un Objet de retour Typé
         return new Promise<T>((resolve) => {
             if (id) {
-                // If there is an ID Provided, lets specifically set the Document
+                // Si on a un ID, on l'utilise pour ajouter le document
                 this.collection
                     .doc(id.toString())
                     .set({ ...entity })
@@ -44,9 +53,8 @@ export class FirestoreCrudService<T extends Entity> {
                         resolve(entity);
                     });
             } else {
-                // If no ID is set, allow Firestore to Auto-Generate one
+                // Si on a pas d'ID, firestore a génère un automatiquement
                 this.collection.add(firebaseSerialize(entity)).then(ref => {
-                    // Let's make sure we return the newly added ID with Model
                     const newentity = {
                         id: ref.id,
                         ...entity,
@@ -58,13 +66,17 @@ export class FirestoreCrudService<T extends Entity> {
     }
 
     /**
-     * Our get method will fetch a single Entity by it's ID
+     * Retourne un Objet en fonction de son identifiant
+     *
+     * @param {string} id - Identifiant de l'objet
+     *
+     * @returns {any} - Retourne l'objet voulu
      */
     get(id: string): any {
         return this.collection.doc<T>(id).snapshotChanges().pipe(
-            // We want to map the document into a Typed JS Object
+            // On map le document retourné en en Objet<T> JSON
             map(doc => {
-                // Only if the entity exists should we build an object out of it
+                // Si l'objet existe, on le map
                 if (doc.payload.exists) {
                     const data = doc.payload.data();
                     const payloadId = doc.payload.id;
@@ -76,12 +88,14 @@ export class FirestoreCrudService<T extends Entity> {
         );
     }
 
-    /*
-     * Our list method will get all the Entities in the Collection
+    /**
+     * Retourne un Observable contenant la liste des Objets de la collection (table)
+     *
+     * @returns {<T[]>} - Retourne un Observable contenant la liste des Objets de la collection (table)
      */
     list(): Observable<T[]> {
         return this.collection.snapshotChanges().pipe(
-            // Again we want to build a Typed JS Object from the Document
+            // On map le document retourné en en Objet<T> JSON
             map(changes => {
                 return changes.map(a => {
                     const data = a.payload.doc.data() as T;
@@ -92,23 +106,47 @@ export class FirestoreCrudService<T extends Entity> {
         );
     }
 
-
+    /**
+     * Retourne la liste des Objets en fonction de l'idenfiant utilisateur
+     *
+     * @param {string} idUser - Identifiant utilisateur
+     *
+     * @returns {<>} Liste des Objets
+     */
     listByUser(idUser: string): Query<DocumentData> {
         return this.collection.ref.where('idUser', '==', idUser);
     }
 
+    /**
+     * Retourne la liste des Objets en fonction de l'idenfiaitn utilisateur et du nom de la catégorie
+     *
+     * @param {string} idUser - Identifiant utilisateur
+     * @param {string} nameCategory - Nom de la catégorie
+     *
+     * @returns {<>} - Liste des Objets
+     */
     listByUserAndCategory(idUser: string, nameCategory: string): Query<DocumentData> {
         return this.collection.ref.where('idUser', '==', idUser).where('category.name', '==', nameCategory);
     }
 
-    /* Our Update method takes the full updated Entity
-     * Including it's ID property which it will use to find the
-     * Entity. This is a Hard Update.
+    /**
+     * Met à jour en base l'Objet passé en paramètre
+     *
+     * @param {T} entity - Objet à mettre à jour
+     *
+     * @returns {Promise<void>} - Retour
      */
     update(entity: T): Promise<void> {
         return this.collection.doc<T>(entity.id?.toString()).set(entity, { merge: true });
     }
 
+    /**
+     * Supprime dans la table l'Objet lié a l'ID
+     *
+     * @param {string} id - Identiifiant de l'objet en base
+     *
+     * @returns {Promise<void>} - Retour
+     */
     delete(id: string): Promise<void> {
         return this.collection.doc<T>(id?.toString()).delete();
     }

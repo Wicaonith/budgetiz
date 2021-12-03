@@ -1,50 +1,54 @@
-import { Component, OnInit } from '@angular/core';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { ChangeDetectorRef, Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
+import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { EnumCategoryType } from 'src/app/shared/enum/enumCategoryType';
+import { Family, OverviewCategory, OverviewUndercategory } from 'src/app/shared/interfaces/overview.interface';
 import { BankAccount } from 'src/app/shared/models/bankAccount.model';
-import { Category } from 'src/app/shared/models/category.model';
 import { Transaction } from 'src/app/shared/models/transaction.model';
 import { BankAccountsService } from 'src/app/shared/services/bankAccounts/bankaccounts.service';
 import { TransactionsService } from 'src/app/shared/services/transactions/transactions.service';
 import { UtilsService } from 'src/app/shared/services/utils/utils.service';
 
-export interface Family {
-  name: string;
-  choosenAmount: number;
-  annualAmount: number;
-  category?: OverviewCategory[];
-}
-
-export interface OverviewCategory {
-  name: string;
-  choosenAmount: number;
-  annualAmount: number;
-  undercategory?: OverviewUndercategory[];
-}
-
-export interface OverviewUndercategory {
-  name: string;
-  type: string;
-  choosenAmount: number;
-  annualAmount: number;
-}
 
 @Component({
   selector: 'app-overview',
   templateUrl: './overview.component.html',
-  styleUrls: ['../../../../app.component.css']
+  styleUrls: ['../../../../app.component.css'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 export class OverviewComponent implements OnInit {
 
 
-  table: Array<Family> = new Array();
+  // ESSAI N°1
 
-  familyColumns = ['name', 'choosenAmount', 'annualAmount'];
-  categoryColumns = ['name', 'choice', 'annual'];
-  underCategoryColumns = ['name', 'choice', 'annual'];
+  displayedColumns: string[] = [
+    'expandIcon',
+    'name',
+    'choosenAmount',
+    'annualAmount'
+  ];
+
+
+  //ESSAI N°2
+  @ViewChild('outerSort', { static: true }) sort: MatSort = new MatSort();
+  @ViewChildren('innerSort') innerSort: QueryList<MatSort> = new QueryList();
+  @ViewChildren('innerTables') innerTables: QueryList<MatTable<OverviewCategory>> = new QueryList();
 
   dataSource: MatTableDataSource<Family> = new MatTableDataSource();
+  families: Array<Family> = new Array();
+
+  columnsToDisplay = ['name', 'choosenAmount', 'annualAmount'];
+  innerDisplayedColumns = ['name', 'choosenAmount', 'annualAmount'];
+
+  expandedElement?: Family | null;
 
   /** Enum des Types de Catégoriess */
   enumTypeList = Object.values(EnumCategoryType);
@@ -62,7 +66,8 @@ export class OverviewComponent implements OnInit {
   constructor(
     private ts: TransactionsService,
     private utilsService: UtilsService,
-    private baService: BankAccountsService) { }
+    private baService: BankAccountsService,
+    private cd: ChangeDetectorRef) { }
 
   ngOnInit(): void {
 
@@ -163,13 +168,13 @@ export class OverviewComponent implements OnInit {
       family.category = lstOC;
     }
 
-    console.log(lstFam);
+
 
 
     for (let family of lstFam) {
 
       if (family.category !== undefined) {
-        for (let cat of family.category) {
+        for (let cat of family.category as OverviewCategory[]) {
           lstOU = [];
           for (let transaction of this.transactions) {
 
@@ -194,13 +199,18 @@ export class OverviewComponent implements OnInit {
       }
     }
 
+    this.families = lstFam;
+    console.log(this.families);
     this.dataSource = new MatTableDataSource(lstFam);
   }
 
 
   toggleRow(element: Family) {
-
+    element.category && (element.category as MatTableDataSource<OverviewCategory>) ? (this.expandedElement = this.expandedElement === element ? null : element) : null;
+    this.cd.detectChanges();
+    this.innerTables.forEach((table, index) => (table.dataSource as MatTableDataSource<OverviewCategory>).sort = this.innerSort.toArray()[index]);
   }
+
 
   public getErrorMessageRequired(): string {
     return this.utilsService.getErrorMessageRequired(this.required);

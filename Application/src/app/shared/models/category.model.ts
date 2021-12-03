@@ -1,35 +1,47 @@
-import { Entity } from "../services/firestoreCrud.service";
+import { Entity } from "../interfaces/entity.interface";
 
 /**
- * L'objet modélisant les Catégoriess dans l'application
- * 
- * @attribut id - number - L'identifiant de la catégories
- * @attribut name - string - Le nom de la catégories
- * @attribut type - string - Le type de catégories (Charge / Revenu)
+ * L'objet modélisant les Catégories dans l'application
+ *
+ * @implements Entity
  */
 export class Category implements Entity {
 
-    id: string;
+  /** Identifiant Firestore */
+  id: string;
 
-    /** L'identifiant de la catégories */
-    idBase: number
+  /** Identifiant FireAuthentication de l'Utilisateur */
+  idUser: string;
 
-    /** Le nom de la catégories */
-    name: string;
+  /** Identifiant de la catégorie pour un utilisateur */
+  idBase: number
 
-    /** Le type de catégories (Charge / Revenu) */
-    type: string;
+  /** Nom de la catégorie */
+  name: string;
 
-    idUser: string;
+  /** Type de catégories (Charge / Revenu / Provision / Epargne) */
+  type: string;
 
-    isDeleted: boolean
+  /** Boolean permettant de savoir si le compte a été supprimé
+  * Si true, le compte ne doit plus apparaitre dans les choix et les tableaux */
+  isDeleted: boolean
 
-    constructor(id: string, idBase: number, name: string, type: string, idUser: string, isDeleted: boolean) {
-        this.id = id;
-        this.idBase = idBase;
-        this.name = name;
-        this.type = type;
-        this.idUser = idUser;
-        this.isDeleted = isDeleted;
-    }
+  /**
+   * Constructeur de la classe model Category
+   *
+   * @param {string} id - Identifiant Firestore
+   * @param {number} idBase - Identifiant de la catégorie
+   * @param {string} name - Nom de la catégorie
+   * @param {string} type - Type de catégories
+   * @param {string} idUser - Identifiant FireAuthentication de l'Utilisateur
+   * @param {boolean} isDeleted - Boolean permettant de savoir si le compte a été supprimé
+   */
+  constructor(id: string, idBase: number, name: string, type: string, idUser: string, isDeleted: boolean) {
+    this.id = id;
+    this.idBase = idBase;
+    this.name = name;
+    this.type = type;
+    this.idUser = idUser;
+    this.isDeleted = isDeleted;
+  }
 }

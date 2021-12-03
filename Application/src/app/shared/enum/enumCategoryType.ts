@@ -1,5 +1,5 @@
 /**
- * Classe Enumération, contenant les types de Catégories (Charge ou Revenu)
+ * Classe Enumération, contenant les types de Catégories (Charge / Revenu / Provision / Epargne)
  */
 export enum EnumCategoryType {
     Charge = "Charge",
