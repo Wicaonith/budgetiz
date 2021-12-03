@@ -31,61 +31,12 @@ Run `ng serve -o` pour lancer avec rafraichissement en temps réel
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
 
-# Version
+# Idée en vrac
 
-## V1.0.0
-
-1. Feature - Mettre en place la page Category
-2. Feature - Mettre en place la page Undercategory
-3. Feature - Mettre en place la page BankAccount
-4. Feature - Mettre en place la page Transaction
-5. Feature - Mettre en place la page du Tableau (Résumé)
-6. Feature - Deployer
-7. Fix 
-    - Vérification de la Documentation
-    - Vérification des imports, suppresion des inutilisés
-    - Mettre la gestion des Erreurs dans un service Utils
-    - Ranger les attributs dans les models
-
-# Évolutions a prévoir
-
-## Général 
-- Feature - Mettre en place la page d'accueil (Home) (à spécifier)
-- Feature - Mettre en place la page des Provisions (à spécifier).
-- Feature - Mettre en place la page de l'Epargne (à spécifier).
-- Feature - Mettre en place la page de Settings (à spécifier).
-- Feature - Mettre en place la page de Profil Utilisateur (à spécifier). (Même que Settings ?)
-- Feature - Ajout d'une pop-up de confirmation lors de la suppression dans un tableau
-
-
-- Fix - Header (refaire)
-
-
-- Refacto - Sortir la méthode "log()" des services
-- Refacto - Sortir le model Entity
-
-
-## TODO Page Labels:
-- Faire que dans labels le clic sur une ligne amène vers un résumé de toutes les transactions faite sur cette catégorie
-- Refaire les tabs de Label, avec juste une recharge du tableau a l'ajout et non une redirection
-- Faire en sorte que l'apparition du formulaire d'ajout mette a jour l'input de l'idBase
-- Contrôle sur le deleteCategory() - LabelsCategoriesComponent --> utiliser l'attribut "isDeleted" qui filtre si la catégorie est remonté à l'écran ou non
-- Contrôle sur le deleteUndersection() - LabelsUndercategoriesComponent --> utiliser l'attribut "isDeleted" qui filtre si la sous-catégorie est remonté à l'écran ou non
-- Contrôle sur le deleteBankAccount() - LabelsBankAccountComponent --> utiliser l'attribut "isDeleted" qui filtre si le compte bancaire est remonté à l'écran ou non
-
-## TODO Page Transactions:
-
-- Si l'idBase === 0, alors rajouter un message conseillant de commencer par mettre les montant de leur compte
-- Rajout des filtres sur les header
-- Pagination sur le tableau
-- Trier Transaction par ordre inverse de l'idBase (la plus récente en haut)
-- DatePicker for Year https://material.angular.io/components/datepicker/overview#watching-the-views-for-changes-on-selected-years-and-months 
-- Faire en sorte que l'apparition du formulaire d'ajout mette a jour l'input de l'idBase
-- Ajout de la zone de description au clic sur une ligne
-- Gérer le cas où une Catégorie n'a pas de Sous-catégorie associé
-- Changer le format de la date dans le formulaire d'ajout (MM/DD/YYYY => DD/MM/YYYY)
-- Lors de la modification, les Select ne se mettent pas à jour
-
-
-## TODO Pages Overview:
-- Pour la saisie de l'année, faire un select contenant les années présentes dans les transactions de l'utilisateur
+- Ajout de pictogramme devant une catégorie
+- Valorisation du montant du compte lors de l'ajout d'une transaction
+- Lors d'une "suppression" de compte bancaire passer isDeleted de toutes les transactions en lien avec ce compte à "true"
+- Authentification avec Google
+- Hash le mot de passe 
+- Gestion des erreurs dans les services
+- Mettre en place un cookie de session 15 min ?)
