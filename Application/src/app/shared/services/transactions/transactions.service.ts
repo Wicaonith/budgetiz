@@ -37,6 +37,11 @@ export class TransactionsService {
     return this.crudService.listByUser(this.utils.getUserUID());
   }
 
+  public readTransactionsByUserIdAndAccount(account: string): Query<DocumentData> {
+
+    return this.crudService.listByUserAndAccount(this.utils.getUserUID(), account);
+  }
+
   public readTransaction(id: string): any {
 
     return this.crudService.get(id);

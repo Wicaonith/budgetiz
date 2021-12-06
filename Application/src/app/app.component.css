@@ -236,14 +236,14 @@ h2 {
 /* Pages Label */
 .dataTable{
     width: 100%;
+}
+
+.dataTable-padding {
     margin-top: 20px;
     padding-left: 10px;
     padding-right: 10px;
 }
 
-.formAdd-form {
-    height:80px;
-}
 
 .formAdd-form div {
     display: inline;
@@ -386,4 +386,54 @@ h2 {
 
 .overview-radio {
     margin-right:10px;
+}
+
+
+tr.overview-row-family {
+    height: 50px;
+    padding-top:10px;
+    border: white 0px solid;
+}
+
+tr.overview-row-category {
+    height: 0;
+    border: white 0px solid;
+}
+
+tr.overview-row-undercategory {
+    height: 0;
+    border: white 0px solid;
+}
+
+.overview-cell-family{
+    border-bottom: #4da34d 1px solid;
+    width:10%;
+    font-weight: 1000;
+    font-size:16px;
+    margin-top:10;
+}
+
+.overview-cell-category{
+    border-bottom: white 0px solid;
+    width:10%;
+}
+
+
+.overview-cell-category-arrow{
+    text-align: end;
+}
+
+.overview-cell-category-amount{
+    font-weight: 500;
+}
+
+.overview-cell-undercategory{
+    border-bottom: white 0px solid;
+    font-size:12px;
+    width:10%;
+}
+
+
+.overview-cell-table {
+    border-bottom: white 0px solid;
 }

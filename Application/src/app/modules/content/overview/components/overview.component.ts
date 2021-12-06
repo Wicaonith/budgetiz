@@ -16,13 +16,7 @@ import { UtilsService } from 'src/app/shared/services/utils/utils.service';
   selector: 'app-overview',
   templateUrl: './overview.component.html',
   styleUrls: ['../../../../app.component.css'],
-  animations: [
-    trigger('detailExpand', [
-      state('collapsed', style({ height: '0px', minHeight: '0' })),
-      state('expanded', style({ height: '*' })),
-      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
-    ]),
-  ],
+  animations: [],
 })
 export class OverviewComponent implements OnInit {
 
@@ -45,8 +39,7 @@ export class OverviewComponent implements OnInit {
   dataSource: MatTableDataSource<Family> = new MatTableDataSource();
   families: Array<Family> = new Array();
 
-  columnsToDisplay = ['name', 'choosenAmount', 'annualAmount'];
-  innerDisplayedColumns = ['name', 'choosenAmount', 'annualAmount'];
+  columnsToDisplay = ['name', 'cat', 'undercat', 'choosenAmount', 'annualAmount'];
 
   expandedElement?: Family | null;
 
@@ -72,6 +65,8 @@ export class OverviewComponent implements OnInit {
   ngOnInit(): void {
 
     // TODO Récupération de la liste de années présentes dans les transactions pour un utilisateur
+    // TODO Onchange sur le combobox du compte qui recharge le tableau
+    // TODO Vérifier les transactions lié au compte bancaire 
 
     // Récupération de la liste des comptes
     this.initializeBankAccounts();
@@ -187,7 +182,17 @@ export class OverviewComponent implements OnInit {
                 choosenAmount: 0,
                 annualAmount: transaction.amount
               };
-              lstOU.push(currentOU);
+              if (lstOU.length === 0 || lstOU.some(el => el.name !== currentOU.name)) { // Si la sous catégorie en cours n'a pas le même nom qu'une sous catégorie déjà dans la liste
+                // On l'ajoute
+                lstOU.push(currentOU);
+              } else {
+                // Sinon on ajout le montant a la sous catégorie dans la liste
+                for (let ou of lstOU) {
+                  if (ou.name === currentOU.name) {
+                    ou.annualAmount += currentOU.annualAmount;
+                  }
+                }
+              }
 
               // Et on calcul le total de la categ overview 
               cat.annualAmount += transaction.amount;
@@ -199,9 +204,9 @@ export class OverviewComponent implements OnInit {
       }
     }
 
-    this.families = lstFam;
-    console.log(this.families);
+
     this.dataSource = new MatTableDataSource(lstFam);
+    this.innerTables.forEach((table, index) => (table.dataSource as MatTableDataSource<OverviewCategory>).sort = this.innerSort.toArray()[index]);
   }
 
 

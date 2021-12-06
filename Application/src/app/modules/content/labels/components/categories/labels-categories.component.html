@@ -3,7 +3,7 @@
 <app-form-categories [category]="category"></app-form-categories>
 
 <!-- Tableau contenant les données de toutes les transactions -->
-<table matSort class="dataTable" mat-table [dataSource]="datasource" matSortActive="idBase" matSortDirection="asc">
+<table matSort class="dataTable dataTable-padding" mat-table [dataSource]="datasource" matSortActive="idBase" matSortDirection="asc">
 
     <ng-container matColumnDef="idBase">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>

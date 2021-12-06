@@ -118,7 +118,19 @@ export class FirestoreCrudService<T extends Entity> {
     }
 
     /**
-     * Retourne la liste des Objets en fonction de l'idenfiaitn utilisateur et du nom de la catégorie
+     * Retourne la liste des Objets en fonction de l'idenfiant utilisateur et du compte bancaire
+     *
+     * @param {string} idUser - Identifiant utilisateur
+     * @param {string} account - Nom du compte
+     *
+     * @returns {<>} Liste des Objets
+     */
+    listByUserAndAccount(idUser: string, account: string): Query<DocumentData> {
+        return this.collection.ref.where('idUser', '==', idUser).where('account.name', '==', account);
+    }
+
+    /**
+     * Retourne la liste des Objets en fonction de l'idenfiant utilisateur et du nom de la catégorie
      *
      * @param {string} idUser - Identifiant utilisateur
      * @param {string} nameCategory - Nom de la catégorie
