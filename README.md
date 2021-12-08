@@ -40,3 +40,5 @@ Run `ng serve -o` pour lancer avec rafraichissement en temps réel
 - Hash le mot de passe 
 - Gestion des erreurs dans les services
 - Mettre en place un cookie de session 15 min ?)
+- Mettre un filtre dans les combobox
+- Mettre un "Arbre" dans les combobox de rubrique mère
